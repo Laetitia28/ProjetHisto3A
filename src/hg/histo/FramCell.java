@@ -54,7 +54,7 @@ public class FramCell extends JFrame
 		graphComponent.getViewport().setOpaque(true);
 		
 		//graphComponent.setPreferredSize(new Dimension(10, 10));
-		graphComponent.setBackgroundImage(new ImageIcon("src/images/loutre.jpg"));
+		graphComponent.setBackgroundImage(new ImageIcon("src/ressources/image0046.jpg"));
 		//graphComponent.getGraphControl().updatePreferredSize();
 		
 		
