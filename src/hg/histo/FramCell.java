@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -34,26 +35,23 @@ public class FramCell extends JFrame {
     mxGraph graph = new mxGraph();
 	Object parent = graph.getDefaultParent();
 	mxGraphComponent graphComponent ;
+	AlertView alertview = new AlertView();
+	SearchFile searchFile = new SearchFile("path");
 	
-	
+	List<Cell> listCells;
 	
 	public FramCell() {
 		
 		super("Frame Cell!");
-	
+		listCells = new ArrayList<Cell>();
 		graphComponent = new mxGraphComponent(graph);
 		graphComponent.setConnectable(false);
 		graphComponent.getViewport().setOpaque(true);
-		//graphComponent.setSize(20, HEIGHT);
+	
 		
 		
 		optionBox.setLayout(new BorderLayout());
-		
-		//create toolbar Button
-		
 		buttonBar.setLayout(new FlowLayout());
-		
-		
 		buttonBar.add(btZoomToFit);
 		//btZoomToFit.addActionListener(this);
 		
@@ -94,21 +92,25 @@ public class FramCell extends JFrame {
 				    System.out.println(temp[i]);*/
 				StringTokenizer st = new StringTokenizer(path, "."); 
 				while (st.hasMoreTokens()) { 
-				System.out.println(st.nextToken()); 
+				String path_initial = st.nextToken();
+				System.out.println("path : " + path_initial); 
 				String ext=st.nextToken();
-				System.out.println(ext);
+				System.out.println("ext : " + ext);
 			    if(ext.equals("csv")){
 			    	System.out.println("Ceci est un bon fichier ");
 			    	System.out.println(ext);
 			    	String newPath1=ext.replace(ext.charAt(0), 'j');
 			    	String newPath2=newPath1.replace(ext.charAt(1), 'p');
 			    	String newPath3=newPath2.replace(ext.charAt(2), 'g');
-			    	System.out.println(newPath3);//nouvelle extention de limage
+			    	String path_image = path_initial +"."+ newPath3;
+			    	System.out.println(path_image);//nouvelle extention de limage
 			    	//System.out.println("token2"+ st.nextToken());
+			    	searchFile.searchFileImage(path_image);
 			    	}
 			    
 			    else System.out.println("Ceci n'est pas un bon fichier ");
-					
+					//Declancher une alert View 
+			    	
 				
 				} 
 									
@@ -128,13 +130,13 @@ public class FramCell extends JFrame {
 			
 }
 	public void initFrame(String path){
-		List<Cell> listcells = setListCell(path);
+		listCells = setListCell(path);
 		graph.getModel().beginUpdate();
 
 		try
 
 		{
-			for (Cell c : listcells) {
+			for (Cell c : listCells) {
 				ColorCell(c);
 				Object v1 = graph
 						.insertVertex(parent, null, c.getClass_name(),
@@ -159,7 +161,9 @@ public class FramCell extends JFrame {
       
 	}
 	public void changeFrame(String path){
-		setListCell(path);
+		listCells.clear();
+		listCells = setListCell(path);
+		
 		graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
 		graph.getModel().beginUpdate();
 		
