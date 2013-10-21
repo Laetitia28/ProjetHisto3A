@@ -15,8 +15,12 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
+=======
+		
+>>>>>>> 26e7fe203e7070508e575b911bfd0276e6b1bddb
 =======
 		
 >>>>>>> 26e7fe203e7070508e575b911bfd0276e6b1bddb
