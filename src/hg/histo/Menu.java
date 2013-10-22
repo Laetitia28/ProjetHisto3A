@@ -1,38 +1,72 @@
 package hg.histo;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.StringTokenizer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-
 public class Menu extends JMenuBar{
-	
-	public Menu(){
-	}
-	public JMenuBar buildMenu(){
-		JMenuBar menu_bar1= new JMenuBar();
-		JMenu menu1 = new JMenu("Fichier");
-        JMenu menu2 = new JMenu("Edition");
-        JMenuItem Ouvrir = new JMenuItem("Ouvrir Fichier");
-		JMenuItem Quitter = new JMenuItem("Quitter");
-		JMenuItem image = new JMenuItem("Afficher Image");
-		JMenuItem copier = new JMenuItem("Copier");
-		JMenuItem coller = new JMenuItem("Coller");
-		menu1.add(Ouvrir);
-		menu1.add(Quitter);
-		menu2.add(image);
-		menu2.add(copier);
-		menu2.add(coller);
-	/* Ajouter les menu sur la bar de menu */
-		menu_bar1.add(menu1);
-		menu_bar1.add(menu2);
-		return menu_bar1;
-	
-	}
-	
-	
+	private JMenuBar menu_bar1;
+	private JMenu File, Edition;
+	private JMenuItem open, exit, image;
 
+	public Menu() {
+
+	}
+
+	public JMenuItem getExit() {
+		return exit;
+	}
+
+	public JMenuItem getOpen() {
+		return open;
+	}
+
+	public void setOpen(JMenuItem open) {
+		this.open = open;
+	}
+
+	public JMenuItem getImage() {
+		return image;
+	}
+
+	public void setImage(JMenuItem image) {
+		this.image = image;
+	}
+
+	public void setExit(JMenuItem exit) {
+		this.exit = exit;
+	}
+
+	public JMenuBar buildMenu() {
+		menu_bar1 = new JMenuBar();
+		File = new JMenu("File");
+		Edition = new JMenu("Edition");
+		menu_bar1.add(File);
+		menu_bar1.add(Edition);
+		open = new JMenuItem("Open File");
+		exit = new JMenuItem("Exit");
+		image = new JMenuItem("Display Image");
+		File.add(open);
+		File.add(exit);
+		Edition.add(image);
+	
+		
+
+		image.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		return menu_bar1;
+	}
+
+	
 }
