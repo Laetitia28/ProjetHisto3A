@@ -13,17 +13,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-
-=======
-		
->>>>>>> 26e7fe203e7070508e575b911bfd0276e6b1bddb
-=======
-		
->>>>>>> 26e7fe203e7070508e575b911bfd0276e6b1bddb
 		String path ="src/ressources/image0046.csv";
 		File myFile = new File(path);
 		FillCellWithCSV f;

@@ -118,7 +118,7 @@ public class FramCell extends JFrame {
 				    System.out.println(temp[i]);*/
 				StringTokenizer st = new StringTokenizer(path, "."); 
 				while (st.hasMoreTokens()) { 
-				System.out.println(st.nextToken()); 
+				System.out.println("token:"+st.nextToken()); 
 				String ext=st.nextToken();
 				System.out.println(ext);
 			    if(ext.equals("csv")){
