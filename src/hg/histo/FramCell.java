@@ -36,7 +36,7 @@ public class FramCell extends JFrame {
 	Object parent = graph.getDefaultParent();
 	mxGraphComponent graphComponent ;
 	AlertView alertview = new AlertView();
-	SearchFile searchFile = new SearchFile("path");
+	SearchFile searchFile ;
 	
 	List<Cell> listCells;
 	
@@ -110,7 +110,13 @@ public class FramCell extends JFrame {
 			    	System.out.println("path_image " + path_image);
 			    	
 			    	// aller chercher path.jpg dans le dossier
-			    	searchFile.searchFileImage(path_image);
+			    	
+			    	searchFile = new SearchFile(path_image);
+			    	boolean found = searchFile.searchFileImage(searchFile.name, searchFile.filePath);
+			    	if (found )
+			    		System.out.println("ok found file .pgj ");
+			    	System.out.println("Ko not found .jpg ");
+			    	
 			    	}
 			    
 			    else System.out.println("Ceci n'est pas un bon fichier ");
