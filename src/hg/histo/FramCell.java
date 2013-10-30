@@ -81,34 +81,35 @@ public class FramCell extends JFrame {
 				// bouton
 				chooser.showOpenDialog(null); // affiche la boite de dialogue
 				String path = chooser.getSelectedFile().getAbsolutePath();
-				System.out.println(path);
-				//StringBuffer pathmodif =new StringBuffer(path);
-				//System.out.println(pathmodif.charAt(5) );
-				/*String[]temp;
-				String delimiter=(".");
-				temp=path.split(delimiter);
-				System.out.println(temp.length);
-				for(int i = 0; i < temp.length ; i++)
-				    System.out.println(temp[i]);*/
+				System.out.println("Path selected : " + path);
+				
 				StringTokenizer st = new StringTokenizer(path, "."); 
+				
 				while (st.hasMoreTokens()) { 
 
-				System.out.println("token:"+st.nextToken()); 
+					String path_initial = st.nextToken();
+					System.out.println("token : " + path_initial); 
 
-				String path_initial = st.nextToken();
-				System.out.println("path : " + path_initial); 
+					String ext = st.nextToken();
+					System.out.println("extention : " + ext); 
 
-				String ext=st.nextToken();
-				System.out.println("ext : " + ext);
+					
+					
 			    if(ext.equals("csv")){
 			    	System.out.println("Ceci est un bon fichier ");
 			    	System.out.println(ext);
+			    	
+			    	//remplace .cvs to jpg
 			    	String newPath1=ext.replace(ext.charAt(0), 'j');
 			    	String newPath2=newPath1.replace(ext.charAt(1), 'p');
 			    	String newPath3=newPath2.replace(ext.charAt(2), 'g');
+			    	
+			    	// creation de path.jpg
 			    	String path_image = path_initial +"."+ newPath3;
-			    	System.out.println(path_image);//nouvelle extention de limage
-			    	//System.out.println("token2"+ st.nextToken());
+			    	
+			    	System.out.println("path_image " + path_image);
+			    	
+			    	// aller chercher path.jpg dans le dossier
 			    	searchFile.searchFileImage(path_image);
 			    	}
 			    
