@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.mxgraph.swing.mxGraphComponent;
@@ -26,6 +27,7 @@ public class FramCell extends JFrame {
 	 */
 	private static final long serialVersionUID = -2707712944901661771L;
 	private String param = "white";
+	
 
     Menu menu=new Menu();
     JPanel optionBox = new JPanel();
@@ -87,24 +89,22 @@ public class FramCell extends JFrame {
 				
 				while (st.hasMoreTokens()) { 
 
-<<<<<<< HEAD
-				System.out.println("token:"+st.nextToken()); 
+				//System.out.println("token:"+st.nextToken()); 
 
 				String path_initial = st.nextToken();
 				System.out.println("path : " + path_initial); 
 
 				String ext=st.nextToken();
 				System.out.println("ext : " + ext);
-=======
-					String path_initial = st.nextToken();
+
+					/*String path_initial = st.nextToken();
 					System.out.println("token : " + path_initial); 
 
 					String ext = st.nextToken();
-					System.out.println("extention : " + ext); 
+					System.out.println("extention : " + ext); */
 
 					
-					
->>>>>>> 0b644e097bf6400406ca9deb56d18c672dae48ad
+
 			    if(ext.equals("csv")){
 			    	System.out.println("Ceci est un bon fichier ");
 			    	System.out.println(ext);
@@ -124,14 +124,22 @@ public class FramCell extends JFrame {
 			    	searchFile = new SearchFile(path_image);
 			    	boolean found = searchFile.searchFileImage(searchFile.name, searchFile.filePath);
 			    	if (found )
-			    		System.out.println("ok found file .pgj ");
+			    		System.out.println("ok found file .jpg ");
+			    	else 
 			    	System.out.println("Ko not found .jpg ");
 			    	
 			    	}
 			    
-			    else System.out.println("Ceci n'est pas un bon fichier ");
-					//Declancher une alert View 
-			    	
+			   else if (!ext.equals("csv")){
+			   System.out.println("Ceci n'est pas un bon fichier ");
+			    
+			    JOptionPane.showMessageDialog(graphComponent, "File choosen is not expected",
+					      "avertissement",
+					      JOptionPane.WARNING_MESSAGE);
+			    FramCell.this.setVisible(false);
+			   
+			    
+			   }
 				
 				} 
 									
@@ -139,14 +147,14 @@ public class FramCell extends JFrame {
 				
 			
 		});
-	      menu.getImage().addActionListener(new ActionListener() {
+	     /* menu.getImage().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				//display or remove image 
 			}
-		});
+		});*/
 			
 			
 }
