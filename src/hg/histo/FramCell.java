@@ -36,7 +36,7 @@ public class FramCell extends JFrame {
 	Object parent = graph.getDefaultParent();
 	mxGraphComponent graphComponent ;
 	AlertView alertview = new AlertView();
-	SearchFile searchFile = new SearchFile("path");
+	SearchFile searchFile ;
 	
 	List<Cell> listCells;
 	
@@ -81,18 +81,13 @@ public class FramCell extends JFrame {
 				// bouton
 				chooser.showOpenDialog(null); // affiche la boite de dialogue
 				String path = chooser.getSelectedFile().getAbsolutePath();
-				System.out.println(path);
-				//StringBuffer pathmodif =new StringBuffer(path);
-				//System.out.println(pathmodif.charAt(5) );
-				/*String[]temp;
-				String delimiter=(".");
-				temp=path.split(delimiter);
-				System.out.println(temp.length);
-				for(int i = 0; i < temp.length ; i++)
-				    System.out.println(temp[i]);*/
+				System.out.println("Path selected : " + path);
+				
 				StringTokenizer st = new StringTokenizer(path, "."); 
+				
 				while (st.hasMoreTokens()) { 
 
+<<<<<<< HEAD
 				System.out.println("token:"+st.nextToken()); 
 
 				String path_initial = st.nextToken();
@@ -100,16 +95,38 @@ public class FramCell extends JFrame {
 
 				String ext=st.nextToken();
 				System.out.println("ext : " + ext);
+=======
+					String path_initial = st.nextToken();
+					System.out.println("token : " + path_initial); 
+
+					String ext = st.nextToken();
+					System.out.println("extention : " + ext); 
+
+					
+					
+>>>>>>> 0b644e097bf6400406ca9deb56d18c672dae48ad
 			    if(ext.equals("csv")){
 			    	System.out.println("Ceci est un bon fichier ");
 			    	System.out.println(ext);
+			    	
+			    	//remplace .cvs to jpg
 			    	String newPath1=ext.replace(ext.charAt(0), 'j');
 			    	String newPath2=newPath1.replace(ext.charAt(1), 'p');
 			    	String newPath3=newPath2.replace(ext.charAt(2), 'g');
+			    	
+			    	// creation de path.jpg
 			    	String path_image = path_initial +"."+ newPath3;
-			    	System.out.println(path_image);//nouvelle extention de limage
-			    	//System.out.println("token2"+ st.nextToken());
-			    	searchFile.searchFileImage(path_image);
+			    	
+			    	System.out.println("path_image " + path_image);
+			    	
+			    	// aller chercher path.jpg dans le dossier
+			    	
+			    	searchFile = new SearchFile(path_image);
+			    	boolean found = searchFile.searchFileImage(searchFile.name, searchFile.filePath);
+			    	if (found )
+			    		System.out.println("ok found file .pgj ");
+			    	System.out.println("Ko not found .jpg ");
+			    	
 			    	}
 			    
 			    else System.out.println("Ceci n'est pas un bon fichier ");

@@ -14,11 +14,15 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0b644e097bf6400406ca9deb56d18c672dae48ad
 		String path ="src/ressources/image0046.csv";
 		File myFile = new File(path);
 		FillCellWithCSV f;
 		Menu menu=new Menu();
+<<<<<<< HEAD
 	
 			f = new FillCellWithCSV(myFile);
 			List<Cell> listcells = f.allCells();// liste de toutes les cellules
@@ -38,10 +42,32 @@ public class Main {
 			frame.setSize(1000, 700);
 			frame.setVisible(true);
 			
+=======
+		
+			try {
+				f = new FillCellWithCSV(myFile);
+				List<Cell> listcells = f.allCells();// liste de toutes les cellules
+				//List<Cell> listcells = f.allCells();// liste de toutes les cellules
+				FramCell frame = new FramCell();
+				frame.initFrame("src/ressources/image0046.csv");
+>>>>>>> 0b644e097bf6400406ca9deb56d18c672dae48ad
 
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setSize(1000, 700);
+				frame.setVisible(true);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	
+<<<<<<< HEAD
 		
 	
 	}
 }
+=======
+>>>>>>> 0b644e097bf6400406ca9deb56d18c672dae48ad
 
+}
