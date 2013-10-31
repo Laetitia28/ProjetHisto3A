@@ -49,6 +49,7 @@ public class FramCell extends JFrame {
 		graphComponent = new mxGraphComponent(graph);
 		graphComponent.setConnectable(false);
 		graphComponent.getViewport().setOpaque(true);
+		
 	
 		
 		
@@ -179,6 +180,11 @@ public class FramCell extends JFrame {
 
 		graphComponent.setConnectable(false);//edges
 		graphComponent.getViewport().setOpaque(true);//background
+		graph.setCellsCloneable(false);
+		graph.setCellsDeletable(false);
+		graph.setCellsMovable(false);
+		graph.setCellsSelectable(false);
+		graph.setCellsResizable(false);
 
 
 
