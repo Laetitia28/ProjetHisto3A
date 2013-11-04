@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -15,12 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
@@ -45,16 +51,22 @@ public class FramCell extends JFrame {
 	mxGraph graph = new mxGraph();
 	Object parent = graph.getDefaultParent();
 	mxGraphComponent graphComponent ;
-	AlertView alertview = new AlertView();
+	
 	SearchFile searchFile ;
 
 	List<Cell> listCells;
 
+	ImageIcon img = new ImageIcon(img_default);
 	public FramCell() {
 
 		super("Frame Cell!");
 		listCells = new ArrayList<Cell>();
+		
 		graphComponent = new mxGraphComponent(graph);
+		graphComponent.setBounds(0, 0, (int)(img.getIconWidth()*0.4), (int)(img.getIconHeight()*0.4));
+		
+		graphComponent.setPreferredSize(new Dimension( (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4)));
+		
 		graphComponent.setGridVisible(true);
 		graphComponent.setGridColor(Color.BLACK);
 		graphComponent.setConnectable(false);
@@ -68,41 +80,84 @@ public class FramCell extends JFrame {
 
 
 
-		optionBox.setLayout(new BorderLayout());
-		buttonBar.setLayout(new FlowLayout());
+		
+		optionBox.setLayout(new BorderLayout());   	
+		//buttonBar.setLayout(new FlowLayout());
 	
 		buttonBar.add(btZoomToFit);
 		
 		 final mxGraphOutline graphOutline = new mxGraphOutline(graphComponent);
 	        graphOutline.setPreferredSize(new Dimension(150, 150));
-	        optionBox.add(graphOutline, BorderLayout.NORTH
-	        		);
+	        
+	        optionBox.add(graphOutline, BorderLayout.NORTH);
+	      
 	        
 	    	btZoomToFit.addActionListener(new ActionListener() {
 
 	            @Override
 	            public void actionPerformed(ActionEvent arg0) {
 
+	            	
 	                double newScale = 1;
 
 	                Dimension graphSize = graphComponent.getGraphControl().getSize();
+
 	                Dimension viewPortSize = graphComponent.getViewport().getSize();
 
 	                int gw = (int) graphSize.getWidth();
 	                int gh = (int) graphSize.getHeight();
-
+	                System.out.println("size graphSize : " + gw);
+	                System.out.println("size graphSize : " + gh);
+	                
+	                System.out.println("size viewPortSize : " + (int) viewPortSize.getWidth());
+	                System.out.println("size viewPortSiee : " + (int) viewPortSize.getHeight());
+	                
+	                 
 	                if (gw > 0 && gh > 0) {
+	                	
 	                    int w = (int) viewPortSize.getWidth();
 	                    int h = (int) viewPortSize.getHeight();
 
 	                    newScale = Math.min((double) w / gw, (double) h / gh);
 	                }
-
+	                
 	                graphComponent.zoom(newScale);
+	                
+	            	   graphComponent.getGraphControl().scrollRectToVisible(new Rectangle(0,0,0,0));
 
 	            }
 	        });
-		optionBox.add(buttonBar,BorderLayout.CENTER);
+	    	
+	    	//Check Box 
+	    	
+	    	JPanel down = new JPanel(new GridLayout(0,1));
+	        Border border = BorderFactory.createTitledBorder("Selected Cell");
+	    	down.setBorder(border);
+	        down.setBackground(Color.GREEN);
+	    	down.setBounds(0, 200, 150, 200);
+	    	down.setOpaque(true);
+	    	
+	    	JCheckBox checkAll = new JCheckBox("All cells");
+	    	checkAll.setSelected(true);
+	        down.add(checkAll);
+	        JCheckBox checkTumor = new JCheckBox("Tumor");
+	        checkTumor.setSelected(false);
+	        down.add(checkTumor);
+	        JCheckBox checkNucleus = new JCheckBox("Nucleus");
+	        checkNucleus.setSelected(false);
+	        down.add(checkNucleus);
+	        JCheckBox checkNucleus1 = new JCheckBox("Nucleus1");
+	        checkNucleus1.setSelected(false);
+	        down.add(checkNucleus1);
+	      
+	        JCheckBox checkNucleus2 = new JCheckBox("Nucleus2");
+	        checkNucleus2.setSelected(false);
+	        down.add(checkNucleus2);
+	        
+	        optionBox.add(down);
+	        optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
+	        
+		
 		getContentPane().add(optionBox, BorderLayout.EAST);
 
 		setJMenuBar(menu.buildMenu());
@@ -142,14 +197,6 @@ public class FramCell extends JFrame {
 					String ext=st.nextToken();
 					System.out.println("ext : " + ext);
 
-					/*String path_initial = st.nextToken();
-					System.out.println("token : " + path_initial); 
-
-					String ext = st.nextToken();
-					System.out.println("extention : " + ext); */
-
-
-
 					if(ext.equals("csv")){
 						System.out.println("Ceci est un bon fichier ");
 						System.out.println(ext);
@@ -170,8 +217,7 @@ public class FramCell extends JFrame {
 						boolean found = searchFile.searchFileImage(searchFile.name, searchFile.filePath);
 						if (found ){
 							System.out.println("ok found file .jpg ");
-							JOptionPane.showMessageDialog(graphComponent, "File .jpn  found ! Name is :"+path_image,
-									"avertissement",
+							JOptionPane.showMessageDialog(graphComponent, "File .jpn  found ! Name is :"+path_image,"avertissement",
 									JOptionPane.WARNING_MESSAGE);
 							FramCell.this.setVisible(true);
 						}
@@ -237,6 +283,7 @@ public class FramCell extends JFrame {
 				}
 			});
 
+		 getContentPane().add(graphComponent);
 
 	}
 
@@ -267,7 +314,7 @@ public class FramCell extends JFrame {
 		graphComponent.setBackgroundImage(img);			
 
 
-		getContentPane().add(graphComponent);
+		 getContentPane().add(graphComponent, BorderLayout.CENTER);
 
 	}
 	public static ImageIcon scale(String source, int width, int height) {
@@ -282,9 +329,12 @@ public class FramCell extends JFrame {
 	}
 	public void changeFrame(String path){
 
+		graph.setCellsDeletable(true);
 
 		this.graph.removeCells(this.graph.getChildVertices(this.parent));
 		graph.refresh();
+		graph.setCellsDeletable(false);
+
 		listCells.clear();
 		listCells = setListCell(path);
 
@@ -311,7 +361,7 @@ public class FramCell extends JFrame {
 				ImageIcon img = new ImageIcon(path_image);
 				img = scale(path_image, (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4));
 				graphComponent.setBackgroundImage(img);	
-		getContentPane().add(graphComponent,BorderLayout.CENTER);
+				 getContentPane().add(graphComponent, BorderLayout.CENTER);
 
 	}
 	public List<Cell> setListCell(String path){
