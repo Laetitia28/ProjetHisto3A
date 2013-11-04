@@ -32,7 +32,7 @@ import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.view.mxGraph;
 
-public class FramCell extends JFrame {
+public class FramCell extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -43,6 +43,13 @@ public class FramCell extends JFrame {
 	private String img_default = "src/ressources/image0046.jpg";
 	private String path_image = img_default;
 	private String excel_default = "src/ressources/image0046.csv";
+	private JCheckBox checkAll;
+	private JCheckBox checkTumor;
+	private JCheckBox checkNucleus;
+	private JCheckBox checkNucleus1;
+	private JCheckBox checkNucleus2;
+	private JCheckBox checkNucleus3;
+	private JButton butDisplay;
 	Menu menu=new Menu();
 	JPanel optionBox = new JPanel();
 	JPanel buttonBar = new JPanel();
@@ -133,30 +140,34 @@ public class FramCell extends JFrame {
 	    	JPanel down = new JPanel(new GridLayout(0,1));
 	        Border border = BorderFactory.createTitledBorder("Selected Cell");
 	    	down.setBorder(border);
-	        down.setBackground(Color.GREEN);
+	        down.setBackground(Color.BLUE);
 	    	down.setBounds(0, 200, 150, 200);
 	    	down.setOpaque(true);
 	    	
-	    	JCheckBox checkAll = new JCheckBox("All cells");
+	    	//creation des checkbox
+	    	checkAll = new JCheckBox("All cells");
 	    	checkAll.setSelected(true);
 	        down.add(checkAll);
-	        JCheckBox checkTumor = new JCheckBox("Tumor");
+	        checkTumor = new JCheckBox("Tumor");
 	        checkTumor.setSelected(false);
 	        down.add(checkTumor);
-	        JCheckBox checkNucleus = new JCheckBox("Nucleus");
+	        checkNucleus = new JCheckBox("Nucleus");
 	        checkNucleus.setSelected(false);
 	        down.add(checkNucleus);
-	        JCheckBox checkNucleus1 = new JCheckBox("Nucleus1");
+	        checkNucleus1 = new JCheckBox("Nucleus1");
 	        checkNucleus1.setSelected(false);
 	        down.add(checkNucleus1);
 	      
-	        JCheckBox checkNucleus2 = new JCheckBox("Nucleus2");
+	        checkNucleus2 = new JCheckBox("Nucleus2");
 	        checkNucleus2.setSelected(false);
 	        down.add(checkNucleus2);
 	        
-	        JCheckBox checkNucleus3 = new JCheckBox("Nucleus2");
+	        checkNucleus3 = new JCheckBox("Nucleus2");
 	        checkNucleus3.setSelected(false);
 	        down.add(checkNucleus3);
+	        butDisplay=new JButton("Display");
+	        down.add(butDisplay,BorderLayout.CENTER);
+	        butDisplay.addActionListener(this);
 	        optionBox.add(down);
 	        optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
 	        
@@ -300,6 +311,7 @@ public class FramCell extends JFrame {
 		{
 			for (Cell c : listCells) {
 				ColorCell(c);
+				
 				Object v1 = graph
 						.insertVertex(parent, null, c.getClass_name(),
 								c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
@@ -312,18 +324,17 @@ public class FramCell extends JFrame {
 
 		//display background
 
-<<<<<<< HEAD
+
 		graphComponent.setBackgroundImage(new ImageIcon(
 				"src/ressources/image0046.jpg"));			
-		
-=======
+
 		ImageIcon img = new ImageIcon(img_default);
 		img = scale(img_default, (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4));
 		graphComponent.setBackgroundImage(img);			
 
 
 		 getContentPane().add(graphComponent, BorderLayout.CENTER);
->>>>>>> e572d3206ffebcbf7f188914bda60efd96e39ab7
+
 
 	}
 	public static ImageIcon scale(String source, int width, int height) {
@@ -372,6 +383,46 @@ public class FramCell extends JFrame {
 				graphComponent.setBackgroundImage(img);	
 				 getContentPane().add(graphComponent, BorderLayout.CENTER);
 
+	}
+	public void actionPerformed(ActionEvent e){
+		if(e.getSource() == butDisplay){
+			System.out.println("Voici le bouton Display");
+			if(checkAll.isSelected()){
+				System.out.println("les checkAll sont selectionnee");
+			
+				
+			}
+			if(checkTumor.isSelected()){
+				System.out.println("les checkTumor sont selectionnee");
+				
+				//Object Tumor = c.getClass().equals("Tumor Nucleus");
+				
+				for (Cell c : listCells) {
+					if (c.getClass().equals("Tumor nucleus")){
+					ColorCell(c);
+					Object v2 = graph
+							.insertVertex(parent, null, c.getClass_name().equals("Tumor nucleus"),
+									c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
+									"shape=ellipse;per=ellipsePerimeter;fillColor="
+											+ param);
+				}
+					
+						}
+				
+			}
+			if(checkNucleus.isSelected()){
+				System.out.println("les checkNucleus sont selectionnee");
+		}
+			if(checkNucleus1.isSelected()){
+				System.out.println("les checkNucleus1 sont selectionnee");
+		}
+			if(checkNucleus2.isSelected()){
+				System.out.println("les checkNucleus2 sont selectionnee");
+		}
+			if(checkNucleus3.isSelected()){
+				System.out.println("les checkNucleus3 sont selectionnee");
+		}
+		}
 	}
 	public List<Cell> setListCell(String path){
 
