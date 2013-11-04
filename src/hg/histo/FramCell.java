@@ -154,6 +154,9 @@ public class FramCell extends JFrame {
 	        checkNucleus2.setSelected(false);
 	        down.add(checkNucleus2);
 	        
+	        JCheckBox checkNucleus3 = new JCheckBox("Nucleus2");
+	        checkNucleus3.setSelected(false);
+	        down.add(checkNucleus3);
 	        optionBox.add(down);
 	        optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
 	        
