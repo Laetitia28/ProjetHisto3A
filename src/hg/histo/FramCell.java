@@ -186,8 +186,6 @@ public class FramCell extends JFrame {
 		graph.setCellsSelectable(false);
 		graph.setCellsResizable(false);
 
-
-
 		graphComponent.setBackgroundImage(new ImageIcon(
 				"src/ressources/image0046.jpg"));			
 		
