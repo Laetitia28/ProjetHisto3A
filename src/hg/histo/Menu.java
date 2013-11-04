@@ -1,10 +1,5 @@
 package hg.histo;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.StringTokenizer;
-
-import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -12,12 +7,20 @@ import javax.swing.JMenuItem;
 public class Menu extends JMenuBar{
 	private JMenuBar menu_bar1;
 	private JMenu File, Edition;
-	private JMenuItem open, exit, image;
+	private JMenuItem open, exit, image_show, image_hidden;
+
+
 
 	public Menu() {
 
 	}
+	public JMenuItem getImage_hidden() {
+		return image_hidden;
+	}
 
+	public void setImage_hidden(JMenuItem image_hidden) {
+		this.image_hidden = image_hidden;
+	}
 	public JMenuItem getExit() {
 		return exit;
 	}
@@ -31,11 +34,11 @@ public class Menu extends JMenuBar{
 	}
 
 	public JMenuItem getImage() {
-		return image;
+		return image_show;
 	}
 
 	public void setImage(JMenuItem image) {
-		this.image = image;
+		this.image_show = image;
 	}
 
 	public void setExit(JMenuItem exit) {
@@ -50,21 +53,15 @@ public class Menu extends JMenuBar{
 		menu_bar1.add(Edition);
 		open = new JMenuItem("Open File");
 		exit = new JMenuItem("Exit");
-		image = new JMenuItem("Display Image");
+		image_show = new JMenuItem("Display Image");
+		image_hidden = new JMenuItem("Hidden Image");
 		File.add(open);
 		File.add(exit);
-		Edition.add(image);
+		Edition.add(image_show);
+		Edition.add(image_hidden);
 	
 		
 
-		image.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 		return menu_bar1;
 	}
 

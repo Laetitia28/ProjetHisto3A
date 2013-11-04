@@ -19,7 +19,6 @@ public class Main {
 		String path ="src/ressources/image0046.csv";
 		File myFile = new File(path);
 		FillCellWithCSV f;
-		Menu menu=new Menu();
 
 	
 			
@@ -28,10 +27,11 @@ public class Main {
 				List<Cell> listcells= f.allCells();// liste de toutes les cellules
 				//List<Cell> listcells = f.allCells();// liste de toutes les cellules
 				FramCell frame = new FramCell();
-				frame.initFrame("src/ressources/image0046.csv");
+				frame.initFrame();
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setSize(1000, 700);
 				frame.setVisible(true);
+				//frame.pack();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
