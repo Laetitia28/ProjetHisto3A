@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -24,8 +25,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import com.mxgraph.swing.mxGraphComponent;
@@ -50,6 +53,11 @@ public class FramCell extends JFrame implements ActionListener {
 	private JCheckBox check_Lymphocyte;
 	private JCheckBox check_NucleusDAB;
 	private JCheckBox check_NucleusDAB_PRB;
+	private JTextField request;
+	private JLabel label;
+	private JButton validate;
+	private JButton cancel;
+	private JPanel containerequest;
 	Menu menu=new Menu();
 	JPanel down = new JPanel(new GridLayout(0,1));
 	JPanel optionBox = new JPanel();
@@ -134,13 +142,30 @@ public class FramCell extends JFrame implements ActionListener {
 		check_NucleusDAB = new JCheckBox("NucleusDAB");
 		check_NucleusDAB.setSelected(false);
 		down.add(check_NucleusDAB);
-
+        
 		//Ada ButtonDisplay in  down  JPanel
 		down.add(btDisplay,BorderLayout.CENTER);
 
 		//Ada JPanel down ie check box in OptionBox JPanel
 		optionBox.add(down);
 		optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
+	    containerequest = new JPanel();
+	    Font police = new Font("Arial", Font.BOLD, 14);
+        request =new JTextField("Enter Users Request");
+        request.setPreferredSize(new Dimension(950, 30));
+        request.setForeground(Color.BLUE);
+        request.setFont(police);
+        label = new JLabel("Request");
+        validate=new JButton("Validate");
+        cancel=new JButton("Cancel");
+       
+        
+        containerequest.add(label);
+        containerequest.add(request);
+        containerequest.add(validate);
+        containerequest.add(cancel);
+       
+        getContentPane().add(containerequest,BorderLayout.PAGE_END);
 
 
 		getContentPane().add(optionBox, BorderLayout.EAST);
