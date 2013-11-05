@@ -14,6 +14,23 @@ public class Menu extends JMenuBar{
 	public Menu() {
 
 	}
+	
+	public JMenuItem getAddCell() {
+		return addCell;
+	}
+
+	public void setAddCell(JMenuItem addCell) {
+		this.addCell = addCell;
+	}
+
+	public JMenuItem getChangeColor() {
+		return changeColor;
+	}
+
+	public void setChangeColor(JMenuItem changeColor) {
+		this.changeColor = changeColor;
+	}
+
 	public JMenuItem getImage_hidden() {
 		return image_hidden;
 	}
