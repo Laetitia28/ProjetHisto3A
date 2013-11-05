@@ -47,9 +47,9 @@ public class FramCell extends JFrame implements ActionListener {
 	private JCheckBox checkAll;
 	private JCheckBox check_Tumor;
 	private JCheckBox check_Granulocyte_nucleus;
-	private JCheckBox checkNucleus1;
-	private JCheckBox checkNucleus2;
-	private JCheckBox checkNucleus3;
+	private JCheckBox check_Lymphocyte;
+	private JCheckBox check_NucleusDAB;
+	private JCheckBox check_NucleusDAB_PRB;
 	Menu menu=new Menu();
 	JPanel down = new JPanel(new GridLayout(0,1));
 	JPanel optionBox = new JPanel();
@@ -123,17 +123,17 @@ public class FramCell extends JFrame implements ActionListener {
 		check_Granulocyte_nucleus.setSelected(false);
 		down.add(check_Granulocyte_nucleus);
 
-		checkNucleus1 = new JCheckBox("Nucleus1");
-		checkNucleus1.setSelected(false);
-		down.add(checkNucleus1);
+		check_Lymphocyte = new JCheckBox("Lymphocyte nucleus");
+		check_Lymphocyte.setSelected(false);
+		down.add(check_Lymphocyte);
 
-		checkNucleus2 = new JCheckBox("Nucleus2");
-		checkNucleus2.setSelected(false);
-		down.add(checkNucleus2);
+		check_NucleusDAB_PRB = new JCheckBox("NucleusDAB_PRB");
+		check_NucleusDAB_PRB.setSelected(false);
+		down.add(check_NucleusDAB_PRB);
 
-		checkNucleus3 = new JCheckBox("Nucleus2");
-		checkNucleus3.setSelected(false);
-		down.add(checkNucleus3);
+		check_NucleusDAB = new JCheckBox("NucleusDAB");
+		check_NucleusDAB.setSelected(false);
+		down.add(check_NucleusDAB);
 
 		//Ada ButtonDisplay in  down  JPanel
 		down.add(btDisplay,BorderLayout.CENTER);
@@ -382,14 +382,17 @@ public class FramCell extends JFrame implements ActionListener {
 				System.out.println("Granulocyte nucleus selected");
 				displaySelectedCells("Granulocyte nucleus");
 			}
-			if(checkNucleus1.isSelected()){
-				System.out.println("les checkNucleus1 sont selectionnee");
+			if(check_Lymphocyte.isSelected()){
+				System.out.println("les check_Lymphocyte Nucleus sont selectionnee");
+				displaySelectedCells("Lymphocyte Nucleus");
 			}
-			if(checkNucleus2.isSelected()){
-				System.out.println("les checkNucleus2 sont selectionnee");
+			if(check_NucleusDAB_PRB.isSelected()){
+				System.out.println("les check_Nucleus DAB+ PRD+ sont selectionnee");
+				displaySelectedCells("Nucleus DAB+ PRD+");
 			}
-			if(checkNucleus3.isSelected()){
-				System.out.println("les checkNucleus3 sont selectionnee");
+			if(check_NucleusDAB.isSelected()){
+				System.out.println("les check_Nucleus DAB+ sont selectionnee");
+				displaySelectedCells("Nucleus DAB+");
 			}
 		}
 		if(e.getSource() == menu.getAddCell()){
