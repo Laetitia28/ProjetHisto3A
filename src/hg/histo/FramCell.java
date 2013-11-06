@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -47,17 +48,22 @@ public class FramCell extends JFrame implements ActionListener {
 	private String path_image = img_default;
 	private String path_excel_default = "src/ressources/image0046.csv";
 	private String path_current = path_excel_default;
+	
 	private JCheckBox checkAll;
 	private JCheckBox check_Tumor;
 	private JCheckBox check_Granulocyte_nucleus;
 	private JCheckBox check_Lymphocyte;
 	private JCheckBox check_NucleusDAB;
 	private JCheckBox check_NucleusDAB_PRB;
+	
 	private JTextField request;
 	private JLabel label;
 	private JButton validate;
 	private JButton cancel;
 	private JPanel containerequest;
+	
+	private HashMap<String, String> mapColor = new HashMap<String, String>();
+	
 	Menu menu=new Menu();
 	JPanel down = new JPanel(new GridLayout(0,1));
 	JPanel optionBox = new JPanel();
@@ -443,6 +449,15 @@ public class FramCell extends JFrame implements ActionListener {
 
 
 
+	}
+	public void ColorCellWithMap(){
+	
+		
+			mapColor.put("Tumor nucleus", "red");
+			mapColor.put("Granulocyte nucleus","yellow");
+		// to complte
+		
+			
 	}
 	public void ColorCell(Cell c) {
 		if (c.getClass_name().equals("Tumor nucleus")) {
