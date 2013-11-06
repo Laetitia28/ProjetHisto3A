@@ -34,6 +34,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
 import com.mxgraph.swing.mxGraphComponent;
@@ -431,11 +432,14 @@ public class FramCell extends JFrame implements ActionListener {
 			}
 		}
 		if(e.getSource() == menu.getAddCell()){
+			tableCell = addCellWithMap();
+			Enumeration<String> k= tableCell.keys();
+			while(k.hasMoreElements()){
+				String a = k.nextElement();
+				 
+				JMenuItem item = new JMenuItem(a.toString());
+			}
 			
-			JOptionPane.showMessageDialog(graphComponent, "File choosen is not expected",
-					"avertissement",
-					JOptionPane.WARNING_MESSAGE);
-			FramCell.this.setVisible(false);
 		}
 	}
 	public List<Cell> setListCell(String path){
@@ -455,29 +459,20 @@ public class FramCell extends JFrame implements ActionListener {
 
 
 	}
-	public void  addCellWithMap(){
-	
-		for(Cell c : listCells)
-		tableCell.put(c.getClass_name(),"red");
-	    Enumeration<String> e = tableCell.elements();
-	    Enumeration<String> k= tableCell.keys();
-	    
-	    
-		while(e.hasMoreElements())
-	    System.out.println(e.nextElement());
-		//if(k.hasMoreElements())
-			
-		while(k.hasMoreElements())
-	    System.out.println(("check_"+k.nextElement()).replaceAll(" ", ""));
-		//String value =(String) k.nextElement();
-		//System.out.println(value);
-		
+	public Hashtable<String, String>  addCellWithMap(){
+		Hashtable<String,String> tmp = new Hashtable< String,String>();
+		for(Cell c : listCells){		
+			tmp.put(c.getClass_name(),"red");
 		}
-		
-	
-		
-			
-	
+	    Enumeration<String> k= tmp.keys();
+		//while(e.hasMoreElements())
+	    //System.out.println(e.nextElement());		
+		while(k.hasMoreElements())
+	    System.out.println(("check_"+k.nextElement()).replaceAll(" ", "_"));		
+		tableCell.put(k.nextElement().replaceAll(" ", "_"), "red");
+		return tableCell;
+		}
+
 	public void ColorCell(Cell c) {
 		if (c.getClass_name().equals("Tumor nucleus")) {
 
