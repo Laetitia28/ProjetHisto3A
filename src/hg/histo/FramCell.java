@@ -15,7 +15,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -27,6 +29,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -62,7 +66,7 @@ public class FramCell extends JFrame implements ActionListener {
 	private JButton cancel;
 	private JPanel containerequest;
 	
-	private HashMap<String, String> mapColor = new HashMap<String, String>();
+	private Hashtable<String,String> tableCell = new Hashtable< String,String>();
 	
 	Menu menu=new Menu();
 	JPanel down = new JPanel(new GridLayout(0,1));
@@ -427,6 +431,7 @@ public class FramCell extends JFrame implements ActionListener {
 			}
 		}
 		if(e.getSource() == menu.getAddCell()){
+			
 			JOptionPane.showMessageDialog(graphComponent, "File choosen is not expected",
 					"avertissement",
 					JOptionPane.WARNING_MESSAGE);
@@ -450,15 +455,29 @@ public class FramCell extends JFrame implements ActionListener {
 
 
 	}
-	public void ColorCellWithMap(){
+	public void  addCellWithMap(){
+	
+		for(Cell c : listCells)
+		tableCell.put(c.getClass_name(),"red");
+	    Enumeration<String> e = tableCell.elements();
+	    Enumeration<String> k= tableCell.keys();
+	    
+	    
+		while(e.hasMoreElements())
+	    System.out.println(e.nextElement());
+		//if(k.hasMoreElements())
+			
+		while(k.hasMoreElements())
+	    System.out.println(("check_"+k.nextElement()).replaceAll(" ", ""));
+		//String value =(String) k.nextElement();
+		//System.out.println(value);
+		
+		}
+		
 	
 		
-			mapColor.put("Tumor nucleus", "red");
-			mapColor.put("Granulocyte nucleus","yellow");
-		// to complte
-		
 			
-	}
+	
 	public void ColorCell(Cell c) {
 		if (c.getClass_name().equals("Tumor nucleus")) {
 

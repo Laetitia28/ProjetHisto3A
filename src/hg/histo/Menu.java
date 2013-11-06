@@ -7,8 +7,8 @@ import javax.swing.JMenuItem;
 public class Menu extends JMenuBar{
 	private JMenuBar menu_bar1;
 	private JMenu File, Edition,PropertyCells;
-	private JMenuItem open, exit, image_show, image_hidden,addCell, changeColor;
-
+	private JMenuItem open, exit, image_show, image_hidden,addCell, changeColor,list;
+    FramCell fr;
 
 
 	public Menu() {
@@ -75,11 +75,13 @@ public class Menu extends JMenuBar{
 		image_show = new JMenuItem("Display Image");
 		image_hidden = new JMenuItem("Hidden Image");
 		addCell = new JMenuItem("Add a new type cell");
+		//list=new JMenuItem("jioi");
 		changeColor = new JMenuItem("Change color of cell");
 		File.add(open);
 		File.add(exit);
 		Edition.add(image_show);
 		Edition.add(image_hidden);
+		
 	
 		PropertyCells.add(addCell);
 		PropertyCells.add(changeColor);

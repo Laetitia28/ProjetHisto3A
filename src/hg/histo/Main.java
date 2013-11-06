@@ -14,7 +14,7 @@ public class Main {
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setSize(1200, 700);
 				frame.setVisible(true);
-				//frame.pack();
+				frame.addCellWithMap();
 		
 			
 		}
