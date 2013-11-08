@@ -89,6 +89,8 @@ public class FramCell extends JFrame implements ActionListener {
 	List<Cell> listCells;
 
 	ImageIcon img = new ImageIcon(img_default);
+	HashMap<String,JCheckBox> checkBoxes = new HashMap<String,JCheckBox>();
+
 	public FramCell() {
 
 		super("Frame Cell!");
@@ -147,6 +149,7 @@ public class FramCell extends JFrame implements ActionListener {
 			checkBox = new JCheckBox(key.toString());
 			checkBox.setName("CheckBox_" + key.toString());
 			checkBox.setSelected(false);
+			checkBoxes.put(key.toString(), checkBox);
 			down.add(checkBox);
 			//System.out.println(checkBox.getName());
 		}
@@ -421,28 +424,13 @@ public class FramCell extends JFrame implements ActionListener {
 			if(checkAll.isSelected()){
 				changeFrame(path_current);
 			}
-			/*
-			if(check_Tumor.isSelected()){
-				System.out.println("check_Tumor selected");
-				displaySelectedCells("Tumor nucleus");
-			}
-			if(check_Granulocyte_nucleus.isSelected()){
-				System.out.println("Granulocyte nucleus selected");
-				displaySelectedCells("Granulocyte nucleus");
-			}
-			if(check_Lymphocyte.isSelected()){
-				System.out.println("les check_Lymphocyte Nucleus sont selectionnee");
-				displaySelectedCells("Lymphocyte Nucleus");
-			}
-			if(check_NucleusDAB_PRB.isSelected()){
-				System.out.println("les check_Nucleus DAB+ PRD+ sont selectionnee");
-				displaySelectedCells("Nucleus DAB+ PRD+");
-			}
-			if(check_NucleusDAB.isSelected()){
-				System.out.println("les check_Nucleus DAB+ sont selectionnee");
-				displaySelectedCells("Nucleus DAB+");
+			for(String p : checkBoxes.keySet()){
+				if(checkBoxes.get(p).isSelected()){
+					displaySelectedCells(p);
+				}
 			}
 		}
+	
 		if(e.getSource() == menu.getAddCell()){
 
 			/*tableCell = addCellWithMap();
