@@ -49,28 +49,32 @@ public class FramCell extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = -2707712944901661771L;
-	private String param = "white";
+
 
 	private String img_default = "src/ressources/image0046.jpg";
 	private String path_image = img_default;
 	private String path_excel_default = "src/ressources/image0046.csv";
 	private String path_current = path_excel_default;
-	
+
 	private JCheckBox checkAll;
+	private JCheckBox checkBox ;
+	/*
 	private JCheckBox check_Tumor;
 	private JCheckBox check_Granulocyte_nucleus;
 	private JCheckBox check_Lymphocyte;
 	private JCheckBox check_NucleusDAB;
 	private JCheckBox check_NucleusDAB_PRB;
-	
+	 */
 	private JTextField request;
 	private JLabel label;
 	private JButton validate;
 	private JButton cancel;
 	private JPanel containerequest;
-	
-	private Hashtable<String,String> tableCell = new Hashtable< String,String>();
-	
+
+	//private Hashtable<String,String> tableCell = new Hashtable< String,String>();
+	private HashMap<String, String> m = new HashMap<String,String>();
+	//private enum enumColorCell {black,blue,gray,green,white,orange,red,yellow,pink};
+
 	Menu menu=new Menu();
 	JPanel down = new JPanel(new GridLayout(0,1));
 	JPanel optionBox = new JPanel();
@@ -87,6 +91,10 @@ public class FramCell extends JFrame implements ActionListener {
 	List<Cell> listCells;
 
 	ImageIcon img = new ImageIcon(img_default);
+	HashMap<String,JCheckBox> checkBoxes = new HashMap<String,JCheckBox>();
+
+
+	
 	public FramCell() {
 
 		super("Frame Cell!");
@@ -110,6 +118,9 @@ public class FramCell extends JFrame implements ActionListener {
 
 		listCells = setListCell(path_current);
 
+		//create color of cell
+		MapColorCell();
+
 		optionBox.setLayout(new BorderLayout());   	
 		//buttonBar.setLayout(new FlowLayout());
 
@@ -132,53 +143,44 @@ public class FramCell extends JFrame implements ActionListener {
 		down.setOpaque(true);
 
 		//creation des checkbox
+
 		checkAll = new JCheckBox("All cells");
 		checkAll.setSelected(true);
 		down.add(checkAll);
 
-		check_Tumor = new JCheckBox("Tumor nucleus");
-		check_Tumor.setSelected(false);
-		down.add(check_Tumor);
+		for(String key : m.keySet()){
 
-		check_Granulocyte_nucleus = new JCheckBox("Granulocyte nucleus");
-		check_Granulocyte_nucleus.setSelected(false);
-		down.add(check_Granulocyte_nucleus);
-
-		check_Lymphocyte = new JCheckBox("Lymphocyte nucleus");
-		check_Lymphocyte.setSelected(false);
-		down.add(check_Lymphocyte);
-
-		check_NucleusDAB_PRB = new JCheckBox("NucleusDAB_PRB");
-		check_NucleusDAB_PRB.setSelected(false);
-		down.add(check_NucleusDAB_PRB);
-
-		check_NucleusDAB = new JCheckBox("NucleusDAB");
-		check_NucleusDAB.setSelected(false);
-		down.add(check_NucleusDAB);
-        
+			checkBox = new JCheckBox(key.toString());
+			checkBox.setName("CheckBox_" + key.toString());
+			checkBox.setSelected(false);
+			checkBoxes.put(key.toString(), checkBox);
+			down.add(checkBox);
+			//System.out.println(checkBox.getName());
+		}
 		//Ada ButtonDisplay in  down  JPanel
 		down.add(btDisplay,BorderLayout.CENTER);
 
 		//Ada JPanel down ie check box in OptionBox JPanel
 		optionBox.add(down);
 		optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
-	    containerequest = new JPanel();
-	    Font police = new Font("Arial", Font.BOLD, 14);
-        request =new JTextField("Enter Users Request");
-        request.setPreferredSize(new Dimension(950, 30));
-        request.setForeground(Color.BLUE);
-        request.setFont(police);
-        label = new JLabel("Request");
-        validate=new JButton("Validate");
-        cancel=new JButton("Cancel");
-       
-        
-        containerequest.add(label);
-        containerequest.add(request);
-        containerequest.add(validate);
-        containerequest.add(cancel);
-       
-        getContentPane().add(containerequest,BorderLayout.PAGE_END);
+		containerequest = new JPanel();
+
+		Font police = new Font("Arial", Font.BOLD, 14);
+		request =new JTextField("Enter Users Request");
+		request.setPreferredSize(new Dimension(950, 30));
+		request.setForeground(Color.BLUE);
+		request.setFont(police);
+		label = new JLabel("Request");
+		validate=new JButton("Validate");
+		cancel=new JButton("Cancel");
+
+
+		containerequest.add(label);
+		containerequest.add(request);
+		containerequest.add(validate);
+		containerequest.add(cancel);
+
+		getContentPane().add(containerequest,BorderLayout.PAGE_END);
 
 
 		getContentPane().add(optionBox, BorderLayout.EAST);
@@ -194,7 +196,7 @@ public class FramCell extends JFrame implements ActionListener {
 		menu.getChangeColor().addActionListener(this);
 		btZoomToFit.addActionListener(this);
 		btDisplay.addActionListener(this);
-		
+
 		getContentPane().add(graphComponent);
 
 	}
@@ -205,12 +207,12 @@ public class FramCell extends JFrame implements ActionListener {
 		try
 		{
 			for (Cell c : listCells) {
-				ColorCell(c);
+
 				Object v1 = graph
 						.insertVertex(parent, null, c.getClass_name(),
 								c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 								"shape=ellipse;per=ellipsePerimeter;fillColor="
-										+ param);
+										+ m.get(c.getClass_name()));
 			}
 		} finally {
 			graph.getModel().endUpdate();
@@ -220,7 +222,7 @@ public class FramCell extends JFrame implements ActionListener {
 		ImageIcon img = new ImageIcon(img_default);
 		img = scale(img_default, (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4));
 		graphComponent.setBackgroundImage(img);			
-		
+
 		getContentPane().add(graphComponent, BorderLayout.CENTER);
 	}
 	public static ImageIcon scale(String source, int width, int height) {
@@ -234,23 +236,37 @@ public class FramCell extends JFrame implements ActionListener {
 		return newIcon;
 	}
 	public void changeFrame(String path){
+
+
 		graph.setCellsDeletable(true);
 		this.graph.removeCells(this.graph.getChildVertices(this.parent));
 		graph.refresh();
 		graph.setCellsDeletable(false);
 		listCells.clear();
 		listCells = setListCell(path);
+
+		//add new Cells in m HashMap  
 		
+		//HashMap<String,String> n = 
+	/*
+		for(String key : m.keySet()){
+			
+			 checkBox = new JCheckBox(key.toString());
+			 checkBox.setName("CheckBox" + key.toString());
+			 checkBox.setSelected(false);
+			 down.add(checkBox);
+			 System.out.println(checkBox.getName());
+		}*/
 		graph.getModel().beginUpdate();
 		try
 		{
 			for (Cell c : listCells) {
-				ColorCell(c);
+
 				Object v2 = graph
 						.insertVertex(parent, null, c.getClass_name(),
 								c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 								"shape=ellipse;per=ellipsePerimeter;fillColor="
-										+ param);
+										+ m.get(c.getClass_name()));
 			}
 		}
 		finally
@@ -272,12 +288,12 @@ public class FramCell extends JFrame implements ActionListener {
 		{
 			for (Cell c : listCells) {
 				if(c.getClass_name().equals(nameSelected)){
-					ColorCell(c);
+
 					Object v2 = graph
 							.insertVertex(parent, null, c.getClass_name(),
 									c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 									"shape=ellipse;per=ellipsePerimeter;fillColor="
-											+ param);
+											+ m.get(c.getClass_name()));
 				}
 			}
 		}
@@ -354,7 +370,7 @@ public class FramCell extends JFrame implements ActionListener {
 					else {
 						JOptionPane.showMessageDialog(graphComponent, "File .jpn not found ! Default image is image0046 ",
 								"avertissement",
-								 JOptionPane.ERROR_MESSAGE);
+								JOptionPane.ERROR_MESSAGE);
 						System.out.println("Ko not found .jpg ");
 						path_image = img_default;
 						FramCell.this.setVisible(true);
@@ -412,38 +428,36 @@ public class FramCell extends JFrame implements ActionListener {
 			if(checkAll.isSelected()){
 				changeFrame(path_current);
 			}
-			if(check_Tumor.isSelected()){
-				System.out.println("check_Tumor selected");
-				displaySelectedCells("Tumor nucleus");
-			}
-			if(check_Granulocyte_nucleus.isSelected()){
-				System.out.println("Granulocyte nucleus selected");
-				displaySelectedCells("Granulocyte nucleus");
-			}
-			if(check_Lymphocyte.isSelected()){
-				System.out.println("les check_Lymphocyte Nucleus sont selectionnee");
-				displaySelectedCells("Lymphocyte Nucleus");
-			}
-			if(check_NucleusDAB_PRB.isSelected()){
-				System.out.println("les check_Nucleus DAB+ PRD+ sont selectionnee");
-				displaySelectedCells("Nucleus DAB+ PRD+");
-			}
-			if(check_NucleusDAB.isSelected()){
-				System.out.println("les check_Nucleus DAB+ sont selectionnee");
-				displaySelectedCells("Nucleus DAB+");
+			for(String p : checkBoxes.keySet()){
+				if(checkBoxes.get(p).isSelected()){
+					displaySelectedCells(p);
+				}
 			}
 		}
+<<<<<<< HEAD
 		/*if(e.getSource() == menu.getAddCell()){
 			tableCell = addCellWithMap();
+=======
+	
+		if(e.getSource() == menu.getAddCell()){
+
+			/*tableCell = addCellWithMap();
+>>>>>>> e41dbcc8049fcf515aed6b448ff05df4788a57af
 			Enumeration<String> k= tableCell.keys();
 			while(k.hasMoreElements()){
 				String a = k.nextElement();
-				 
+
 				JMenuItem item = new JMenuItem(a.toString());
+<<<<<<< HEAD
 			}
 			
 		
 	}}*/
+=======
+			}*/
+
+		}
+>>>>>>> e41dbcc8049fcf515aed6b448ff05df4788a57af
 	}
 	public List<Cell> setListCell(String path){
 		File myFile = new File(path);
@@ -462,6 +476,7 @@ public class FramCell extends JFrame implements ActionListener {
 
 
 	}
+	/*
 	public Hashtable<String, String>  addCellWithMap(){
 		Hashtable<String,String> tmp = new Hashtable< String,String>();
 		for(Cell c : listCells){		
@@ -474,32 +489,24 @@ public class FramCell extends JFrame implements ActionListener {
 	    System.out.println(("check_"+k.nextElement()).replaceAll(" ", "_"));		
 		tableCell.put(k.nextElement().replaceAll(" ", "_"), "red");
 		return tableCell;
+<<<<<<< HEAD
 		}
 	
 	
 	
+=======
+		}*/
 
-	public void ColorCell(Cell c) {
-		if (c.getClass_name().equals("Tumor nucleus")) {
+	public void MapColorCell(){
 
-			param = "red";
-			// System.out.println(param);
-		} else if (c.getClass_name().equals("Granulocyte nucleus")) {
-			param = "yellow";
-			// System.out.println(param);
-		} else if (c.getClass_name().equals("Lymphocyte Nucleus")) {
-			param = "green";
-			// System.out.println(param);
-		} else if (c.getClass_name().equals("Nucleus DAB+ PRD+")) {
-			param = "black";
-			// System.out.println(param);
-		} else if (c.getClass_name().equals("Nucleus DAB+")) {
-			param = "blue";
-			// System.out.println(param);
-		} else {
-			param = "white";
-			// System.out.println(param);
-		}
+		m.put("Tumor nucleus", "red");
+		m.put("Granulocyte nucleus", "yellow");
+		m.put("Lymphocyte Nucleus", "green");
+		m.put("Nucleus DAB+ PRD+", "black");
+		m.put("Nucleus DAB+", "blue");
+		//System.out.println(m.keySet());
+>>>>>>> e41dbcc8049fcf515aed6b448ff05df4788a57af
+
 
 	}
 }
