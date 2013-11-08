@@ -91,6 +91,8 @@ public class FramCell extends JFrame implements ActionListener {
 	ImageIcon img = new ImageIcon(img_default);
 	HashMap<String,JCheckBox> checkBoxes = new HashMap<String,JCheckBox>();
 
+
+	
 	public FramCell() {
 
 		super("Frame Cell!");
