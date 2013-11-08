@@ -74,17 +74,17 @@ public class Menu extends JMenuBar{
 		exit = new JMenuItem("Exit");
 		image_show = new JMenuItem("Display Image");
 		image_hidden = new JMenuItem("Hidden Image");
-		addCell = new JMenuItem("Add a new type cell");
+		//addCell = new JMenuItem("Add a new type cell");
 		//list=new JMenuItem("jioi");
-		changeColor = new JMenuItem("Change color of cell");
+		//changeColor = new JMenuItem("Change color of cell");
 		File.add(open);
 		File.add(exit);
 		Edition.add(image_show);
 		Edition.add(image_hidden);
 		
 	
-		PropertyCells.add(addCell);
-		PropertyCells.add(changeColor);
+		//PropertyCells.add(addCell);
+		//PropertyCells.add(changeColor);
 
 		return menu_bar1;
 	}
