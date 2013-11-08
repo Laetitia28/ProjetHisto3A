@@ -89,5 +89,13 @@ public class Menu extends JMenuBar{
 		return menu_bar1;
 	}
 
+	public JMenu getPropertyCells() {
+		return PropertyCells;
+	}
+
+	public void setPropertyCells(JMenu propertyCells) {
+		PropertyCells = propertyCells;
+	}
+
 	
 }

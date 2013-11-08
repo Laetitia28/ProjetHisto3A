@@ -17,8 +17,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.BorderFactory;
@@ -431,7 +433,7 @@ public class FramCell extends JFrame implements ActionListener {
 				displaySelectedCells("Nucleus DAB+");
 			}
 		}
-		if(e.getSource() == menu.getAddCell()){
+		/*if(e.getSource() == menu.getAddCell()){
 			tableCell = addCellWithMap();
 			Enumeration<String> k= tableCell.keys();
 			while(k.hasMoreElements()){
@@ -440,7 +442,8 @@ public class FramCell extends JFrame implements ActionListener {
 				JMenuItem item = new JMenuItem(a.toString());
 			}
 			
-		}
+		
+	}}*/
 	}
 	public List<Cell> setListCell(String path){
 		File myFile = new File(path);
@@ -472,6 +475,9 @@ public class FramCell extends JFrame implements ActionListener {
 		tableCell.put(k.nextElement().replaceAll(" ", "_"), "red");
 		return tableCell;
 		}
+	
+	
+	
 
 	public void ColorCell(Cell c) {
 		if (c.getClass_name().equals("Tumor nucleus")) {
