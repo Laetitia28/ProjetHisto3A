@@ -1,14 +1,38 @@
 package hg.histo;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 
 public class Menu extends JMenuBar{
+
 	private JMenuBar menu_bar1;
 	private JMenu File, Edition,PropertyCells;
 	private JMenuItem open, exit, image_show, image_hidden,addCell, changeColor,list;
-    FramCell fr;
+	private JRadioButtonMenuItem cb1,cb2;
+    public JRadioButtonMenuItem getCb1() {
+		return cb1;
+	}
+
+	public void setCb1(JRadioButtonMenuItem cb1) {
+		this.cb1 = cb1;
+	}
+
+	public JRadioButtonMenuItem getCb2() {
+		return cb2;
+	}
+
+	public void setCb2(JRadioButtonMenuItem cb2) {
+		this.cb2 = cb2;
+	}
+
+	FramCell fr;
 
 
 	public Menu() {
@@ -72,21 +96,41 @@ public class Menu extends JMenuBar{
 		menu_bar1.add(PropertyCells);
 		open = new JMenuItem("Open File");
 		exit = new JMenuItem("Exit");
-		image_show = new JMenuItem("Display Image");
-		image_hidden = new JMenuItem("Hidden Image");
-		//addCell = new JMenuItem("Add a new type cell");
-		//list=new JMenuItem("jioi");
-		//changeColor = new JMenuItem("Change color of cell");
+		//image_show = new JMenuItem("Display Image");
+		//image_hidden = new JMenuItem("Hidden Image");
+		
+		
+		cb1 = new JRadioButtonMenuItem("Display Image");
+		cb1.setMnemonic(KeyEvent.VK_R);
+        cb2 = new JRadioButtonMenuItem("Hidden Image");
+        cb2.setMnemonic(KeyEvent.VK_O);
+      //  cb1.addActionListener(this);
+      //  cb2.addActionListener(this);
+        
 		File.add(open);
 		File.add(exit);
-		Edition.add(image_show);
-		Edition.add(image_hidden);
+		//Edition.add(image_show);
+		//Edition.add(image_hidden);
+		ButtonGroup group = new ButtonGroup();
+	    group.add(cb1);
+	    group.add(cb2);
+	    
+	   Edition.add(cb1);
+       Edition.add(cb2);
 		
 	
 		//PropertyCells.add(addCell);
 		//PropertyCells.add(changeColor);
 
 		return menu_bar1;
+	}
+
+	public JMenu getEdition() {
+		return Edition;
+	}
+
+	public void setEdition(JMenu edition) {
+		Edition = edition;
 	}
 
 	public JMenu getPropertyCells() {
@@ -96,6 +140,6 @@ public class Menu extends JMenuBar{
 	public void setPropertyCells(JMenu propertyCells) {
 		PropertyCells = propertyCells;
 	}
+}
 
 	
-}

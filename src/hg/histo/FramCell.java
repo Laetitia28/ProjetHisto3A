@@ -193,11 +193,13 @@ public class FramCell extends JFrame implements ActionListener {
 
 		//Add ActionListener elements				
 		menu.getExit().addActionListener(this);
-		menu.getImage_hidden().addActionListener(this);
-		menu.getImage().addActionListener(this);
+		//menu.getImage_hidden().addActionListener(this);
+		//menu.getImage().addActionListener(this);
 		menu.getOpen().addActionListener(this);
 		//menu.getAddCell().addActionListener(this);
 		//menu.getChangeColor().addActionListener(this);
+		menu.getCb1().addActionListener(this);
+		menu.getCb2().addActionListener(this);
 		btZoomToFit.addActionListener(this);
 		btDisplay.addActionListener(this);
 
@@ -249,18 +251,7 @@ public class FramCell extends JFrame implements ActionListener {
 		listCells.clear();
 		listCells = setListCell(path);
 
-		//add new Cells in m HashMap  
 		
-		//HashMap<String,String> n = 
-	/*
-		for(String key : m.keySet()){
-			
-			 checkBox = new JCheckBox(key.toString());
-			 checkBox.setName("CheckBox" + key.toString());
-			 checkBox.setSelected(false);
-			 down.add(checkBox);
-			 System.out.println(checkBox.getName());
-		}*/
 		graph.getModel().beginUpdate();
 		try
 		{
@@ -312,13 +303,16 @@ public class FramCell extends JFrame implements ActionListener {
 		if(e.getSource() == menu.getExit() ){
 			FramCell.this.setVisible(false);
 		}
-		if(e.getSource() == menu.getImage_hidden()){
+		
+		if( e.getSource() == menu.getCb2()){
+			System.out.println("jai bien selectionne cb1 ");
 			graphComponent.setBackgroundImage(new ImageIcon("src/ressources/Back_White.png"));			
 			getContentPane().add(graphComponent);
 			graphComponent.refresh();
-		}
-		if(e.getSource() == menu.getImage()){
+			}
+		if(e.getSource() == menu.getCb1() ){
 			//display or remove image 
+			System.out.println("je remove");
 			ImageIcon img = new ImageIcon(path_image);
 			img = scale(path_image, (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4));
 			graphComponent.setBackgroundImage(img);			
@@ -439,22 +433,6 @@ public class FramCell extends JFrame implements ActionListener {
 			
 		}
 
-	
-
-	
-		/*if(e.getSource() == newCell){
-			for(String element : newCell.k)
-			JOptionPane.showMessageDialog(graphComponent, "File choosen is not expected",
-					"avertissement",
-					JOptionPane.ERROR_MESSAGE);
-			FramCell.this.setVisible(false);
-
-	}
-	}
-*/
-			
-
-		
 
 	
 	public List<Cell> setListCell(String path){
@@ -474,6 +452,8 @@ public class FramCell extends JFrame implements ActionListener {
 
 
 	}
+	
+
 	public void  addCellWithMap(){
 		HashMap<String,String> tmp = new HashMap< String,String>();
 		
