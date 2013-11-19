@@ -11,6 +11,9 @@ public class SearchFile {
 	String name_default =  "image0046.csv";
 	File filePath_default = new File("C:/Users/Laetitia/Documents/Projet_Histo"); 
 	
+	
+
+
 	public SearchFile(String path) {
 		super();
 		if(path == null){
@@ -48,9 +51,9 @@ public class SearchFile {
             else if (name.equalsIgnoreCase(fil.getName()))
             {
             	
-               // System.out.println(fil.getParentFile());
-                //System.out.println(fil);
+               
                 System.out.println("found : "+ fil + " in folder : "+ fil.getParentFile());
+                
                 count = count + 1;
             }
         }
@@ -59,4 +62,5 @@ public class SearchFile {
         else
         	return true;
 }
+
 }
