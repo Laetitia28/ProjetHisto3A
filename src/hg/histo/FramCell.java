@@ -479,7 +479,7 @@ public class FramCell extends JFrame implements ActionListener {
 					@Override
 					public void actionPerformed(ActionEvent evt) {
 						String[] list = {"RED", "GREEN", "BLUE","YELLOW", "BLACK", "WHITE","ORANGE", "PURPLE"};
-						JComboBox<Object> jcb = new JComboBox<Object>(list);
+						JComboBox jcb = new JComboBox<Object>(list);
 						jcb.setEditable(false);
 						jcb.getSelectedItem();
 						JOptionPane.showMessageDialog( null, jcb,evt.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
