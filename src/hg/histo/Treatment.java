@@ -6,10 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import com.mxgraph.swing.mxGraphComponent;
@@ -22,9 +26,28 @@ public class Treatment {
 	private String path_excel_default = "src/ressources/image0046.csv";
 	private String path_current = path_excel_default;
 	private String path_initial;
+	private String color;
+	private JMenuItem newCell;
 	private ImageIcon img ;
 	private SearchFile searchFile ;
+	private String cellselected;
+	private Object key;
+	
+	
+	public Object getKey() {
+		return key;
+	}
+	public void setKey(Object key) {
+		this.key = key;
+	}
+	public String getCellselected() {
+		return cellselected;
+	}
+	public void setCellselected(String cellselected) {
+		this.cellselected = cellselected;
+	}
 	private HashMap<String, String> m = new HashMap<String,String>();
+	HashMap<String, JMenuItem> JMenuItems = new HashMap<String,JMenuItem>();
 
 
 
@@ -231,6 +254,43 @@ public class Treatment {
 			}
 
 		}
+	}
+	public void changeMap(String typeCell,String typeColor){
+		for(String e:m.keySet()){
+			if(typeCell.equals(e)){
+				m.put(e, typeColor);
+			}
+		}
+	}
+	public void  addCellWithMap(Menu menu){
+		HashMap<String,String> tmp = new HashMap< String,String>();
+		
+		for (Cell c : listCells) {
+			tmp.put(c.getClass_name(),color);
+		}
+		Set<String> k=tmp.keySet();
+		
+			for(String j : tmp.keySet() ){
+				System.out.println(j.replaceAll(" ", "_"));
+			    newCell = new JMenuItem(j.replaceAll(" ", "_"));
+			    menu.getPropertyCells().add(newCell);
+			    key =j;
+				JMenuItems.put(key.toString(),newCell);
+				//items=JMenuItems.keySet()
+				System.out.println("element de la JMenuItems:" + JMenuItems.keySet());
+			}
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	public JMenuItem getNewCell() {
+		return newCell;
+	}
+	public void setNewCell(JMenuItem newCell) {
+		this.newCell = newCell;
 	}
 	public String getImg_default() {
 		return img_default;
