@@ -490,7 +490,12 @@ public class FramCell extends JFrame implements ActionListener {
 
 		
 		
+<<<<<<< HEAD
 
+=======
+		}
+//Commit
+>>>>>>> 2e2dd64a5b964de02ee7a366d46a093f35063005
 	public void MapColorCell(){
 		
 		
