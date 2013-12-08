@@ -167,6 +167,9 @@ public class FramCell extends JFrame implements ActionListener {
 		//Ada JPanel down ie check box in OptionBox JPanel
 		optionBox.add(down);
 		optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
+		
+		getContentPane().add(graphComponent);
+
 		containerequest = new JPanel();
 
 		Font police = new Font("Arial", Font.BOLD, 14);
@@ -203,7 +206,6 @@ public class FramCell extends JFrame implements ActionListener {
 		btZoomToFit.addActionListener(this);
 		btDisplay.addActionListener(this);
 
-		getContentPane().add(graphComponent);
 
 	}
 
@@ -229,7 +231,7 @@ public class FramCell extends JFrame implements ActionListener {
 		img = scale(img_default, (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4));
 		graphComponent.setBackgroundImage(img);			
 
-		getContentPane().add(graphComponent, BorderLayout.CENTER);
+		getContentPane().add(graphComponent);
 	}
 	public static ImageIcon scale(String source, int width, int height) {
 
