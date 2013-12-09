@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +47,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
@@ -430,28 +434,46 @@ public class FramCell extends JFrame implements ActionListener {
 			paneSphere.setBackground(Color.white);
 			paneSphere.setPreferredSize(new Dimension(300,30));
 			
-			btSup=new JButton("Sup");
-	        btInf=new JButton("Inf");
-	        btEt=new JButton("ET");
-			btOu=new JButton("OU");
-		    sliderDisplay =new JTextField();
-		    sliderDisplay.setText("Value of slider");
-		    sliderDisplay.setPreferredSize(new Dimension(100,30));
-		    sliderDisplay.setForeground(Color.BLUE);
-		    slider =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
-		    slider.setMajorTickSpacing(50);
-		    slider.setMinorTickSpacing(1);
-		    slider.setPaintTicks(true);
-		    slider.setPaintLabels(true);
-			paneSphere.add(btSup,BorderLayout.WEST);
-			paneSphere.add(btInf,BorderLayout.CENTER);
-			paneSphere.add(btEt,BorderLayout.WEST);
-			paneSphere.add(btOu,BorderLayout.CENTER);
+			btSup2=new JButton("Sup");
+	        btInf2=new JButton("Inf");
+	        btEt2=new JButton("ET");
+			btOu2=new JButton("OU");
+		    sliderDisplay2 =new JTextField();
+		    sliderDisplay2.setText("Value of slider");
+		    sliderDisplay2.setPreferredSize(new Dimension(100,30));
+		    sliderDisplay2.setForeground(Color.BLUE);
+		    slider2 =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+		    slider2.setMajorTickSpacing(50);
+		    slider2.setMinorTickSpacing(1);
+		    slider2.setPaintTicks(true);
+		    slider2.setPaintLabels(true);
+		    slider2.addChangeListener(new ChangeListener(){
+	            @Override
+	            public void stateChanged(ChangeEvent e) {
+	                sliderDisplay2.setText(String.valueOf(slider2.getValue()));
+	            }
+	        });
+		    sliderDisplay2.addKeyListener(new KeyAdapter(){
+	            @Override
+	            public void keyReleased(KeyEvent ke) {
+	                String typed = sliderDisplay2.getText();
+	                slider2.setValue(0);
+	                if(!typed.matches("\\d+")) {
+	                    return;
+	                }
+	                int value = Integer.parseInt(typed);
+	                slider2.setValue(value);
+	            }
+	        });
+			paneSphere.add(btSup2,BorderLayout.WEST);
+			paneSphere.add(btInf2,BorderLayout.CENTER);
+			paneSphere.add(btEt2,BorderLayout.WEST);
+			paneSphere.add(btOu2,BorderLayout.CENTER);
 			//paneSphere.add(slider,BorderLayout.EAST);
 			rubrique2.add(Sphericity,BorderLayout.NORTH);
 			rubrique2.add(paneSphere,BorderLayout.WEST);
-			rubrique2.add(slider);
-			rubrique2.add(sliderDisplay);
+			rubrique2.add(slider2);
+			rubrique2.add(sliderDisplay2);
 			
 			
 			
@@ -479,6 +501,24 @@ public class FramCell extends JFrame implements ActionListener {
 		    slider.setMinorTickSpacing(1);
 		    slider.setPaintTicks(true);
 		    slider.setPaintLabels(true);
+		    slider.addChangeListener(new ChangeListener(){
+	            @Override
+	            public void stateChanged(ChangeEvent e) {
+	                sliderDisplay.setText(String.valueOf(slider.getValue()));
+	            }
+	        });
+		    sliderDisplay.addKeyListener(new KeyAdapter(){
+	            @Override
+	            public void keyReleased(KeyEvent ke) {
+	                String typed = sliderDisplay.getText();
+	                slider.setValue(0);
+	                if(!typed.matches("\\d+")) {
+	                    return;
+	                }
+	                int value = Integer.parseInt(typed);
+	                slider.setValue(value);
+	            }
+	        });
 			paneArea.add(btSup,BorderLayout.WEST);
 			paneArea.add(btInf,BorderLayout.CENTER);
 			paneArea.add(btEt,BorderLayout.WEST);
@@ -514,6 +554,24 @@ public class FramCell extends JFrame implements ActionListener {
 		slider3.setMinorTickSpacing(1);
 	    slider3.setPaintTicks(true);
 		slider3.setPaintLabels(true);
+		  slider3.addChangeListener(new ChangeListener(){
+	            @Override
+	            public void stateChanged(ChangeEvent e) {
+	                sliderDisplay3.setText(String.valueOf(slider3.getValue()));
+	            }
+	        });
+		    sliderDisplay3.addKeyListener(new KeyAdapter(){
+	            @Override
+	            public void keyReleased(KeyEvent ke) {
+	                String typed = sliderDisplay3.getText();
+	                slider3.setValue(0);
+	                if(!typed.matches("\\d+")) {
+	                    return;
+	                }
+	                int value = Integer.parseInt(typed);
+	                slider3.setValue(value);
+	            }
+	        });
 		paneBorder.add(btSup3,BorderLayout.WEST);
 		paneBorder.add(btInf3,BorderLayout.CENTER);
 		paneBorder.add(btEt3,BorderLayout.WEST);
@@ -699,25 +757,7 @@ public class FramCell extends JFrame implements ActionListener {
 
 
 	}
-<<<<<<< HEAD
-	
-	
 
-	
-				
-					
-					
-			
-						
-				
-			
-				
-
-		
-		
-
-=======
->>>>>>> 7f5ea4db12cce7a2da25c7ecb36ac51d1d0ca74f
 	public void MapColorCell(){
 		
 		
