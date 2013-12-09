@@ -60,8 +60,8 @@ public class FramCell extends JFrame implements ActionListener {
 
 	private JCheckBox checkAll;
 	private JCheckBox checkBox ;
-	private String color;
-	private String celselected;
+	
+
 	/*
 	private JCheckBox check_Tumor;
 	private JCheckBox check_Granulocyte_nucleus;
@@ -80,6 +80,7 @@ public class FramCell extends JFrame implements ActionListener {
 	//private enum enumColorCell {black,blue,gray,green,white,orange,red,yellow,pink};
 
 	Menu menu=new Menu();
+	Treatment treat=new Treatment();
 	JPanel down = new JPanel(new GridLayout(0,1));
 	JPanel optionBox = new JPanel();
 	JPanel buttonBar = new JPanel();
@@ -103,7 +104,7 @@ public class FramCell extends JFrame implements ActionListener {
 
 		super("Frame Cell!");
 		listCells = new ArrayList<Cell>();
-
+  
 		graphComponent = new mxGraphComponent(graph);
 		graphComponent.setBounds(0, 0, (int)(img.getIconWidth()*0.4), (int)(img.getIconHeight()*0.4));
 
@@ -205,7 +206,14 @@ public class FramCell extends JFrame implements ActionListener {
 		menu.getCb2().addActionListener(this);
 		btZoomToFit.addActionListener(this);
 		btDisplay.addActionListener(this);
+<<<<<<< HEAD
 
+=======
+		
+		
+		treat.addCellWithMap(menu);
+		getContentPane().add(graphComponent);
+>>>>>>> 0b16ca6449ceb41d3f2aa127b980980362d4f4c2
 
 	}
 
@@ -306,11 +314,11 @@ public class FramCell extends JFrame implements ActionListener {
 			FramCell.this.setVisible(false);
 		}
 		
-		if( e.getSource() == menu.getCb2()){
+		/*if( e.getSource() == menu.getCb2()){
 			graphComponent.setBackgroundImage(new ImageIcon("src/ressources/Back_White.png"));			
 			getContentPane().add(graphComponent);
 			graphComponent.refresh();
-			}
+			}*/
 		if(e.getSource() == menu.getCb1() ){
 			//display or remove image 
 			
@@ -419,6 +427,29 @@ public class FramCell extends JFrame implements ActionListener {
 			graphComponent.zoom(newScale);
 			graphComponent.getGraphControl().scrollRectToVisible(new Rectangle(0,0,0,0));
 		}
+		
+		//for(String element : treat.JMenuItems.keySet()){ 
+		   if(e.getSource() == treat.JMenuItems.get("Nucleus_PRD+")){
+			   
+		    	System.out.println("ele:"+ treat.JMenuItems.keySet());
+			    System.out.println("loooooooolllll");
+			String[] list = {"RED", "GREEN", "BLUE","YELLOW", "BLACK", "WHITE","ORANGE", "PURPLE"};
+			JComboBox jcb = new JComboBox(list);
+			jcb.setEditable(false);
+			jcb.getSelectedItem();
+			JOptionPane.showMessageDialog( null, jcb,e.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
+			treat.setCellselected(e.getActionCommand());
+			System.out.println("chosenCell:" + treat.getCellselected());
+			treat.setColor(jcb.getSelectedItem().toString());
+			System.out.println("chosenColor:" + treat.getColor());
+			treat.changeMap(treat.getCellselected(), treat.getColor());
+			changeFrame(path_current);
+			
+		//}
+			
+		
+		}
+	
 		if(e.getSource() == btDisplay){
 			graph.setCellsDeletable(true);
 			this.graph.removeCells(this.graph.getChildVertices(this.parent));
@@ -430,10 +461,9 @@ public class FramCell extends JFrame implements ActionListener {
 			for(String p : checkBoxes.keySet()){
 				if(checkBoxes.get(p).isSelected()){
 					displaySelectedCells(p);
-				}}}
+				}}}}
 			
-		}
-
+	
 
 	
 	public List<Cell> setListCell(String path){
@@ -455,52 +485,24 @@ public class FramCell extends JFrame implements ActionListener {
 	}
 	
 
-	public void  addCellWithMap(){
-		HashMap<String,String> tmp = new HashMap< String,String>();
-		
-		for (Cell c : listCells) {
-			tmp.put(c.getClass_name(),color);
-		}
-		Set<String> k=tmp.keySet();
-		/*Set<String> v=(Set<String>) tmp.values();
-		for(String col : tmp.values()){
-			System.out.println(col);
-		}*/
-			
-		//while(k.hasMoreElements())
-			for(String j : tmp.keySet() ){
-				System.out.println(j.replaceAll(" ", "_"));
-			    newCell = new JMenuItem(j.replaceAll(" ", "_"));
-				//menu.getAddCell().add(newCell);
-				menu.getPropertyCells().add(newCell);
-				//celselected=newCell.getSelectedObjects().toString();
-				//System.out.println("selectedCell:" +celselected);
-				newCell.addActionListener(new ActionListener() {
+	
 				
 					
-					@Override
-					public void actionPerformed(ActionEvent evt) {
-						String[] list = {"RED", "GREEN", "BLUE","YELLOW", "BLACK", "WHITE","ORANGE", "PURPLE"};
-						JComboBox jcb = new JComboBox(list);
-						jcb.setEditable(false);
-						jcb.getSelectedItem();
-						JOptionPane.showMessageDialog( null, jcb,evt.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
-						celselected=evt.getActionCommand();
-						System.out.println("chosenCell:" + celselected);
-						color=jcb.getSelectedItem().toString();
-						System.out.println("chosenColor:" + color);
 					
+			
 						
-					}
-					
-				});
 				
 			
 				
-			}
+
 		
+		
+<<<<<<< HEAD
+
+=======
 		}
 //Commit
+>>>>>>> 2e2dd64a5b964de02ee7a366d46a093f35063005
 	public void MapColorCell(){
 		
 		
