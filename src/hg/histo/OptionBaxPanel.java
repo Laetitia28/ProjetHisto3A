@@ -23,8 +23,6 @@ public class OptionBaxPanel extends JPanel{
 	public OptionBaxPanel(){
 		panel1=new JPanel();
 		//panel1.add(btZoomToFit)
-		add(btZoomToFit);//because Zoom is on NORTH
-
 		add(down,BorderLayout.SOUTH);
 	
 
