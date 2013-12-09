@@ -206,14 +206,8 @@ public class FramCell extends JFrame implements ActionListener {
 		menu.getCb2().addActionListener(this);
 		btZoomToFit.addActionListener(this);
 		btDisplay.addActionListener(this);
-<<<<<<< HEAD
-
-=======
-		
-		
 		treat.addCellWithMap(menu);
 		getContentPane().add(graphComponent);
->>>>>>> 0b16ca6449ceb41d3f2aa127b980980362d4f4c2
 
 	}
 
@@ -483,26 +477,6 @@ public class FramCell extends JFrame implements ActionListener {
 
 
 	}
-	
-
-	
-				
-					
-					
-			
-						
-				
-			
-				
-
-		
-		
-<<<<<<< HEAD
-
-=======
-		}
-//Commit
->>>>>>> 2e2dd64a5b964de02ee7a366d46a093f35063005
 	public void MapColorCell(){
 		
 		
