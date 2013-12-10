@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -41,37 +42,36 @@ public class View extends JFrame implements Observer, ActionListener{
 	private static final long serialVersionUID = 1L;
 
 	private Controller controller;
-	
+
 	private String img_default = "src/ressources/image0046.jpg";
 	private String path_image = img_default;
 	private String path_excel_default = "src/ressources/image0046.csv";
 	private String path_current = path_excel_default;
-	
+
 	private HashMap<String, String> m = new HashMap<String,String>();
 
 	private Menu menu=new Menu();
-	private Treatment treat=new Treatment();
+	//private Treatment treat=new Treatment();
 	private JPanel down = new JPanel(new GridLayout(0,1));
 	private JPanel optionBox = new JPanel();
 	private JPanel buttonBar = new JPanel();
 	private JButton btZoomToFit = new JButton("Zoom Off");
 	private JButton btDisplay=new JButton("Display");
-	
+
 	private mxGraph graph = new mxGraph();
 	private Object parent = graph.getDefaultParent();
 	private mxGraphComponent graphComponent ;
 
-	
-	
-	
+	private JFileChooser chooser = new JFileChooser();
+
 	private SearchFile searchFile ;
 	private List<Cell> listCells;
 	private ImageIcon img = new ImageIcon(img_default);
 	private HashMap<String,JCheckBox> checkBoxes = new HashMap<String,JCheckBox>();
-	
-	
-	
-	
+
+
+
+
 
 	public View(Controller controller)  {
 		super("Frame Cell!");
@@ -82,7 +82,7 @@ public class View extends JFrame implements Observer, ActionListener{
 
 		//Create a list of Cell
 		listCells = new ArrayList<Cell>();
-  
+
 		//Create mxgraphComponent with properties
 		graphComponent = new mxGraphComponent(graph);
 		graphComponent.setBounds(0, 0, (int)(img.getIconWidth()*0.4), (int)(img.getIconHeight()*0.4));
@@ -104,8 +104,8 @@ public class View extends JFrame implements Observer, ActionListener{
 
 		//create color of cell
 		MapColorCell();
-*/
-		
+		 */
+
 		optionBox.setLayout(new BorderLayout());   	
 		buttonBar.add(btZoomToFit);
 
@@ -121,7 +121,7 @@ public class View extends JFrame implements Observer, ActionListener{
 		down.setBounds(0, 200, 150, 200);
 		down.setOpaque(true);
 
-	
+
 
 		//Ada ButtonDisplay in  down  JPanel
 		down.add(btDisplay,BorderLayout.CENTER);
@@ -129,7 +129,7 @@ public class View extends JFrame implements Observer, ActionListener{
 		//Ada JPanel down ie check box in OptionBox JPanel
 		optionBox.add(down);
 		optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
-		
+
 		getContentPane().add(optionBox, BorderLayout.EAST);
 
 		setJMenuBar(menu.buildMenu());
@@ -139,20 +139,17 @@ public class View extends JFrame implements Observer, ActionListener{
 		menu.getChangeColor().addActionListener(this);
 		btZoomToFit.addActionListener(this);
 		btDisplay.addActionListener(this);
-		
-		
-		treat.addCellWithMap(menu);
-		getContentPane().add(graphComponent);
-		
-		
 
-	
+		controller.addCellWithMap(menu);
+
+		getContentPane().add(graphComponent);
+
 	}
 
 	@Override
 	public void update(Observable o, Object arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -161,80 +158,15 @@ public class View extends JFrame implements Observer, ActionListener{
 			this.setVisible(false);
 		}
 		if(e.getSource() == menu.getOpen()){
-			JFileChooser chooser = new JFileChooser();
-			chooser.setApproveButtonText("Choose File..."); // intitulé du
-			// bouton
-			chooser.showOpenDialog(null); // affiche la boite de dialogue
-			path_current = chooser.getSelectedFile().getAbsolutePath();
-			System.out.println("Path selected current : " + path_current);
-
-			StringTokenizer st = new StringTokenizer(path_current, "."); 
-
-			while (st.hasMoreTokens()) { 
-
-				//System.out.println("token:"+st.nextToken()); 
-
-				String path_initial = st.nextToken();
-				System.out.println("path_initial : " + path_initial); 
-
-				String ext=st.nextToken();
-				System.out.println("ext : " + ext);
-
-				if(ext.equals("csv")){
-					System.out.println("Ceci est un bon fichier ");
-					System.out.println(ext);
-
-					//remplace .cvs to jpg
-					String newPath1=ext.replace(ext.charAt(0), 'j');
-					String newPath2=newPath1.replace(ext.charAt(1), 'p');
-					String newPath3=newPath2.replace(ext.charAt(2), 'g');
-
-					// creation de path.jpg
-					path_image = path_initial +"."+ newPath3;
-
-					System.out.println("path_image " + path_image);
-
-					// aller chercher path.jpg dans le dossier
-
-					searchFile = new SearchFile(path_image);
-					boolean found = searchFile.searchFileImage(searchFile.name, searchFile.filePath);
-					if (found ){
-						System.out.println("ok found file .jpg ");
-						JOptionPane.showMessageDialog(graphComponent, "File .jpn  found ! Name is :"+path_image,"avertissement",
-								JOptionPane.WARNING_MESSAGE);
-						this.setVisible(true);
-					}
-					else {
-						JOptionPane.showMessageDialog(graphComponent, "File .jpn not found ! Default image is image0046 ",
-								"avertissement",
-								JOptionPane.ERROR_MESSAGE);
-						System.out.println("Ko not found .jpg ");
-						path_image = img_default;
-						this.setVisible(true);
-					}
-
-					//if .cvs is found then display new graph
-					System.out.println("path using with change Frame"+ path_current);
-					changeFrame(path_current);
-
-				}
-
-				else if (!ext.equals("csv")){
-					System.out.println("Ceci n'est pas un bon fichier ");
-
-					JOptionPane.showMessageDialog(graphComponent, "File choosen is not expected",
-							"avertissement",
-							JOptionPane.ERROR_MESSAGE);
-					this.setVisible(false);
-
-
-				}
-
-			} 
-
+			controller.ChangeFile(chooser, graphComponent, graph);
 		}
-		
+		if(e.getSource() == btZoomToFit){
+			graphComponent.zoom(controller.newScale(graphComponent));
+			graphComponent.getGraphControl().scrollRectToVisible(new Rectangle(0,0,0,0));
+		}
 	}
 
-	
+
+
 }
+
