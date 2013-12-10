@@ -7,6 +7,10 @@ import javax.swing.JPanel;
 
 public class ButtonBarPanel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btZoomToFit = new JButton("Zoom Off");
 
 	public ButtonBarPanel(){
