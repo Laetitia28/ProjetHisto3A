@@ -24,6 +24,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -33,8 +34,9 @@ import javax.swing.border.Border;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.view.mxGraph;
+import com.sun.org.apache.xerces.internal.impl.RevalidationHandler;
 
-public class View extends JFrame implements Observer, ActionListener{
+public class View extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -43,15 +45,8 @@ public class View extends JFrame implements Observer, ActionListener{
 
 	private Controller controller;
 
-	private String img_default = "src/ressources/image0046.jpg";
-	private String path_image = img_default;
-	private String path_excel_default = "src/ressources/image0046.csv";
-	private String path_current = path_excel_default;
-
-	private HashMap<String, String> m = new HashMap<String,String>();
-
 	private Menu menu=new Menu();
-	//private Treatment treat=new Treatment();
+
 	private JPanel down = new JPanel(new GridLayout(0,1));
 	private JPanel optionBox = new JPanel();
 	private JPanel buttonBar = new JPanel();
@@ -64,29 +59,25 @@ public class View extends JFrame implements Observer, ActionListener{
 
 	private JFileChooser chooser = new JFileChooser();
 
-	private SearchFile searchFile ;
+	private JCheckBox checkAll = new JCheckBox("All cells");
+	private JCheckBox checkBox ;
+
 	private List<Cell> listCells;
-	private ImageIcon img = new ImageIcon(img_default);
-	private HashMap<String,JCheckBox> checkBoxes = new HashMap<String,JCheckBox>();
-
-
-
-
+	
+	private HashMap<String,JCheckBox> listOfCheckBox = new HashMap<String,JCheckBox>();
 
 	public View(Controller controller)  {
 		super("Frame Cell!");
 		this.controller = controller;
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1200, 700);
-		this.setVisible(true);
+	
 
 		//Create a list of Cell
 		listCells = new ArrayList<Cell>();
 
 		//Create mxgraphComponent with properties
 		graphComponent = new mxGraphComponent(graph);
-		graphComponent.setBounds(0, 0, (int)(img.getIconWidth()*0.4), (int)(img.getIconHeight()*0.4));
-		graphComponent.setPreferredSize(new Dimension( (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4)));
+		graphComponent.setBounds(0, 0, (int)(controller.getImg().getIconWidth()*0.4), (int)(controller.getImg().getIconHeight()*0.4));
+		graphComponent.setPreferredSize(new Dimension( (int)(controller.getImg().getIconWidth()*0.4),(int)(controller.getImg().getIconHeight()*0.4)));
 		graphComponent.setGridVisible(true);
 		graphComponent.setGridColor(Color.BLACK);
 		graphComponent.setConnectable(false);
@@ -99,14 +90,16 @@ public class View extends JFrame implements Observer, ActionListener{
 		graph.setCellsSelectable(false);
 		graph.setCellsResizable(false);
 
-		/*
-		listCells = setListCell(path_current);
+		
+		listCells = controller.setListCell(controller.getPath_current());
 
+		
 		//create color of cell
-		MapColorCell();
-		 */
-
-		optionBox.setLayout(new BorderLayout());   	
+		controller.MapColorCell();
+		 
+		controller.initFrame(graph, graphComponent);
+		
+		optionBox.setLayout(new BorderLayout());  
 		buttonBar.add(btZoomToFit);
 
 		//Zoom out graph
@@ -118,9 +111,20 @@ public class View extends JFrame implements Observer, ActionListener{
 		Border border = BorderFactory.createTitledBorder("Selected Cell");
 		down.setBorder(border);
 		down.setBackground(Color.BLUE);
-		down.setBounds(0, 200, 150, 200);
+		down.setBounds(0, 200, 150, 300);
 		down.setOpaque(true);
+		down.setLayout(new GridLayout(10,1));
 
+		checkAll.setSelected(true);
+		down.add(checkAll);
+
+		for(String key : controller.getM().keySet()){
+			checkBox = new JCheckBox(key.toString());
+			checkBox.setName("CheckBox_" + key.toString());
+			checkBox.setSelected(false);
+			listOfCheckBox.put(key.toString(), checkBox);
+			down.add(checkBox);
+		}
 
 
 		//Ada ButtonDisplay in  down  JPanel
@@ -131,26 +135,53 @@ public class View extends JFrame implements Observer, ActionListener{
 		optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
 
 		getContentPane().add(optionBox, BorderLayout.EAST);
-
 		setJMenuBar(menu.buildMenu());
 
-		//Add ActionListener elements				
+		//Add ActionListener elements
 		menu.getExit().addActionListener(this);
-		menu.getChangeColor().addActionListener(this);
+		menu.getOpen().addActionListener(this);
 		btZoomToFit.addActionListener(this);
 		btDisplay.addActionListener(this);
+		menu.getRadioButtonMenuItemDisplay().addActionListener(this);
+		menu.getRadioButtonMenuItemHidden().addActionListener(this);
+		
+		
+		
+		controller.ChangeColorOfCell(menu);
+		for(String a : controller.getJMenuItems().keySet()){
+			controller.getJMenuItems().get(a).addActionListener(new ActionListener(){
+				  public void actionPerformed(ActionEvent event){
+					  String[] list = {"red", "grenn", "blue","yellow", "black", "white","orange", "purple"};
+						JComboBox jcb = new JComboBox(list);
+						jcb.setEditable(false);
+						jcb.getSelectedItem();
+						JOptionPane.showMessageDialog( null, jcb,event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
+						getController().setCellselected(event.getActionCommand());
+						System.out.println("chosenCell:" + getController().getCellselected());
+						getController().setColor(jcb.getSelectedItem().toString());
+						System.out.println("chosenColor:" + getController().getColor());
+						getController().changeMap(getController().getCellselected(), getController().getColor());
+						getController().displaySelectedCells(getController().getCellselected(),graph);
 
-		controller.addCellWithMap(menu);
+					  }
+					});
+			
+		}
 
 		getContentPane().add(graphComponent);
 
 	}
 
-	@Override
-	public void update(Observable o, Object arg1) {
-		// TODO Auto-generated method stub
 
+	public Controller getController() {
+		return controller;
 	}
+
+
+	public void setController(Controller controller) {
+		this.controller = controller;
+	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -158,15 +189,59 @@ public class View extends JFrame implements Observer, ActionListener{
 			this.setVisible(false);
 		}
 		if(e.getSource() == menu.getOpen()){
+			chooser.showOpenDialog(null);
+			chooser.setApproveButtonText("Choose File..."); 
 			controller.ChangeFile(chooser, graphComponent, graph);
+			for(String key :listOfCheckBox.keySet()){
+				down.remove(listOfCheckBox.get(key));
+			}
+			down.remove(btDisplay);
+			listOfCheckBox.clear();
+			for(String key :controller.getM().keySet()){
+					checkBox = new JCheckBox(key.toString());
+					checkBox.setName("CheckBox_" + key.toString());
+					checkBox.setSelected(false);
+					listOfCheckBox.put(key.toString(), checkBox);
+					System.out.println("key : "+key);
+					down.add(checkBox);				
+				}
+			down.add(btDisplay,BorderLayout.CENTER);
+			this.setVisible(true);
 		}
 		if(e.getSource() == btZoomToFit){
 			graphComponent.zoom(controller.newScale(graphComponent));
 			graphComponent.getGraphControl().scrollRectToVisible(new Rectangle(0,0,0,0));
 		}
+		if( e.getSource() == menu.getRadioButtonMenuItemHidden()){
+			System.out.println("Display");
+			graphComponent.setBackgroundImage(new ImageIcon("src/ressources/Back_White.png"));			
+			getContentPane().add(graphComponent);
+			graphComponent.refresh();
+		}
+		if(e.getSource() == menu.getRadioButtonMenuItemDisplay()){
+			System.out.println("Hidden");
+			ImageIcon img = new ImageIcon(controller.getPath_image());
+			img = Controller.scale(controller.getPath_image(), (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4));
+			graphComponent.setBackgroundImage(img);			
+			getContentPane().add(graphComponent);
+			graphComponent.refresh();
+		}
+		if(e.getSource() == btDisplay){
+
+			graph.setCellsDeletable(true);
+			this.graph.removeCells(this.graph.getChildVertices(this.parent));
+			graph.refresh();
+			graph.setCellsDeletable(false);
+			if(checkAll.isSelected()){
+				controller.changeFrame(controller.getPath_current(),graph,graphComponent);
+			}
+			for(String p : listOfCheckBox.keySet()){
+				if(listOfCheckBox.get(p).isSelected()){
+					controller.displaySelectedCells(p,graph);
+				}
+			}
+		}
+		
 	}
-
-
-
 }
 
