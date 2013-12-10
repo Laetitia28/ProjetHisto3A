@@ -79,12 +79,12 @@ public class FramCell extends JFrame implements ActionListener {
 	private JCheckBox check_NucleusDAB;
 	private JCheckBox check_NucleusDAB_PRB;
 	 */
-	private JTextField request;
-	private JLabel label;
+	 JTextField request;
+	 JLabel label;
 	 JButton validate;
 	 JButton cancel;
 	 JPanel containerequest;
-    private JMenuItem newCell;
+     JMenuItem newCell;
 	//private Hashtable<String,String> tableCell = new Hashtable< String,String>();
 	private HashMap<String, String> m = new HashMap<String,String>();
 	//private enum enumColorCell {black,blue,gray,green,white,orange,red,yellow,pink};
@@ -95,8 +95,10 @@ public class FramCell extends JFrame implements ActionListener {
 	JPanel down = new JPanel(new GridLayout(0,1));
 	JPanel optionBox = new JPanel();
 	JPanel buttonBar = new JPanel();
+	JPanel AdvancedReq =new JPanel();
 	JButton btZoomToFit = new JButton("Zoom Off");
 	JButton btDisplay=new JButton("Display");
+	JButton go;
 	
 	mxGraph graph = new mxGraph();
 	Object parent = graph.getDefaultParent();
@@ -136,11 +138,13 @@ public class FramCell extends JFrame implements ActionListener {
 
 		//create color of cell
 		MapColorCell();
-
+		
+		validate=new JButton("Advanced Request");
+		validate.addActionListener(this);
 		optionBox.setLayout(new BorderLayout());   	
-		//buttonBar.setLayout(new FlowLayout());
-
+		optionBox.setPreferredSize(new Dimension(150,900));
 		buttonBar.add(btZoomToFit);
+		AdvancedReq.add(validate);
 
 
 
@@ -175,10 +179,11 @@ public class FramCell extends JFrame implements ActionListener {
 		}
 		//Ada ButtonDisplay in  down  JPanel
 		down.add(btDisplay,BorderLayout.CENTER);
-
+		
 		//Ada JPanel down ie check box in OptionBox JPanel
 		optionBox.add(down);
 		optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
+		optionBox.add(AdvancedReq,BorderLayout.AFTER_LAST_LINE);
 		
 		getContentPane().add(graphComponent);
 
@@ -190,14 +195,14 @@ public class FramCell extends JFrame implements ActionListener {
 		request.setForeground(Color.BLUE);
 		request.setFont(police);
 		label = new JLabel("Request");
-		validate=new JButton("Request");
-		validate.addActionListener(this);
+		go=new JButton("Go");
+        go.addActionListener(this);
 		cancel=new JButton("Cancel");
 
 
 		containerequest.add(label);
 		containerequest.add(request);
-		containerequest.add(validate);
+		containerequest.add(go);
 		containerequest.add(cancel);
 
 		getContentPane().add(containerequest,BorderLayout.PAGE_END);
@@ -439,8 +444,8 @@ public class FramCell extends JFrame implements ActionListener {
 			graphComponent.getGraphControl().scrollRectToVisible(new Rectangle(0,0,0,0));
 		}
 		
-		//for(String element : treat.JMenuItems.keySet()){ 
-		   if(e.getSource() == treat.JMenuItems.get("Nucleus_PRD+")){
+	
+		   if(e.getSource() == treat.getJMenuItems() ){
 			   
 		    	System.out.println("ele:"+ treat.JMenuItems.keySet());
 			    System.out.println("loooooooolllll");

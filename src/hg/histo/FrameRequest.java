@@ -8,7 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -22,8 +24,8 @@ import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class FrameRequest extends JFrame  {
-
+public class FrameRequest extends JFrame implements ActionListener {
+//FramCell fr = new FramCell();
 
 	/**
 	 * 
@@ -53,6 +55,7 @@ public class FrameRequest extends JFrame  {
 	JPanel rubrique2;
 	JPanel rubrique3;
 	JPanel rubrique4;
+	JFrame frame2;
 	static final int SLIDER_INIT =125 ;
 	static final int SLIDER_MIN =0;
 	static final int SLIDER_MAX =250;
@@ -66,13 +69,14 @@ public class FrameRequest extends JFrame  {
 	private JRadioButton btRadio7;
 	private JRadioButton btRadio8;
 	private JRadioButton btRadio9;
+	String b;
 	private static final long serialVersionUID = 1L;
 	
 	public FrameRequest(){
 	}
 	
 	public JFrame advancedRequest(){
-		JFrame frame2 = new JFrame("Advanced Request");
+		frame2 = new JFrame("Advanced Request");
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame2.setSize(800,1000);
 		frame2.setVisible(true);
@@ -96,13 +100,13 @@ public class FrameRequest extends JFrame  {
 		paneCellule.setLayout(new GridLayout(3,3));
 	     g = new ButtonGroup();
 	     btRadio1 = new JRadioButton("AllCells",true);
-	     btRadio2 = new JRadioButton("NucleusDAB+PRD+");
+	     btRadio2 = new JRadioButton("Nucleus DAB+ PRD+");
 	     btRadio3 = new JRadioButton("Lymphocyte Nucleus");
 	     btRadio4 = new JRadioButton("Tumor nucleus");
 	     btRadio5 = new JRadioButton("NucleusPRD+");
 	     btRadio6 = new JRadioButton("Granulocyte nucleus");
 	     btRadio7 = new JRadioButton("Nucleus DAB+");
-	    btRadio8 = new JRadioButton("OO");
+	     btRadio8 = new JRadioButton("OO");
 	     btRadio9 = new JRadioButton("NN");
 	   
 	    
@@ -289,7 +293,9 @@ public class FrameRequest extends JFrame  {
     paneEnd.setPreferredSize(new Dimension(1200,100));
     paneEnd.setBackground(Color.white);
 	btOk=new JButton("Ok");
+	btOk.addActionListener(this);
     btApply=new JButton("Apply");
+    btApply.addActionListener(this);
     paneEnd.add(btOk,BorderLayout.WEST);
     paneEnd.add(btApply,BorderLayout.WEST);
     
@@ -299,9 +305,34 @@ public class FrameRequest extends JFrame  {
 		panel.add(rubrique4);
 		panel.add(paneEnd,BorderLayout.SOUTH);
 		
-		
-		
 		return frame2;
+		
+	}
+	public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+            	b=button.getText();
+                return b;
+                //System.out.println(button.getText());
+            }
+        }
+
+        return b;
+    }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == btOk ){
+		frame2.setVisible(false);
+		}
+		//if(e.getSource() == btApply){
+	       //fr.request.setText(getSelectedButtonText(g));//retourne la cellule selectionner
+			
+			
+		//}
 		
 	}
 		

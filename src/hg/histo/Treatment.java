@@ -274,11 +274,17 @@ public class Treatment {
 				System.out.println(j.replaceAll(" ", "_"));
 			    newCell = new JMenuItem(j.replaceAll(" ", "_"));
 			    menu.getPropertyCells().add(newCell);
-			    key =j;
+			    key=j;
 				JMenuItems.put(key.toString(),newCell);
-				//items=JMenuItems.keySet()
+		
 				System.out.println("element de la JMenuItems:" + JMenuItems.keySet());
 			}
+	}
+	public HashMap<String, JMenuItem> getJMenuItems() {
+		return JMenuItems;
+	}
+	public void setJMenuItems(HashMap<String, JMenuItem> jMenuItems) {
+		JMenuItems = jMenuItems;
 	}
 	public String getColor() {
 		return color;
