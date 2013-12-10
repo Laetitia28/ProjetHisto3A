@@ -110,8 +110,8 @@ public class Controller {
 		graphComponent.setBackgroundImage(img);	
 		return graphComponent;
 	}
-	public void  ChangeColorOfCell(Menu menu){
-		//remplacer les espacs blancs par des "_"
+	public void  ChangeColorOfCell(Menu menu){	
+		getJMenuItems().clear();		
 		for(String j : getM().keySet() ){
 			newCell = new JMenuItem(j);
 			menu.getPropertyCells().add(newCell);
@@ -240,7 +240,6 @@ public class Controller {
 		{
 			graph.getModel().endUpdate();
 		}
-
 	}
 	public void changeMap(String typeCell,String typeColor){
 		for(String e:getM().keySet()){
@@ -269,9 +268,9 @@ public class Controller {
 	public List<Cell> getListCells() {
 	return listCells;
 }
-public void setListCells(List<Cell> listCells) {
+    public void setListCells(List<Cell> listCells) {
 	this.listCells = listCells;
-}
+    }
 	public String getColor() {
 		return color;
 	}
