@@ -5,8 +5,8 @@ import java.io.File;
 public class SearchFile {
 
 	String path ;
-	private String name;
-	private File filePath ; 
+	String name;
+	File filePath ; 
 	String path_default = "C:/Users/Laetitia/Documents/Projet_Histo/image0046.csv" ;
 	String name_default =  "image0046.csv";
 	File filePath_default = new File("C:/Users/Laetitia/Documents/Projet_Histo"); 
@@ -18,15 +18,15 @@ public class SearchFile {
 		super();
 		if(path == null){
 			this.path = this.path_default;
-			this.setName(this.name_default);
-			this.setFilePath(this.filePath_default);
+			this.name = this.name_default;
+			this.filePath = this.filePath_default;
 		}
 		else
 		{
 		this.path = path;
 		File f = new File(path);
-		this.setName(f.getName());
-		this.setFilePath(new File(f.getParent()));
+		this.name = f.getName();
+		this.filePath = new File(f.getParent());
 		
 		}
 		
@@ -62,21 +62,5 @@ public class SearchFile {
         else
         	return true;
 }
-
-	public File getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(File filePath) {
-		this.filePath = filePath;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 }
