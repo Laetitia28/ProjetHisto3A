@@ -14,6 +14,7 @@ public class Main {
 				frame.setSize(1200, 700);
 				frame.setVisible(true);
 				//frame.addCellWithMap();
+			
 		
 			
 		}
