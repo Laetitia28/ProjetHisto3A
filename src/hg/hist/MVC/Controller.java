@@ -15,15 +15,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.plaf.synth.ColorType;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
@@ -36,7 +33,7 @@ public class Controller {
 	private String path_excel_default = "src/ressources/image0046.csv";
 	private String path_current = path_excel_default;
 	private String path_initial;
-	private String color;
+	private String color = "black";
 
 	JMenuItem newCell;
 	
@@ -52,10 +49,14 @@ public class Controller {
 	private List<Cell> listCells;
 
 	public Controller (){
+		
+		
 		listCells = new ArrayList<Cell>();
 		listCells = setListCell(path_current);
 		img = new ImageIcon(img_default);
 	}
+	
+	
 	public static ImageIcon scale(String source, int width, int height) {
 
 		ImageIcon icon = new ImageIcon(source);
@@ -74,7 +75,6 @@ public class Controller {
 			List<Cell> listcells = f.allCells();
 			return listcells;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			setListCell(getPath_excel_default());
 		}

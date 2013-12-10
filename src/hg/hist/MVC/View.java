@@ -1,10 +1,6 @@
 package hg.hist.MVC;
 
-import hg.histo.Cell;
-import hg.histo.FramCell;
 import hg.histo.Menu;
-import hg.histo.SearchFile;
-import hg.histo.Treatment;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,12 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.StringTokenizer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -34,7 +25,6 @@ import javax.swing.border.Border;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.view.mxGraph;
-import com.sun.org.apache.xerces.internal.impl.RevalidationHandler;
 
 public class View extends JFrame implements ActionListener {
 
@@ -62,7 +52,6 @@ public class View extends JFrame implements ActionListener {
 	private JCheckBox checkAll = new JCheckBox("All cells");
 	private JCheckBox checkBox ;
 
-	private List<Cell> listCells;
 	
 	private HashMap<String,JCheckBox> listOfCheckBox = new HashMap<String,JCheckBox>();
 
@@ -72,7 +61,7 @@ public class View extends JFrame implements ActionListener {
 	
 
 		//Create a list of Cell
-		listCells = new ArrayList<Cell>();
+	
 
 		//Create mxgraphComponent with properties
 		graphComponent = new mxGraphComponent(graph);
@@ -90,8 +79,8 @@ public class View extends JFrame implements ActionListener {
 		graph.setCellsSelectable(false);
 		graph.setCellsResizable(false);
 
-		
-		listCells = controller.setListCell(controller.getPath_current());
+		//create list of cells 
+		controller.setListCell(controller.getPath_current());
 
 		
 		//create color of cell
