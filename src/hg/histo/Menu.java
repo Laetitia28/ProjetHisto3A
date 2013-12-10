@@ -1,7 +1,5 @@
 package hg.histo;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
@@ -12,10 +10,15 @@ import javax.swing.JRadioButtonMenuItem;
 
 public class Menu extends JMenuBar{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JMenuBar menu_bar1;
 	private JMenu File, Edition,PropertyCells;
 	private JMenuItem open, exit, image_show, image_hidden,addCell, changeColor,list;
 	private JRadioButtonMenuItem cb1,cb2;
+	private JRadioButtonMenuItem radioButtonMenuItemDisplay,RadioButtonMenuItemHidden;
     public JRadioButtonMenuItem getCb1() {
 		return cb1;
 	}
@@ -100,6 +103,11 @@ public class Menu extends JMenuBar{
 		//image_hidden = new JMenuItem("Hidden Image");
 		
 		
+		radioButtonMenuItemDisplay = new JRadioButtonMenuItem("Display Image");
+		radioButtonMenuItemDisplay.setMnemonic(KeyEvent.VK_R);
+		RadioButtonMenuItemHidden = new JRadioButtonMenuItem("Hidden Image");
+		RadioButtonMenuItemHidden.setMnemonic(KeyEvent.VK_O);
+        
 		cb1 = new JRadioButtonMenuItem("Display Image");
 		cb1.setMnemonic(KeyEvent.VK_R);
         cb2 = new JRadioButtonMenuItem("Hidden Image");
@@ -112,11 +120,16 @@ public class Menu extends JMenuBar{
 		//Edition.add(image_show);
 		//Edition.add(image_hidden);
 		ButtonGroup group = new ButtonGroup();
+		group.add(radioButtonMenuItemDisplay);
+		group.add(RadioButtonMenuItemHidden);
 	    group.add(cb1);
 	    group.add(cb2);
 	    
 	   Edition.add(cb1);
        Edition.add(cb2);
+       
+       Edition.add(radioButtonMenuItemDisplay);
+       Edition.add(RadioButtonMenuItemHidden);
 		
 	
 		//PropertyCells.add(addCell);
@@ -139,6 +152,22 @@ public class Menu extends JMenuBar{
 
 	public void setPropertyCells(JMenu propertyCells) {
 		PropertyCells = propertyCells;
+	}
+
+	public JRadioButtonMenuItem getRadioButtonMenuItemDisplay() {
+		return radioButtonMenuItemDisplay;
+	}
+
+	public void setRadioButtonMenuItemDisplay(JRadioButtonMenuItem radioButtonMenuItemDisplay) {
+		this.radioButtonMenuItemDisplay = radioButtonMenuItemDisplay;
+	}
+
+	public JRadioButtonMenuItem getRadioButtonMenuItemHidden() {
+		return RadioButtonMenuItemHidden;
+	}
+
+	public void setRadioButtonMenuItemHidden(JRadioButtonMenuItem radioButtonMenuItemHidden) {
+		RadioButtonMenuItemHidden = radioButtonMenuItemHidden;
 	}
 }
 
