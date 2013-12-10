@@ -147,32 +147,27 @@ public class View extends JFrame implements ActionListener {
 		
 		
 		
-		controller.ChangeColorOfCell(menu);
-		for(String a : controller.getJMenuItems().keySet()){
-			controller.getJMenuItems().get(a).addActionListener(new ActionListener(){
-				  public void actionPerformed(ActionEvent event){
-					  String[] list = {"red", "grenn", "blue","yellow", "black", "white","orange", "purple"};
-						JComboBox jcb = new JComboBox(list);
-						jcb.setEditable(false);
-						jcb.getSelectedItem();
-						JOptionPane.showMessageDialog( null, jcb,event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
-						getController().setCellselected(event.getActionCommand());
-						System.out.println("chosenCell:" + getController().getCellselected());
-						getController().setColor(jcb.getSelectedItem().toString());
-						System.out.println("chosenColor:" + getController().getColor());
-						getController().changeMap(getController().getCellselected(), getController().getColor());
-						getController().displaySelectedCells(getController().getCellselected(),graph);
-
-					  }
-					});
-			
-		}
-
+		controller.ChangeColorOfCell(menu);			
+			for(String a : controller.getJMenuItems().keySet()){
+				controller.getJMenuItems().get(a).addActionListener(new ActionListener(){
+					  public void actionPerformed(ActionEvent event){
+						  String[] list = {"red", "green", "blue","yellow", "black", "white","orange", "purple"};
+							JComboBox jcb = new JComboBox(list);
+							jcb.setEditable(false);
+							jcb.getSelectedItem();
+							JOptionPane.showMessageDialog( null, jcb,event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
+							getController().setCellselected(event.getActionCommand());
+							System.out.println("chosenCell:" + getController().getCellselected());
+							getController().setColor(jcb.getSelectedItem().toString());
+							System.out.println("chosenColor:" + getController().getColor());
+							getController().changeMap(getController().getCellselected(), getController().getColor());
+							getController().displaySelectedCells(getController().getCellselected(),graph);
+						  }
+						});	
+			}
+		
 		getContentPane().add(graphComponent);
-
 	}
-
-
 	public Controller getController() {
 		return controller;
 	}
@@ -188,6 +183,7 @@ public class View extends JFrame implements ActionListener {
 		if(e.getSource() == menu.getExit() ){
 			this.setVisible(false);
 		}
+		
 		if(e.getSource() == menu.getOpen()){
 			chooser.showOpenDialog(null);
 			chooser.setApproveButtonText("Choose File..."); 
@@ -199,14 +195,34 @@ public class View extends JFrame implements ActionListener {
 			listOfCheckBox.clear();
 			for(String key :controller.getM().keySet()){
 					checkBox = new JCheckBox(key.toString());
-					checkBox.setName("CheckBox_" + key.toString());
+					//checkBox.setName("CheckBox_" + key.toString());
 					checkBox.setSelected(false);
 					listOfCheckBox.put(key.toString(), checkBox);
-					System.out.println("key : "+key);
+					//System.out.println("key : "+key);
 					down.add(checkBox);				
 				}
 			down.add(btDisplay,BorderLayout.CENTER);
 			this.setVisible(true);
+
+			controller.ChangeColorOfCell(menu);
+
+			for(String a : controller.getJMenuItems().keySet()){
+				controller.getJMenuItems().get(a).addActionListener(new ActionListener(){
+					  public void actionPerformed(ActionEvent event){
+						  String[] list = {"red", "green", "blue","yellow", "black", "white","orange", "purple"};
+							JComboBox jcb = new JComboBox(list);
+							jcb.setEditable(false);
+							jcb.getSelectedItem();
+							JOptionPane.showMessageDialog( null, jcb,event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
+							getController().setCellselected(event.getActionCommand());
+							System.out.println("chosenCell:" + getController().getCellselected());
+							getController().setColor(jcb.getSelectedItem().toString());
+							System.out.println("chosenColor:" + getController().getColor());
+							getController().changeMap(getController().getCellselected(), getController().getColor());
+							getController().displaySelectedCells(getController().getCellselected(),graph);
+						  }
+						});	
+
 		}
 		if(e.getSource() == btZoomToFit){
 			graphComponent.zoom(controller.newScale(graphComponent));
@@ -243,5 +259,6 @@ public class View extends JFrame implements ActionListener {
 		}
 		
 	}
+}
 }
 
