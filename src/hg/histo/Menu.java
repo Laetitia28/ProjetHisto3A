@@ -103,9 +103,9 @@ public class Menu extends JMenuBar{
 		//image_hidden = new JMenuItem("Hidden Image");
 		
 		
-		radioButtonMenuItemDisplay = new JRadioButtonMenuItem("Display Image");
+		radioButtonMenuItemDisplay = new JRadioButtonMenuItem("Display Image radio");
 		radioButtonMenuItemDisplay.setMnemonic(KeyEvent.VK_R);
-		RadioButtonMenuItemHidden = new JRadioButtonMenuItem("Hidden Image");
+		RadioButtonMenuItemHidden = new JRadioButtonMenuItem("Hidden Image radio");
 		RadioButtonMenuItemHidden.setMnemonic(KeyEvent.VK_O);
         
 		cb1 = new JRadioButtonMenuItem("Display Image");
