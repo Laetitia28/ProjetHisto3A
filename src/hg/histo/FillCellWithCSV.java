@@ -16,7 +16,7 @@ import java.util.List;
 
 	    public FillCellWithCSV(File file) throws IOException {
 	        this();
-	        this.file = file;
+	        this.setFile(file);
 	        //on remplit lines l'array list des lignes du csv
 	        //on remplit data une array de tableaux de string  par les elements des lignes du CSV
 	        this.transformCSV = new TransformCSV(file);
@@ -63,6 +63,14 @@ import java.util.List;
 			cell.setClass_name(tab[7]);
 
 		    return cell;
+		}
+
+		public File getFile() {
+			return file;
+		}
+
+		public void setFile(File file) {
+			this.file = file;
 		}
 			
 		
