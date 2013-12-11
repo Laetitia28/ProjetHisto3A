@@ -17,24 +17,9 @@ public class Menu extends JMenuBar{
 	private JMenuBar menu_bar1;
 	private JMenu File, Edition,PropertyCells;
 	private JMenuItem open, exit, image_show, image_hidden,addCell, changeColor,list;
-	private JRadioButtonMenuItem cb1,cb2;
+
 	private JRadioButtonMenuItem radioButtonMenuItemDisplay,RadioButtonMenuItemHidden;
-    public JRadioButtonMenuItem getCb1() {
-		return cb1;
-	}
-
-	public void setCb1(JRadioButtonMenuItem cb1) {
-		this.cb1 = cb1;
-	}
-
-	public JRadioButtonMenuItem getCb2() {
-		return cb2;
-	}
-
-	public void setCb2(JRadioButtonMenuItem cb2) {
-		this.cb2 = cb2;
-	}
-
+  
 	FramCell fr;
 
 
@@ -97,10 +82,10 @@ public class Menu extends JMenuBar{
 		menu_bar1.add(File);
 		menu_bar1.add(Edition);
 		menu_bar1.add(PropertyCells);
+		
 		open = new JMenuItem("Open File");
 		exit = new JMenuItem("Exit");
-		//image_show = new JMenuItem("Display Image");
-		//image_hidden = new JMenuItem("Hidden Image");
+
 		
 		
 		radioButtonMenuItemDisplay = new JRadioButtonMenuItem("Display Image radio");
@@ -108,32 +93,19 @@ public class Menu extends JMenuBar{
 		RadioButtonMenuItemHidden = new JRadioButtonMenuItem("Hidden Image radio");
 		RadioButtonMenuItemHidden.setMnemonic(KeyEvent.VK_O);
         
-		cb1 = new JRadioButtonMenuItem("Display Image");
-		cb1.setMnemonic(KeyEvent.VK_R);
-        cb2 = new JRadioButtonMenuItem("Hidden Image");
-        cb2.setMnemonic(KeyEvent.VK_O);
-      //  cb1.addActionListener(this);
-      //  cb2.addActionListener(this);
+
         
 		File.add(open);
 		File.add(exit);
-		//Edition.add(image_show);
-		//Edition.add(image_hidden);
+
 		ButtonGroup group = new ButtonGroup();
 		group.add(radioButtonMenuItemDisplay);
 		group.add(RadioButtonMenuItemHidden);
-	    group.add(cb1);
-	    group.add(cb2);
 	    
-	   Edition.add(cb1);
-       Edition.add(cb2);
-       
        Edition.add(radioButtonMenuItemDisplay);
        Edition.add(RadioButtonMenuItemHidden);
 		
-	
-		//PropertyCells.add(addCell);
-		//PropertyCells.add(changeColor);
+
 
 		return menu_bar1;
 	}
