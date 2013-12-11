@@ -5,6 +5,7 @@ import hg.histo.Menu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -18,8 +19,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import com.mxgraph.swing.mxGraphComponent;
@@ -40,8 +43,14 @@ public class View extends JFrame implements ActionListener {
 	private JPanel down = new JPanel(new GridLayout(0,1));
 	private JPanel optionBox = new JPanel();
 	private JPanel buttonBar = new JPanel();
+	private JPanel panelContainRequestField  = new JPanel();;
+	private JPanel panelAdvancedRequest =new JPanel();
+	
 	private JButton btZoomToFit = new JButton("Zoom Off");
 	private JButton btDisplay=new JButton("Display");
+	private JButton buttonAdvancedRequest = new JButton("Advanced Request");
+	private JButton buttonCancel = new JButton("Cancel");
+	private JButton buttonGo = new JButton("Go");
 
 	private mxGraph graph = new mxGraph();
 	private Object parent = graph.getDefaultParent();
@@ -52,16 +61,18 @@ public class View extends JFrame implements ActionListener {
 	private JCheckBox checkAll = new JCheckBox("All cells");
 	private JCheckBox checkBox ;
 
+	 private JTextField textFieldRequest = new JTextField("Enter Users Requests");
+	 private JLabel label = new JLabel("Request");;
+
+	private	Font police = new Font("Arial", Font.BOLD, 14);
+
+
 	
 	private HashMap<String,JCheckBox> listOfCheckBox = new HashMap<String,JCheckBox>();
 
 	public View(Controller controller)  {
-		super("Frame Cell!");
+		super("Frame Cell! MVC");
 		this.controller = controller;
-	
-
-		//Create a list of Cell
-	
 
 		//Create mxgraphComponent with properties
 		graphComponent = new mxGraphComponent(graph);
@@ -116,15 +127,32 @@ public class View extends JFrame implements ActionListener {
 		}
 
 
+		panelContainRequestField.add(label);
+		panelContainRequestField.add(textFieldRequest);
+		panelContainRequestField.add(buttonGo);
+		panelContainRequestField.add(buttonCancel);
+		
+		getContentPane().add(panelContainRequestField,BorderLayout.PAGE_END);
+		
+		panelAdvancedRequest.add(buttonAdvancedRequest);
+		
+		
 		//Ada ButtonDisplay in  down  JPanel
 		down.add(btDisplay,BorderLayout.CENTER);
 
 		//Ada JPanel down ie check box in OptionBox JPanel
 		optionBox.add(down);
 		optionBox.add(buttonBar,BorderLayout.CENTER);//because Zoom is on NORTH
-
+		optionBox.add(panelAdvancedRequest,BorderLayout.AFTER_LAST_LINE);
+		
 		getContentPane().add(optionBox, BorderLayout.EAST);
 		setJMenuBar(menu.buildMenu());
+			
+		
+		textFieldRequest.setPreferredSize(new Dimension(950,30));
+		textFieldRequest.setForeground(Color.BLUE);
+		textFieldRequest.setFont(police);
+		
 
 		//Add ActionListener elements
 		menu.getExit().addActionListener(this);
@@ -133,7 +161,7 @@ public class View extends JFrame implements ActionListener {
 		btDisplay.addActionListener(this);
 		menu.getRadioButtonMenuItemDisplay().addActionListener(this);
 		menu.getRadioButtonMenuItemHidden().addActionListener(this);
-		
+		buttonGo.addActionListener(this);
 		
 		
 		controller.ChangeColorOfCell(menu);			
