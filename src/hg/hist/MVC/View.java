@@ -20,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -64,6 +65,8 @@ public class View extends JFrame implements ActionListener {
 	 private JTextField textFieldRequest = new JTextField("Enter Users Requests");
 	 private JLabel label = new JLabel("Request");;
 
+	 private HashMap<String, JMenuItem> JMenuItems = new HashMap<String,JMenuItem>();
+	
 	private	Font police = new Font("Arial", Font.BOLD, 14);
 
 
@@ -71,7 +74,7 @@ public class View extends JFrame implements ActionListener {
 	private HashMap<String,JCheckBox> listOfCheckBox = new HashMap<String,JCheckBox>();
 
 	public View(Controller controller)  {
-		super("Frame Cell! MVC");
+		super("Frame Cell! MVC ");
 		this.controller = controller;
 
 		//Create mxgraphComponent with properties
@@ -117,8 +120,9 @@ public class View extends JFrame implements ActionListener {
 
 		checkAll.setSelected(true);
 		down.add(checkAll);
-
-		for(String key : controller.getM().keySet()){
+ 
+		//Check Box
+		for(String key : controller.getMapColor().keySet()){
 			checkBox = new JCheckBox(key.toString());
 			checkBox.setName("CheckBox_" + key.toString());
 			checkBox.setSelected(false);
@@ -164,9 +168,9 @@ public class View extends JFrame implements ActionListener {
 		buttonGo.addActionListener(this);
 		
 		
-		controller.ChangeColorOfCell(menu);			
-			for(String a : controller.getJMenuItems().keySet()){
-				controller.getJMenuItems().get(a).addActionListener(new ActionListener(){
+		JMenuItems = controller.ChangeColorOfCell(menu,JMenuItems);			
+			for(String a : getJMenuItems().keySet()){
+				getJMenuItems().get(a).addActionListener(new ActionListener(){
 					  public void actionPerformed(ActionEvent event){
 						  String[] list = {"red", "green", "blue","yellow", "black", "white","orange", "purple"};
 							JComboBox jcb = new JComboBox(list);
@@ -210,7 +214,7 @@ public class View extends JFrame implements ActionListener {
 			}
 			down.remove(btDisplay);
 			listOfCheckBox.clear();
-			for(String key :controller.getM().keySet()){
+			for(String key :controller.getMapColor().keySet()){
 					checkBox = new JCheckBox(key.toString());
 					//checkBox.setName("CheckBox_" + key.toString());
 					checkBox.setSelected(false);
@@ -221,10 +225,10 @@ public class View extends JFrame implements ActionListener {
 			down.add(btDisplay,BorderLayout.CENTER);
 			this.setVisible(true);
 
-			controller.ChangeColorOfCell(menu);
+			controller.ChangeColorOfCell(menu,JMenuItems);
 
-			for(String a : controller.getJMenuItems().keySet()){
-				controller.getJMenuItems().get(a).addActionListener(new ActionListener(){
+			for(String a : getJMenuItems().keySet()){
+				getJMenuItems().get(a).addActionListener(new ActionListener(){
 					  public void actionPerformed(ActionEvent event){
 						  String[] list = {"red", "green", "blue","yellow", "black", "white","orange", "purple"};
 							JComboBox jcb = new JComboBox(list);
@@ -277,5 +281,11 @@ public class View extends JFrame implements ActionListener {
 		
 	}
 }
+	public HashMap<String, JMenuItem> getJMenuItems() {
+		return JMenuItems;
+	}
+	public void setJMenuItems(HashMap<String, JMenuItem> jMenuItems) {
+		JMenuItems = jMenuItems;
+	}
 }
 

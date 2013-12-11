@@ -35,16 +35,14 @@ public class Controller {
 	private String path_initial;
 	private String color = "black";
 
-	JMenuItem newCell;
-	
+
 	SearchFile searchFile;
 
 	String cellselected;
 	Object key;
 
 	private ImageIcon img = new ImageIcon(img_default);
-	private HashMap<String, String> m = new HashMap<String,String>();
-	private HashMap<String, JMenuItem> JMenuItems = new HashMap<String,JMenuItem>();
+	private HashMap<String, String> mapColor = new HashMap<String,String>();
 
 	private List<Cell> listCells;
 
@@ -97,7 +95,7 @@ public class Controller {
 						.insertVertex(graph.getDefaultParent(), null, c.getClass_name(),
 								c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 								"shape=ellipse;per=ellipsePerimeter;fillColor="
-										+ getM().get(c.getClass_name()));
+										+ getMapColor().get(c.getClass_name()));
 			}
 		}
 		finally
@@ -110,14 +108,15 @@ public class Controller {
 		graphComponent.setBackgroundImage(img);	
 		return graphComponent;
 	}
-	public void  ChangeColorOfCell(Menu menu){	
-		getJMenuItems().clear();		
-		for(String j : getM().keySet() ){
+	public HashMap<String, JMenuItem>  ChangeColorOfCell(Menu menu, HashMap<String, JMenuItem> JMenuItems){	
+		JMenuItem newCell;		
+		for(String j : getMapColor().keySet() ){
 			newCell = new JMenuItem(j);
 			menu.getPropertyCells().add(newCell);
 			JMenuItems.put(j.toString(),newCell);
-			System.out.println("element de la JMenuItems:" + JMenuItems.keySet());
+			//System.out.println("element de la JMenuItems:" + JMenuItems.keySet());
 		}
+		return JMenuItems;
 	}
 	public void ChangeFile(JFileChooser chooser,mxGraphComponent graphComponent,mxGraph graph){	
 		path_current = chooser.getSelectedFile().getAbsolutePath();
@@ -192,11 +191,11 @@ public class Controller {
 		return newScale;
 	}
 	public void MapColorCell(){
-		m.put("Tumor nucleus", "red");
-		m.put("Granulocyte nucleus", "yellow");
-		m.put("Lymphocyte Nucleus", "green");
-		m.put("Nucleus DAB+ PRD+", "black");
-		m.put("Nucleus DAB+", "blue");
+		mapColor.put("Tumor nucleus", "red");
+		mapColor.put("Granulocyte nucleus", "yellow");
+		mapColor.put("Lymphocyte Nucleus", "green");
+		mapColor.put("Nucleus DAB+ PRD+", "black");
+		mapColor.put("Nucleus DAB+", "blue");
 	}
 	public mxGraphComponent initFrame( mxGraph graph,  mxGraphComponent graphComponent){
 		graph.getModel().beginUpdate();
@@ -207,7 +206,7 @@ public class Controller {
 						.insertVertex(graph.getDefaultParent(), null, c.getClass_name(),
 								c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 								"shape=ellipse;per=ellipsePerimeter;fillColor="
-										+ getM().get(c.getClass_name()));
+										+ getMapColor().get(c.getClass_name()));
 			}
 		} finally {
 			graph.getModel().endUpdate();
@@ -232,7 +231,7 @@ public class Controller {
 							.insertVertex(graph.getDefaultParent(), null, c.getClass_name(),
 									c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 									"shape=ellipse;per=ellipsePerimeter;fillColor="
-											+ getM().get(c.getClass_name()));
+											+ getMapColor().get(c.getClass_name()));
 				}
 			}
 		}
@@ -242,9 +241,9 @@ public class Controller {
 		}
 	}
 	public void changeMap(String typeCell,String typeColor){
-		for(String e:getM().keySet()){
+		for(String e:getMapColor().keySet()){
 			if(typeCell.equals(e)){
-				getM().put(e, typeColor);
+				getMapColor().put(e, typeColor);
 			}
 		}
 	}
@@ -257,13 +256,13 @@ public class Controller {
 	}
 	HashMap<String,String> unionMap = new HashMap<String, String>();
 	unionMap.putAll(tmp);
-	unionMap.putAll(getM());
+	unionMap.putAll(getMapColor());
 	for(String e:unionMap.keySet()){	
 			System.out.println("key : "+ e);
 			System.out.println("object : "+ unionMap.get(e));
 		}
-	setM(unionMap);
-	return getM();
+	setMapColor(unionMap);
+	return getMapColor();
     }
 	public List<Cell> getListCells() {
 	return listCells;
@@ -277,12 +276,7 @@ public class Controller {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public JMenuItem getNewCell() {
-		return newCell;
-	}
-	public void setNewCell(JMenuItem newCell) {
-		this.newCell = newCell;
-	}
+
 	public String getImg_default() {
 		return img_default;
 	}
@@ -321,11 +315,11 @@ public class Controller {
 		this.path_image = path_image;
 	}
 
-	public HashMap<String, String> getM() {
-		return m;
+	public HashMap<String, String> getMapColor() {
+		return mapColor;
 	}
-	public void setM(HashMap<String, String> m) {
-		this.m = m;
+	public void setMapColor(HashMap<String, String> m) {
+		this.mapColor = m;
 	}
 	public Object getKey() {
 		return key;
@@ -339,12 +333,7 @@ public class Controller {
 	public void setCellselected(String cellselected) {
 		this.cellselected = cellselected;
 	}
-	public HashMap<String, JMenuItem> getJMenuItems() {
-		return JMenuItems;
-	}
-	public void setJMenuItems(HashMap<String, JMenuItem> jMenuItems) {
-		JMenuItems = jMenuItems;
-	}
+
 }
 
 
