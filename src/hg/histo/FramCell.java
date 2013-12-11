@@ -219,8 +219,8 @@ public class FramCell extends JFrame implements ActionListener {
 		menu.getOpen().addActionListener(this);
 		//menu.getAddCell().addActionListener(this);
 		//menu.getChangeColor().addActionListener(this);
-		menu.getCb1().addActionListener(this);
-		menu.getCb2().addActionListener(this);
+		menu.getRadioButtonMenuItemDisplay().addActionListener(this);
+		menu.getRadioButtonMenuItemHidden().addActionListener(this);
 		btZoomToFit.addActionListener(this);
 		btDisplay.addActionListener(this);
 		treat.addCellWithMap(menu);
@@ -324,12 +324,12 @@ public class FramCell extends JFrame implements ActionListener {
 			FramCell.this.setVisible(false);
 		}
 		
-		if( e.getSource() == menu.getCb2()){
+		if( e.getSource() == menu.getRadioButtonMenuItemHidden()){
 			graphComponent.setBackgroundImage(new ImageIcon("src/ressources/Back_White.png"));			
 			getContentPane().add(graphComponent);
 			graphComponent.refresh();
 			}
-		if(e.getSource() == menu.getCb1() ){
+		if(e.getSource() == menu.getRadioButtonMenuItemDisplay() ){
 			//display or remove image 
 			
 			ImageIcon img = new ImageIcon(path_image);
