@@ -386,8 +386,8 @@ public class FramCell extends JFrame implements ActionListener {
 					boolean found = searchFile.searchFileImage(searchFile.name, searchFile.filePath);
 					if (found ){
 						System.out.println("ok found file .jpg ");
-						JOptionPane.showMessageDialog(graphComponent, "File .jpn  found ! Name is :"+path_image,"avertissement",
-								JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(graphComponent, "File .jpn  found ! Name is :"+path_image,"Information",
+								JOptionPane.INFORMATION_MESSAGE);
 						FramCell.this.setVisible(true);
 					}
 					else {
