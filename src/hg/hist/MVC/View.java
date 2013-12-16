@@ -161,8 +161,8 @@ public class View extends JFrame implements ActionListener {
 		//Add ActionListener elements
 		menu.getExit().addActionListener(this);
 		menu.getOpen().addActionListener(this);
-		btZoomToFit.addActionListener(this);
-		btDisplay.addActionListener(this);
+		this.btZoomToFit.addActionListener(this);
+		this.btDisplay.addActionListener(this);
 		menu.getRadioButtonMenuItemDisplay().addActionListener(this);
 		menu.getRadioButtonMenuItemHidden().addActionListener(this);
 		buttonGo.addActionListener(this);
@@ -212,6 +212,7 @@ public class View extends JFrame implements ActionListener {
 			for(String key :listOfCheckBox.keySet()){
 				down.remove(listOfCheckBox.get(key));
 			}
+			
 			down.remove(btDisplay);
 			listOfCheckBox.clear();
 			for(String key :controller.getMapColor().keySet()){
@@ -242,7 +243,9 @@ public class View extends JFrame implements ActionListener {
 							getController().changeMap(getController().getCellselected(), getController().getColor());
 							getController().displaySelectedCells(getController().getCellselected(),graph);
 						  }
-						});	
+						});
+						}	
+						
 
 		}
 		if(e.getSource() == btZoomToFit){
@@ -280,7 +283,7 @@ public class View extends JFrame implements ActionListener {
 		}
 		
 	}
-}
+
 	public HashMap<String, JMenuItem> getJMenuItems() {
 		return JMenuItems;
 	}
