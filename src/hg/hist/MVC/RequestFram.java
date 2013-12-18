@@ -23,7 +23,7 @@ package hg.hist.MVC;
 	import javax.swing.event.ChangeEvent;
 	import javax.swing.event.ChangeListener;
 
-	public class RequestFram  extends JFrame implements ActionListener {
+	public class RequestFram  extends JFrame implements ActionListener,ChangeListener {
 	
 
 		/**
@@ -31,12 +31,9 @@ package hg.hist.MVC;
 		 */
 		
 		
-		private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 123456L;
 		
 		private JLabel LabelChooseType = new JLabel("Choose your Cellule"); 
-		private JLabel Cellule2;
-		private JLabel Cellule3;
-		private JLabel Cellule4;
 		private JLabel Sphericity = new JLabel("Choose your Spherecity");
 		private JLabel Area  = new JLabel("Choose your Area");
 		private JLabel Border= new JLabel("Choose your Border");
@@ -110,22 +107,16 @@ package hg.hist.MVC;
 		
 		
 		
-		public RequestFram (){
-			
-			
-		}
 		
-		public JFrame advancedRequest(){
-			frame2 = new JFrame("Advanced Request");
-			
-			frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame2.setSize(800,1000);
-			frame2.setVisible(true);
-			frame2.setLayout(new BorderLayout());
 			
 			
+		
+		
+	public RequestFram (){
+
+		
 			panel.setBackground(Color.white);
-			frame2.add(panel);
+			this.add(panel);
 			//choisir la cellule
 			
 			
@@ -194,12 +185,12 @@ package hg.hist.MVC;
 		    slider2.setMinorTickSpacing(1);
 		    slider2.setPaintTicks(true);
 		    slider2.setPaintLabels(true);
-		    slider2.addChangeListener(new ChangeListener(){
-	            @Override
-	            public void stateChanged(ChangeEvent e) {
-	                sliderDisplay2.setText(String.valueOf(slider2.getValue()));
-	            }
-	        });
+		    
+		    slider.addChangeListener(this);
+		    slider2.addChangeListener(this);
+
+		    slider3.addChangeListener(this);
+
 		    sliderDisplay2.addKeyListener(new KeyAdapter(){
 	            @Override
 	            public void keyReleased(KeyEvent ke) {
@@ -243,13 +234,7 @@ package hg.hist.MVC;
 		    slider.setMinorTickSpacing(1);
 		    slider.setPaintTicks(true);
 		    slider.setPaintLabels(true);
-		    
-		    slider.addChangeListener(new ChangeListener(){
-	            @Override
-	            public void stateChanged(ChangeEvent e) {
-	                sliderDisplay.setText(String.valueOf(slider.getValue()));
-	            }
-	        });
+
 		    sliderDisplay.addKeyListener(new KeyAdapter(){
 	            @Override
 	            public void keyReleased(KeyEvent ke) {
@@ -293,12 +278,7 @@ package hg.hist.MVC;
 		slider3.setMinorTickSpacing(1);
 	    slider3.setPaintTicks(true);
 		slider3.setPaintLabels(true);
-		  slider3.addChangeListener(new ChangeListener(){
-	            @Override
-	            public void stateChanged(ChangeEvent e) {
-	                sliderDisplay3.setText(String.valueOf(slider3.getValue()));
-	            }
-	        });
+	
 		    sliderDisplay3.addKeyListener(new KeyAdapter(){
 	            @Override
 	            public void keyReleased(KeyEvent ke) {
@@ -339,10 +319,27 @@ package hg.hist.MVC;
 			panel.add(rubrique3);
 			panel.add(rubrique4);
 			panel.add(paneEnd,BorderLayout.SOUTH);
-			
-			return frame2;
-			
+						
 		}
+	
+	public void stateChanged(ChangeEvent event) {
+		System.out.println("Slider");
+	       if(event.getSource() == slider3){
+	                sliderDisplay3.setText(String.valueOf(slider3.getValue()));
+	            }
+	       
+		    
+	       if(slider == event.getSource()){
+	                sliderDisplay.setText(String.valueOf(slider.getValue()));
+	            }
+	       if(slider2 == event.getSource()){
+
+	                sliderDisplay2.setText(String.valueOf(slider2.getValue()));
+	            }
+	        
+	        
+		
+	}
 		public String getSelectedButtonText(ButtonGroup buttonGroup) {
 	        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
 	            AbstractButton button = buttons.nextElement();
@@ -361,7 +358,7 @@ package hg.hist.MVC;
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			if(e.getSource() == btOk ){
-			frame2.setVisible(false);
+			this.setVisible(false);
 			}
 			//if(e.getSource() == btApply){
 		       //fr.request.setText(getSelectedButtonText(g));//retourne la cellule selectionner

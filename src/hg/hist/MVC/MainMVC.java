@@ -1,5 +1,7 @@
 package hg.hist.MVC;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 
 public class MainMVC {
@@ -12,7 +14,14 @@ public class MainMVC {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1200, 700);
 		frame.setVisible(true);
-			
+		
+		
+		RequestFram  frame2 = new RequestFram();
+		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame2.setSize(1200, 700);
+		frame2.setVisible(true);
+		frame2.setLayout(new BorderLayout());
+		
 		}
 
 		
