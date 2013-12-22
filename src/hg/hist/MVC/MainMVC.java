@@ -16,12 +16,12 @@ public class MainMVC {
 		frame.setVisible(true);
 		
 		
-		RequestFram  frame2 = new RequestFram();
+		/*RequestFram  frame2 = new RequestFram();
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame2.setSize(1200, 700);
 		frame2.setVisible(true);
 		frame2.setLayout(new BorderLayout());
-		
+		*/
 		}
 
 		
