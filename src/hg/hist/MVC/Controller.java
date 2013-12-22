@@ -32,7 +32,7 @@ public class Controller {
 	private String path_image = img_default;
 	private String path_excel_default = "src/ressources/image0046.csv";
 	private String path_current = path_excel_default;
-	private String path_initial;
+	private String path_initial = "";
 	private String color = "black";
 
 
@@ -121,24 +121,38 @@ public class Controller {
 	public void ChangeFile(JFileChooser chooser,mxGraphComponent graphComponent,mxGraph graph){	
 		path_current = chooser.getSelectedFile().getAbsolutePath();
 		System.out.println("Path selected current : " + path_current);
+		
 		StringTokenizer st = new StringTokenizer(path_current, "."); 
 
 		while (st.hasMoreTokens()) { 
-			String path_initial = st.nextToken();
+			path_initial = st.nextToken();
 			System.out.println("path_initial : " + path_initial); 
-			String ext=st.nextToken();
-			System.out.println("ext : " + ext);
+			break;
+		}
+		
+		
+		System.out.println("path_initial : " + path_initial); 
 
-			if(ext.equals("csv")){
+		
+		 
+		String extension = "";
+
+		int i = path_current.lastIndexOf('.');
+		if (i > 0) {
+		    extension = path_current.substring(i+1);
+		}
+		
+			if(extension.equals("csv")){
 				System.out.println("Ceci est un bon fichier ");
-				System.out.println(ext);
+				System.out.println("Ceci est l'extension :" + extension);
 
 				//remplace .cvs to jpg
-				String newPath1=ext.replace(ext.charAt(0), 'j');
-				String newPath2=newPath1.replace(ext.charAt(1), 'p');
-				String newPath3=newPath2.replace(ext.charAt(2), 'g');
+				String newPath1=extension.replace(extension.charAt(0), 'j');
+				String newPath2=newPath1.replace(extension.charAt(1), 'p');
+				String newPath3=newPath2.replace(extension.charAt(2), 'g');
 
 				// creation de path.jpg
+				System.out.println("path_initial : " + path_initial); 
 				path_image = path_initial +"."+ newPath3;
 				System.out.println("path_image " + path_image);
 				// aller chercher path.jpg dans le dossier
@@ -160,14 +174,15 @@ public class Controller {
 				System.out.println("path using with change Frame"+ path_current);
 				changeFrame(path_current,graph,  graphComponent);
 			}
-			else if (!ext.equals("csv")){
+			else if (!extension.equals("csv")){
 				System.out.println("Ceci n'est pas un bon fichier ");
 				JOptionPane.showMessageDialog(graphComponent, "File choosen is not expected",
 						"avertissement",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-	}
+		
+	//}
 	public double newScale(mxGraphComponent graphComponent){
 		double newScale = 1;
 
