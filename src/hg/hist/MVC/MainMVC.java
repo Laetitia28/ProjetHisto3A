@@ -1,7 +1,5 @@
 package hg.hist.MVC;
 
-import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 
 public class MainMVC {

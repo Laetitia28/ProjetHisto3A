@@ -9,6 +9,8 @@ import hg.histo.SearchFile;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +20,9 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
@@ -43,18 +47,20 @@ public class Controller {
 
 	private ImageIcon img = new ImageIcon(img_default);
 	private HashMap<String, String> mapColor = new HashMap<String,String>();
+	private HashMap<String, JMenuItem> JMenuItems = new HashMap<String,JMenuItem>();
+
 
 	private List<Cell> listCells;
 
 	public Controller (){
-		
-		
+
+
 		listCells = new ArrayList<Cell>();
 		listCells = setListCell(path_current);
 		img = new ImageIcon(img_default);
 	}
-	
-	
+
+
 	public static ImageIcon scale(String source, int width, int height) {
 
 		ImageIcon icon = new ImageIcon(source);
@@ -85,7 +91,7 @@ public class Controller {
 		graph.setCellsDeletable(false);
 		this.listCells.clear();
 		this.listCells = setListCell(path);
-		
+
 		ChangeMapColor(this.listCells);
 		graph.getModel().beginUpdate();
 		try
@@ -121,7 +127,7 @@ public class Controller {
 	public void ChangeFile(JFileChooser chooser,mxGraphComponent graphComponent,mxGraph graph){	
 		path_current = chooser.getSelectedFile().getAbsolutePath();
 		System.out.println("Path selected current : " + path_current);
-		
+
 		StringTokenizer st = new StringTokenizer(path_current, "."); 
 
 		while (st.hasMoreTokens()) { 
@@ -129,59 +135,55 @@ public class Controller {
 			System.out.println("path_initial : " + path_initial); 
 			break;
 		}
-		
-		
-		System.out.println("path_initial : " + path_initial); 
 
-		
-		 
+		System.out.println("path_initial : " + path_initial); 
 		String extension = "";
 
 		int i = path_current.lastIndexOf('.');
 		if (i > 0) {
-		    extension = path_current.substring(i+1);
+			extension = path_current.substring(i+1);
 		}
-		
-			if(extension.equals("csv")){
-				System.out.println("Ceci est un bon fichier ");
-				System.out.println("Ceci est l'extension :" + extension);
 
-				//remplace .cvs to jpg
-				String newPath1=extension.replace(extension.charAt(0), 'j');
-				String newPath2=newPath1.replace(extension.charAt(1), 'p');
-				String newPath3=newPath2.replace(extension.charAt(2), 'g');
+		if(extension.equals("csv")){
+			System.out.println("Ceci est un bon fichier ");
+			System.out.println("Ceci est l'extension :" + extension);
 
-				// creation de path.jpg
-				System.out.println("path_initial : " + path_initial); 
-				path_image = path_initial +"."+ newPath3;
-				System.out.println("path_image " + path_image);
-				// aller chercher path.jpg dans le dossier
-				searchFile = new SearchFile(path_image);
-				boolean found = searchFile.searchFileImage(searchFile.getName(), searchFile.getFilePath());
-				if (found ){
-					System.out.println("ok found file .jpg ");
-					JOptionPane.showMessageDialog(graphComponent, "File .jpn  found ! Name is :"+path_image,"avertissement",
-							JOptionPane.WARNING_MESSAGE);
-				}
-				else {
-					JOptionPane.showMessageDialog(graphComponent, "File .jpn not found ! Default image is image0046 ",
-							"avertissement",
-							JOptionPane.ERROR_MESSAGE);
-					System.out.println("Ko not found .jpg ");
-					path_image = img_default;
-				}
-				//if .cvs is found then display new graph
-				System.out.println("path using with change Frame"+ path_current);
-				changeFrame(path_current,graph,  graphComponent);
+			//remplace .cvs to jpg
+			String newPath1=extension.replace(extension.charAt(0), 'j');
+			String newPath2=newPath1.replace(extension.charAt(1), 'p');
+			String newPath3=newPath2.replace(extension.charAt(2), 'g');
+
+			// creation de path.jpg
+			System.out.println("path_initial : " + path_initial); 
+			path_image = path_initial +"."+ newPath3;
+			System.out.println("path_image " + path_image);
+			// aller chercher path.jpg dans le dossier
+			searchFile = new SearchFile(path_image);
+			boolean found = searchFile.searchFileImage(searchFile.getName(), searchFile.getFilePath());
+			if (found ){
+				System.out.println("ok found file .jpg ");
+				JOptionPane.showMessageDialog(graphComponent, "File .jpn  found ! Name is :"+path_image,"avertissement",
+						JOptionPane.WARNING_MESSAGE);
 			}
-			else if (!extension.equals("csv")){
-				System.out.println("Ceci n'est pas un bon fichier ");
-				JOptionPane.showMessageDialog(graphComponent, "File choosen is not expected",
+			else {
+				JOptionPane.showMessageDialog(graphComponent, "File .jpn not found ! Default image is image0046 ",
 						"avertissement",
 						JOptionPane.ERROR_MESSAGE);
+				System.out.println("Ko not found .jpg ");
+				path_image = img_default;
 			}
+			//if .cvs is found then display new graph
+			System.out.println("path using with change Frame"+ path_current);
+			changeFrame(path_current,graph,  graphComponent);
 		}
-		
+		else if (!extension.equals("csv")){
+			System.out.println("Ceci n'est pas un bon fichier ");
+			JOptionPane.showMessageDialog(graphComponent, "File choosen is not expected",
+					"avertissement",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
 	//}
 	public double newScale(mxGraphComponent graphComponent){
 		double newScale = 1;
@@ -212,8 +214,9 @@ public class Controller {
 		mapColor.put("Nucleus DAB+ PRD+", "black");
 		mapColor.put("Nucleus DAB+", "blue");
 	}
-	public mxGraphComponent initFrame( mxGraph graph,  mxGraphComponent graphComponent){
+	public mxGraphComponent initFrame(mxGraph graph,  mxGraphComponent graphComponent){
 		graph.getModel().beginUpdate();
+
 		try
 		{
 			for (Cell c : this.listCells) {
@@ -231,7 +234,25 @@ public class Controller {
 		ImageIcon img = new ImageIcon(img_default);
 		img = ImageToIcon.scale(img_default, (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4));
 		graphComponent.setBackgroundImage(img);			
-
+/*
+		ChangeColorOfCell(menu,JMenuItems);			
+		for(String a : JMenuItems.keySet()){
+			JMenuItems.get(a).addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent event){
+					String[] list = {"red", "green", "blue","yellow", "black", "white","orange", "purple"};
+					JComboBox jcb = new JComboBox(list);
+					jcb.setEditable(false);
+					jcb.getSelectedItem();
+					JOptionPane.showMessageDialog( null, jcb,event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
+					setCellselected(event.getActionCommand());
+					System.out.println("chosenCell:" + getCellselected());
+					setColor(jcb.getSelectedItem().toString());
+					System.out.println("chosenColor:" + getColor());
+					changeMap(getCellselected(), getColor());
+					//displaySelectedCells(getCellselected(),graph);
+				}
+			});	
+		}*/
 		return graphComponent;
 		//getContentPane().add(graphComponent, BorderLayout.CENTER);
 	}
@@ -262,29 +283,29 @@ public class Controller {
 			}
 		}
 	}
-    public HashMap<String,String> ChangeMapColor(List<Cell> myNewList){
-    	System.out.println("ChangeMapColor");
-    	
-	HashMap<String,String> tmp = new HashMap<String, String>();
-	for(Cell c : myNewList){
-		tmp.put(c.getClass_name(), "orange");
-	}
-	HashMap<String,String> unionMap = new HashMap<String, String>();
-	unionMap.putAll(tmp);
-	unionMap.putAll(getMapColor());
-	for(String e:unionMap.keySet()){	
+	public HashMap<String,String> ChangeMapColor(List<Cell> myNewList){
+		System.out.println("ChangeMapColor method");
+
+		HashMap<String,String> tmp = new HashMap<String, String>();
+		for(Cell c : myNewList){
+			tmp.put(c.getClass_name(), "orange");
+		}
+		HashMap<String,String> unionMap = new HashMap<String, String>();
+		unionMap.putAll(tmp);
+		unionMap.putAll(getMapColor());
+		for(String e:unionMap.keySet()){	
 			System.out.println("key : "+ e);
 			System.out.println("object : "+ unionMap.get(e));
 		}
-	setMapColor(unionMap);
-	return getMapColor();
-    }
+		setMapColor(unionMap);
+		return getMapColor();
+	}
 	public List<Cell> getListCells() {
-	return listCells;
-}
-    public void setListCells(List<Cell> listCells) {
-	this.listCells = listCells;
-    }
+		return listCells;
+	}
+	public void setListCells(List<Cell> listCells) {
+		this.listCells = listCells;
+	}
 	public String getColor() {
 		return color;
 	}

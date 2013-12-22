@@ -65,10 +65,10 @@ public class View extends JFrame implements ActionListener {
 	 private JTextField textFieldRequest = new JTextField("Enter Users Requests");
 	 private JLabel label = new JLabel("Request");;
 
-	 private HashMap<String, JMenuItem> JMenuItems = new HashMap<String,JMenuItem>();
 	
 	private	Font police = new Font("Arial", Font.BOLD, 14);
 
+	 private HashMap<String, JMenuItem> JMenuItems = new HashMap<String,JMenuItem>();
 
 	
 	private HashMap<String,JCheckBox> listOfCheckBox = new HashMap<String,JCheckBox>();
@@ -168,24 +168,7 @@ public class View extends JFrame implements ActionListener {
 		buttonGo.addActionListener(this);
 		
 		
-		JMenuItems = controller.ChangeColorOfCell(menu,JMenuItems);			
-			for(String a : getJMenuItems().keySet()){
-				getJMenuItems().get(a).addActionListener(new ActionListener(){
-					  public void actionPerformed(ActionEvent event){
-						  String[] list = {"red", "green", "blue","yellow", "black", "white","orange", "purple"};
-							JComboBox jcb = new JComboBox(list);
-							jcb.setEditable(false);
-							jcb.getSelectedItem();
-							JOptionPane.showMessageDialog( null, jcb,event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
-							getController().setCellselected(event.getActionCommand());
-							System.out.println("chosenCell:" + getController().getCellselected());
-							getController().setColor(jcb.getSelectedItem().toString());
-							System.out.println("chosenColor:" + getController().getColor());
-							getController().changeMap(getController().getCellselected(), getController().getColor());
-							getController().displaySelectedCells(getController().getCellselected(),graph);
-						  }
-						});	
-			}
+		
 		
 		getContentPane().add(graphComponent);
 	}
@@ -226,8 +209,16 @@ public class View extends JFrame implements ActionListener {
 			down.add(btDisplay,BorderLayout.CENTER);
 			this.setVisible(true);
 
-			controller.ChangeColorOfCell(menu,JMenuItems);
+			JMenuItems.clear();
 
+
+			
+			
+			controller.ChangeColorOfCell(menu,getJMenuItems());
+
+			for(String a : getJMenuItems().keySet()){
+				System.out.println("jk : "+ a);
+			}
 			for(String a : getJMenuItems().keySet()){
 				getJMenuItems().get(a).addActionListener(new ActionListener(){
 					  public void actionPerformed(ActionEvent event){
