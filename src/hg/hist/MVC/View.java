@@ -103,6 +103,7 @@ public class View extends JFrame implements ActionListener {
 		controller.initFrame(graph, graphComponent);
 		
 		optionBox.setLayout(new BorderLayout());  
+		optionBox.setPreferredSize(new Dimension(200, 200));
 		buttonBar.add(btZoomToFit);
 
 		//Zoom out graph
@@ -113,8 +114,8 @@ public class View extends JFrame implements ActionListener {
 		//Check Box 
 		Border border = BorderFactory.createTitledBorder("Selected Cell");
 		down.setBorder(border);
-		down.setBackground(Color.BLUE);
-		down.setBounds(0, 200, 150, 300);
+		down.setBackground(Color.GREEN);
+		down.setBounds(0, 200, 200, 300);
 		down.setOpaque(true);
 		down.setLayout(new GridLayout(10,1));
 
@@ -166,7 +167,7 @@ public class View extends JFrame implements ActionListener {
 		menu.getRadioButtonMenuItemDisplay().addActionListener(this);
 		menu.getRadioButtonMenuItemHidden().addActionListener(this);
 		buttonGo.addActionListener(this);
-		
+		buttonAdvancedRequest.addActionListener(this);
 		
 		
 		
@@ -271,6 +272,14 @@ public class View extends JFrame implements ActionListener {
 					controller.displaySelectedCells(p,graph);
 				}
 			}
+		}
+		if(e.getSource() == buttonAdvancedRequest){
+			RequestFram  frame2 = new RequestFram();
+
+			frame2.setVisible(true);
+			
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			
 		}
 		
 	}

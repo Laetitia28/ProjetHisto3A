@@ -1,36 +1,32 @@
 package hg.hist.MVC;
 	import java.awt.BorderLayout;
-	import java.awt.Color;
-	import java.awt.Dimension;
-	import java.awt.GridLayout;
-	import java.awt.event.ActionEvent;
-	import java.awt.event.ActionListener;
-	import java.awt.event.KeyAdapter;
-	import java.awt.event.KeyEvent;
-	import java.util.Enumeration;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Enumeration;
 
 	import javax.swing.AbstractButton;
-	import javax.swing.BorderFactory;
-	import javax.swing.ButtonGroup;
-	import javax.swing.JButton;
-	import javax.swing.JFrame;
-	import javax.swing.JLabel;
-	import javax.swing.JPanel;
-	import javax.swing.JRadioButton;
-	import javax.swing.JSlider;
-	import javax.swing.JTextField;
-	import javax.swing.border.Border;
-	import javax.swing.event.ChangeEvent;
-	import javax.swing.event.ChangeListener;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 	public class RequestFram  extends JFrame implements ActionListener,ChangeListener {
 	
 
-		/**
-		 * 
-		 */
-		
-		
 		private static final long serialVersionUID = 123456L;
 		
 		private JLabel LabelChooseType = new JLabel("Choose your Cellule"); 
@@ -47,43 +43,46 @@ package hg.hist.MVC;
 		private JPanel paneEnd = new JPanel();
 		
 		
-		private JButton btOk=new JButton("Ok");
+		private JButton btFinish=new JButton("Finish");
 		private JButton btApply=new JButton("Apply");
 
-		private JButton btSup = new JButton("Sup");
-		private JButton btInf = new JButton("Inf");
+		private JButton btSupSphericity = new JButton("Sup");
+		private JButton btInfSphericity = new JButton("Inf");
 		private JButton btEt = new JButton("ET");
 		private JButton btOu = new JButton("OU");
 		
-		private JButton btSup2 =new JButton("Sup");
-		private JButton btInf2=new JButton("Inf");
+		//private JButton btSupArea =new JButton("Sup");
+		//private JButton btInfArea=new JButton("Inf");
+		private JCheckBox btSupArea = new JCheckBox("Sup");
+		private JCheckBox btInfArea = new JCheckBox("Inf");
+
 		private JButton btEt2=new JButton("ET");
 		private JButton btOu2=new JButton("OU");
 		
-		private JButton btSup3=new JButton("Su");
-		private JButton btInf3=new JButton("In");
-		private JButton btEt3=new JButton("ET");
-		private JButton btOu3=new JButton("OU");
+		private JButton btSupBorder=new JButton("Su");
+		private JButton btInfBorder=new JButton("In");
+		private JButton btEtBorder=new JButton("ET");
+		private JButton btOuBorder=new JButton("OU");
 		
 		
-		private JSlider slider =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+		private JSlider sliderSphericity =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
 
-		private JSlider slider2 =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
-		private JSlider slider3 =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+		private JSlider sliderArea =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+		private JSlider sliderBorder =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
 
 		
 	    
 
-		private JTextField sliderDisplay = new JTextField();
-		private JTextField sliderDisplay2 =new JTextField();
-		private JTextField sliderDisplay3 =new JTextField();
+		private JTextField sliderDisplaySphericity = new JTextField();
+		private JTextField sliderDisplayArea =new JTextField();
+		private JTextField sliderDisplayBorder =new JTextField();
 		
 		private JPanel rubrique1 = new JPanel();//contient les cellules
 		private JPanel rubrique2 = new JPanel();
 		private JPanel rubrique3 = new JPanel();
 		private JPanel rubrique4 = new JPanel();
 		
-		JFrame frame2;
+		
 		
 		static final int SLIDER_INIT =125 ;
 		static final int SLIDER_MIN =0;
@@ -97,23 +96,19 @@ package hg.hist.MVC;
 		private JRadioButton btRadio4 = new JRadioButton("Tumor nucleus");
 		private JRadioButton btRadio5 = new JRadioButton("NucleusPRD+");
 		private JRadioButton btRadio6 = new JRadioButton("Granulocyte nucleus");
-		private JRadioButton  btRadio7 = new JRadioButton("Nucleus DAB+");
+		private JRadioButton btRadio7 = new JRadioButton("Nucleus DAB+");
 		private JRadioButton btRadio8 = new JRadioButton("OO");
 		private JRadioButton btRadio9 = new JRadioButton("NN");
 	
 	    
-		private String b;
-		
-		
-		
-		
-		
-			
-			
-		
+		private String stringResultOfRequest = "empty";
+		private String stringAreaSup = "0";
+		private String stringAreaInf = "250";
+
 		
 	public RequestFram (){
 
+		this.setSize(500, 500);
 		
 			panel.setBackground(Color.white);
 			this.add(panel);
@@ -176,43 +171,43 @@ package hg.hist.MVC;
 
 			
 		    
-		    sliderDisplay2.setText("Value of slider");
-		    sliderDisplay2.setPreferredSize(new Dimension(100,30));
-		    sliderDisplay2.setForeground(Color.BLUE);
+		    sliderDisplayArea.setText("Value of slider");
+		    sliderDisplayArea.setPreferredSize(new Dimension(100,30));
+		    sliderDisplayArea.setForeground(Color.BLUE);
 		    
 		    
-		    slider2.setMajorTickSpacing(50);
-		    slider2.setMinorTickSpacing(1);
-		    slider2.setPaintTicks(true);
-		    slider2.setPaintLabels(true);
+		    sliderArea.setMajorTickSpacing(50);
+		    sliderArea.setMinorTickSpacing(1);
+		    sliderArea.setPaintTicks(true);
+		    sliderArea.setPaintLabels(true);
 		    
-		    slider.addChangeListener(this);
-		    slider2.addChangeListener(this);
+		    sliderSphericity.addChangeListener(this);
+		    sliderArea.addChangeListener(this);
 
-		    slider3.addChangeListener(this);
+		    sliderBorder.addChangeListener(this);
 
-		    sliderDisplay2.addKeyListener(new KeyAdapter(){
+		    sliderDisplayArea.addKeyListener(new KeyAdapter(){
 	            @Override
 	            public void keyReleased(KeyEvent ke) {
-	                String typed = sliderDisplay2.getText();
-	                slider2.setValue(0);
+	                String typed = sliderDisplayArea.getText();
+	                sliderArea.setValue(0);
 	                if(!typed.matches("\\d+")) {
 	                    return;
 	                }
 	                int value = Integer.parseInt(typed);
-	                slider2.setValue(value);
+	                sliderArea.setValue(value);
 	            }
 	        });
-			paneSphere.add(btSup2,BorderLayout.WEST);
-			paneSphere.add(btInf2,BorderLayout.CENTER);
+			paneSphere.add(btSupArea,BorderLayout.WEST);
+			paneSphere.add(btInfArea,BorderLayout.CENTER);
 			paneSphere.add(btEt2,BorderLayout.WEST);
 			paneSphere.add(btOu2,BorderLayout.CENTER);
 			
 			//paneSphere.add(slider,BorderLayout.EAST);
-			rubrique2.add(Sphericity,BorderLayout.NORTH);
-			rubrique2.add(paneSphere,BorderLayout.WEST);
-			rubrique2.add(slider2);
-			rubrique2.add(sliderDisplay2);
+			rubrique3.add(Sphericity,BorderLayout.NORTH);
+			rubrique3.add(paneSphere,BorderLayout.WEST);
+			rubrique3.add(sliderArea);
+			rubrique3.add(sliderDisplayArea);
 			
 			
 			
@@ -226,38 +221,38 @@ package hg.hist.MVC;
 			paneArea.setPreferredSize(new Dimension(300,30));
 			
 
-		    sliderDisplay.setText("Value of slider");
-		    sliderDisplay.setPreferredSize(new Dimension(100,30));
-		    sliderDisplay.setForeground(Color.BLUE);
+		    sliderDisplaySphericity.setText("Value of slider");
+		    sliderDisplaySphericity.setPreferredSize(new Dimension(100,30));
+		    sliderDisplaySphericity.setForeground(Color.BLUE);
 
-		    slider.setMajorTickSpacing(50);
-		    slider.setMinorTickSpacing(1);
-		    slider.setPaintTicks(true);
-		    slider.setPaintLabels(true);
+		    sliderSphericity.setMajorTickSpacing(50);
+		    sliderSphericity.setMinorTickSpacing(1);
+		    sliderSphericity.setPaintTicks(true);
+		    sliderSphericity.setPaintLabels(true);
 
-		    sliderDisplay.addKeyListener(new KeyAdapter(){
+		    sliderDisplaySphericity.addKeyListener(new KeyAdapter(){
 	            @Override
 	            public void keyReleased(KeyEvent ke) {
-	                String typed = sliderDisplay.getText();
-	                slider.setValue(0);
+	                String typed = sliderDisplaySphericity.getText();
+	                sliderSphericity.setValue(0);
 	                if(!typed.matches("\\d+")) {
 	                    return;
 	                }
 	                int value = Integer.parseInt(typed);
-	                slider.setValue(value);
+	                sliderSphericity.setValue(value);
 	            }
 	        });
 		    
 		    
-			paneArea.add(btSup,BorderLayout.WEST);
-			paneArea.add(btInf,BorderLayout.CENTER);
+			paneArea.add(btSupSphericity,BorderLayout.WEST);
+			paneArea.add(btInfSphericity,BorderLayout.CENTER);
 			paneArea.add(btEt,BorderLayout.WEST);
 			paneArea.add(btOu,BorderLayout.CENTER);
 			
-			rubrique3.add(Area,BorderLayout.NORTH);
-			rubrique3.add(paneArea,BorderLayout.WEST);
-			rubrique3.add(slider);
-			rubrique3.add(sliderDisplay);
+			rubrique2.add(Area,BorderLayout.NORTH);
+			rubrique2.add(paneArea,BorderLayout.WEST);
+			rubrique2.add(sliderSphericity);
+			rubrique2.add(sliderDisplaySphericity);
 		
 			
 			//choisir area
@@ -270,48 +265,50 @@ package hg.hist.MVC;
 		paneBorder.setPreferredSize(new Dimension(300,30));
 					
 
-		sliderDisplay3.setText("Value of slider");
-		sliderDisplay3.setPreferredSize(new Dimension(100,30));
-	    sliderDisplay3.setForeground(Color.BLUE);
+		sliderDisplayBorder.setText("Value of slider");
+		sliderDisplayBorder.setPreferredSize(new Dimension(100,30));
+	    sliderDisplayBorder.setForeground(Color.BLUE);
 	    
-		slider3.setMajorTickSpacing(50);
-		slider3.setMinorTickSpacing(1);
-	    slider3.setPaintTicks(true);
-		slider3.setPaintLabels(true);
+		sliderBorder.setMajorTickSpacing(50);
+		sliderBorder.setMinorTickSpacing(1);
+	    sliderBorder.setPaintTicks(true);
+		sliderBorder.setPaintLabels(true);
 	
-		    sliderDisplay3.addKeyListener(new KeyAdapter(){
+		    sliderDisplayBorder.addKeyListener(new KeyAdapter(){
 	            @Override
 	            public void keyReleased(KeyEvent ke) {
-	                String typed = sliderDisplay3.getText();
-	                slider3.setValue(0);
+	                String typed = sliderDisplayBorder.getText();
+	                sliderBorder.setValue(0);
 	                if(!typed.matches("\\d+")) {
 	                    return;
 	                }
 	                int value = Integer.parseInt(typed);
-	                slider3.setValue(value);
+	                sliderBorder.setValue(value);
 	            }
 	        });
 		    
 		    
-		paneBorder.add(btSup3,BorderLayout.WEST);
-		paneBorder.add(btInf3,BorderLayout.CENTER);
-		paneBorder.add(btEt3,BorderLayout.WEST);
-		paneBorder.add(btOu3,BorderLayout.CENTER);
+		paneBorder.add(btSupBorder,BorderLayout.WEST);
+		paneBorder.add(btInfBorder,BorderLayout.CENTER);
+		paneBorder.add(btEtBorder,BorderLayout.WEST);
+		paneBorder.add(btOuBorder,BorderLayout.CENTER);
 					
 		rubrique4.add(Border,BorderLayout.NORTH);
 		rubrique4.add(paneBorder,BorderLayout.WEST);
-		rubrique4.add(slider3);
-		rubrique4.add(sliderDisplay3);
+		rubrique4.add(sliderBorder);
+		rubrique4.add(sliderDisplayBorder);
 				
 	    paneEnd.setPreferredSize(new Dimension(1200,100));
 	    paneEnd.setBackground(Color.white);
 	    
-		btOk.addActionListener(this);
-	  
+	    
+	    
+	    btFinish.addActionListener(this);
 	    btApply.addActionListener(this);
+	    btInfArea.addActionListener(this);
+	    btSupArea.addActionListener(this);
 	    
-	    
-	    paneEnd.add(btOk,BorderLayout.WEST);
+	    paneEnd.add(btFinish,BorderLayout.WEST);
 	    paneEnd.add(btApply,BorderLayout.WEST);
 	    
 			panel.add(rubrique1);
@@ -323,18 +320,34 @@ package hg.hist.MVC;
 		}
 	
 	public void stateChanged(ChangeEvent event) {
-		System.out.println("Slider");
-	       if(event.getSource() == slider3){
-	                sliderDisplay3.setText(String.valueOf(slider3.getValue()));
+	       if(event.getSource() == sliderBorder){
+	                sliderDisplayBorder.setText(String.valueOf(sliderBorder.getValue()));
+	        		System.out.println("Border : " + String.valueOf(sliderBorder.getValue()));
+
 	            }
 	       
 		    
-	       if(slider == event.getSource()){
-	                sliderDisplay.setText(String.valueOf(slider.getValue()));
-	            }
-	       if(slider2 == event.getSource()){
+	       if(sliderSphericity == event.getSource()){
+	                sliderDisplaySphericity.setText(String.valueOf(sliderSphericity.getValue()));
+	        		System.out.println("Sphéericity : " + String.valueOf(sliderSphericity.getValue()));
 
-	                sliderDisplay2.setText(String.valueOf(slider2.getValue()));
+	            }
+	       if(sliderArea == event.getSource()){
+
+	                sliderDisplayArea.setText(String.valueOf(sliderArea.getValue()));
+	        		System.out.println("Area : " + String.valueOf(sliderArea.getValue()));
+	        		if(btInfArea.isSelected() ){
+						//System.out.println("btInfArea is Selected : ");
+						this.stringAreaInf = String.valueOf(sliderArea.getValue());
+						System.out.println("InfArea is : "+this.stringAreaInf);
+
+					}
+	        		if(btSupArea.isSelected()){
+						this.stringAreaSup = String.valueOf(sliderArea.getValue());
+						System.out.println("SupArea is  : "+this.stringAreaSup);
+	
+					}
+
 	            }
 	        
 	        
@@ -345,27 +358,89 @@ package hg.hist.MVC;
 	            AbstractButton button = buttons.nextElement();
 
 	            if (button.isSelected()) {
-	            	b=button.getText();
-	                return b;
-	                //System.out.println(button.getText());
+	            	stringResultOfRequest=button.getText();
+	                System.out.println(button.getText());
+
+	                return stringResultOfRequest;
 	            }
 	        }
 
-	        return b;
+	        return stringResultOfRequest;
 	    }
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			if(e.getSource() == btOk ){
-			this.setVisible(false);
+			if(e.getSource() == btFinish ){
+				System.out.println("It is finish !");
+				this.setVisible(false);
 			}
-			//if(e.getSource() == btApply){
-		       //fr.request.setText(getSelectedButtonText(g));//retourne la cellule selectionner
+	
+			if(e.getSource() == btApply ){
+				System.out.println("It is apply !");
+				if(btSupArea.isSelected()){
+					System.out.println("btSupArea is Selected : ");
+					System.out.println("Sup Area : "+ this.stringAreaSup);
+				}
+				else
+				{
+					 this.stringAreaSup = "0";
+					 System.out.println("Sup Area : "+ this.stringAreaSup);
+
+				}
+				if(btInfArea.isSelected()){
+					System.out.println("btInfArea is Selected : ");
+					System.out.println("Inf Area : "+ this.stringAreaInf);
+				}
+				else
+				{
+					 this.stringAreaSup = "250";
+					 System.out.println("Inf Area : "+ this.stringAreaInf);
+
+				}
 				
+				this.setVisible(true);
+			}
+			if(e.getSource() == btSupArea ){
 				
-			//}
+				if(btSupArea.isSelected()){
+					System.out.println("btSupArea is Selected : ");
+					this.stringAreaSup = sliderDisplayArea.getText();
+
+				}
+			}
+			if(e.getSource() == btInfArea ){
+				
+				if(btInfArea.isSelected()){
+					System.out.println("btInfArea is Selected : ");
+					this.stringAreaInf = sliderDisplayArea.getText();
+
+				}
+			}
 			
+		}
+
+		public String getStringResultOfRequest() {
+			return stringResultOfRequest;
+		}
+
+		public void setStringResultOfRequest(String stringResultOfRequest) {
+			this.stringResultOfRequest = stringResultOfRequest;
+		}
+
+		public String getStringAreaSup() {
+			return stringAreaSup;
+		}
+
+		public void setStringAreaSup(String stringAreaSup) {
+			this.stringAreaSup = stringAreaSup;
+		}
+
+		public String getStringAreaInf() {
+			return stringAreaInf;
+		}
+
+		public void setStringAreaInf(String stringAreaInf) {
+			this.stringAreaInf = stringAreaInf;
 		}
 			
 			
