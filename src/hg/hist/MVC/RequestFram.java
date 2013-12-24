@@ -126,11 +126,7 @@ import javax.swing.event.ChangeListener;
 			paneCellule.setBackground(Color.white);
 			paneCellule.setPreferredSize(new Dimension(600,50));;
 			paneCellule.setLayout(new GridLayout(3,3));
-			
-		
-
-		   
-		    
+				    
 			groupButton.add(btRadio1);
 			groupButton.add(btRadio2);
 			groupButton.add(btRadio3);
@@ -441,12 +437,5 @@ import javax.swing.event.ChangeListener;
 
 		public void setStringAreaInf(String stringAreaInf) {
 			this.stringAreaInf = stringAreaInf;
-		}
-			
-			
-		
-		
-
+		}		
 	}
-
-
