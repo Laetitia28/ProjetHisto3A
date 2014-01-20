@@ -4,7 +4,7 @@
 *.jar
 *.war
 *.ear
-/bin
-/.classpath
-/.project
+bin
+.classpath
+.project
 /src/hg/histo/FramCellLaetitia
