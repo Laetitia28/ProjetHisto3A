@@ -38,16 +38,21 @@ import javax.swing.event.ChangeListener;
 		private JPanel panel =  new JPanel();
 		private JPanel paneCellule = new JPanel();
 		private JPanel paneSphere = new JPanel();
+		private JPanel paneSphere2 = new JPanel();
 		private JPanel paneArea = new JPanel();
+		private JPanel paneArea2 = new JPanel();
 		private JPanel paneBorder = new JPanel();
+		private JPanel paneBorder2 = new JPanel();
 		private JPanel paneEnd = new JPanel();
 		
 		
 		private JButton btFinish=new JButton("Finish");
 		private JButton btApply=new JButton("Apply");
 
-		private JButton btSupSphericity = new JButton("Sup");
-		private JButton btInfSphericity = new JButton("Inf");
+		//private JButton btSupSphericity = new JButton("Sup");
+		//private JButton btInfSphericity = new JButton("Inf");
+		private JCheckBox btSupSphericity = new JCheckBox("Sup");
+	    private JCheckBox btInfSphericity = new JCheckBox("Inf");
 		private JButton btEt = new JButton("ET");
 		private JButton btOu = new JButton("OU");
 		
@@ -59,23 +64,30 @@ import javax.swing.event.ChangeListener;
 		private JButton btEt2=new JButton("ET");
 		private JButton btOu2=new JButton("OU");
 		
-		private JButton btSupBorder=new JButton("Su");
-		private JButton btInfBorder=new JButton("In");
+		//private JButton btSupBorder=new JButton("Su");
+		//private JButton btInfBorder=new JButton("In");
+		private JCheckBox btSupBorder=new JCheckBox("Sup");
+		private JCheckBox btInfBorder=new JCheckBox("Inf");
 		private JButton btEtBorder=new JButton("ET");
 		private JButton btOuBorder=new JButton("OU");
 		
 		
-		private JSlider sliderSphericity =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
-
-		private JSlider sliderArea =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
-		private JSlider sliderBorder =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+		private JSlider sliderSphericitySup =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+		private JSlider sliderSphericityInf =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+        private JSlider sliderAreaSup =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+        private JSlider sliderAreaInf =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+		private JSlider sliderBorderSup =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
+		private JSlider sliderBorderInf =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
 
 		
 	    
 
-		private JTextField sliderDisplaySphericity = new JTextField();
-		private JTextField sliderDisplayArea =new JTextField();
-		private JTextField sliderDisplayBorder =new JTextField();
+		private JTextField sliderDisplaySphericitySup = new JTextField();
+		private JTextField sliderDisplaySphericityInf = new JTextField();
+		private JTextField sliderDisplayAreaSup =new JTextField();
+		private JTextField sliderDisplayAreaInf =new JTextField();
+		private JTextField sliderDisplayBorderSup =new JTextField();
+		private JTextField sliderDisplayBorderInf =new JTextField();
 		
 		private JPanel rubrique1 = new JPanel();//contient les cellules
 		private JPanel rubrique2 = new JPanel();
@@ -152,147 +164,225 @@ import javax.swing.event.ChangeListener;
 			rubrique1.add(paneCellule,BorderLayout.NORTH);
 			
 			
-			//choisir la sphericite
+			//choisir la surface
 			
 			
 			rubrique2.setPreferredSize(new Dimension(1200,100));
 			rubrique2.setBackground(Color.white);
+
+			paneArea.setLayout(new GridLayout(1,3));
+			paneArea.setBackground(Color.white);
+			paneArea.setPreferredSize(new Dimension(400,50));
+			paneArea2.setLayout(new GridLayout(1,3));
+			paneArea2.setBackground(Color.white);
+			paneArea2.setPreferredSize(new Dimension(400,50));
+						
+
+			sliderDisplayAreaSup.setText("Value of sup");
+			sliderDisplayAreaSup.setPreferredSize(new Dimension(100,30));
+		    sliderDisplayAreaSup.setForeground(Color.BLUE);
+		    sliderDisplayAreaInf.setText("Value of inf");
+			sliderDisplayAreaInf.setPreferredSize(new Dimension(100,30));
+		    sliderDisplayAreaInf.setForeground(Color.BLUE);
+		    
+			sliderAreaSup.setMajorTickSpacing(50);
+			sliderAreaSup.setMinorTickSpacing(1);
+		    sliderAreaSup.setPaintTicks(true);
+			sliderAreaSup.setPaintLabels(true);
 			
+			sliderAreaInf.setMajorTickSpacing(50);
+			sliderAreaInf.setMinorTickSpacing(1);
+		    sliderAreaInf.setPaintTicks(true);
+			sliderAreaInf.setPaintLabels(true);
+		
 			
-			
-			paneSphere.setLayout(new GridLayout(1,4));
-			paneSphere.setBackground(Color.white);
-			paneSphere.setPreferredSize(new Dimension(300,30));
-			
+			 sliderAreaSup.addChangeListener(this);
+			 sliderAreaInf.addChangeListener(this);
+		
+			   sliderDisplayAreaSup.addKeyListener(new KeyAdapter(){
+		            @Override
+		            public void keyReleased(KeyEvent ke) {
+		                String typed = sliderDisplayAreaSup.getText();
+		                sliderAreaSup.setValue(0);
+		                if(!typed.matches("\\d+")) {
+		                    return;
+		                }
+		                int value = Integer.parseInt(typed);
+		                sliderAreaSup.setValue(value);
+		            }
+		        });
+			    sliderDisplayAreaInf.addKeyListener(new KeyAdapter(){
+		            @Override
+		            public void keyReleased(KeyEvent ke) {
+		                String typed = sliderDisplayAreaInf.getText();
+		                sliderAreaInf.setValue(0);
+		                if(!typed.matches("\\d+")) {
+		                    return;
+		                }
+		                int value = Integer.parseInt(typed);
+		                sliderAreaInf.setValue(value);
+		            }
+		        });
+			    
+			    
+			paneArea.add(btSupArea,BorderLayout.WEST);
+			paneArea.add(sliderAreaSup);
+			paneArea.add(sliderDisplayAreaSup);
+			paneArea2.add(btInfArea,BorderLayout.WEST);
+			paneArea2.add(sliderAreaInf);
+			paneArea2.add(sliderDisplayAreaInf);
+						
+			rubrique2.add(Area,BorderLayout.NORTH);
+			rubrique2.add(paneArea);
+			rubrique2.add(paneArea2);
+		
 
 			
-		    
-		    sliderDisplayArea.setText("Value of slider");
-		    sliderDisplayArea.setPreferredSize(new Dimension(100,30));
-		    sliderDisplayArea.setForeground(Color.BLUE);
-		    
-		    
-		    sliderArea.setMajorTickSpacing(50);
-		    sliderArea.setMinorTickSpacing(1);
-		    sliderArea.setPaintTicks(true);
-		    sliderArea.setPaintLabels(true);
-		    
-		    sliderSphericity.addChangeListener(this);
-		    sliderArea.addChangeListener(this);
-
-		    sliderBorder.addChangeListener(this);
-
-		    sliderDisplayArea.addKeyListener(new KeyAdapter(){
-	            @Override
-	            public void keyReleased(KeyEvent ke) {
-	                String typed = sliderDisplayArea.getText();
-	                sliderArea.setValue(0);
-	                if(!typed.matches("\\d+")) {
-	                    return;
-	                }
-	                int value = Integer.parseInt(typed);
-	                sliderArea.setValue(value);
-	            }
-	        });
-			paneSphere.add(btSupArea,BorderLayout.WEST);
-			paneSphere.add(btInfArea,BorderLayout.CENTER);
-			paneSphere.add(btEt2,BorderLayout.WEST);
-			paneSphere.add(btOu2,BorderLayout.CENTER);
-			
-			//paneSphere.add(slider,BorderLayout.EAST);
-			rubrique3.add(Sphericity,BorderLayout.NORTH);
-			rubrique3.add(paneSphere,BorderLayout.WEST);
-			rubrique3.add(sliderArea);
-			rubrique3.add(sliderDisplayArea);
-			
-			
-			
-			//choisir la surface
+			//choisir la sphericité
 			   
 			rubrique3.setPreferredSize(new Dimension(1200,100));
 			rubrique3.setBackground(Color.white);
 			
-			paneArea.setLayout(new GridLayout(1,4));
-			paneArea.setBackground(Color.white);
-			paneArea.setPreferredSize(new Dimension(300,30));
+			paneSphere.setLayout(new GridLayout(1,3));
+			paneSphere.setBackground(Color.white);
+			paneSphere.setPreferredSize(new Dimension(400,50));
+			paneSphere2.setLayout(new GridLayout(1,3));
+			paneSphere2.setBackground(Color.white);
+			paneSphere2.setPreferredSize(new Dimension(400,50));
 			
 
-		    sliderDisplaySphericity.setText("Value of slider");
-		    sliderDisplaySphericity.setPreferredSize(new Dimension(100,30));
-		    sliderDisplaySphericity.setForeground(Color.BLUE);
+		    sliderDisplaySphericitySup.setText("Value of slider");
+		    sliderDisplaySphericitySup.setPreferredSize(new Dimension(100,30));
+		    sliderDisplaySphericitySup.setForeground(Color.BLUE);
+		    sliderDisplaySphericityInf.setText("Value of slider");
+		    sliderDisplaySphericityInf.setPreferredSize(new Dimension(100,30));
+		    sliderDisplaySphericityInf.setForeground(Color.BLUE);
 
-		    sliderSphericity.setMajorTickSpacing(50);
-		    sliderSphericity.setMinorTickSpacing(1);
-		    sliderSphericity.setPaintTicks(true);
-		    sliderSphericity.setPaintLabels(true);
+		    sliderSphericitySup.setMajorTickSpacing(50);
+		    sliderSphericitySup.setMinorTickSpacing(1);
+		    sliderSphericitySup.setPaintTicks(true);
+		    sliderSphericitySup.setPaintLabels(true);
+		    
+		    
+		    sliderSphericityInf.setMajorTickSpacing(50);
+		    sliderSphericityInf.setMinorTickSpacing(1);
+		    sliderSphericityInf.setPaintTicks(true);
+		    sliderSphericityInf.setPaintLabels(true);
+		    
+		    sliderSphericityInf.addChangeListener(this);
+			 sliderSphericitySup.addChangeListener(this);
 
-		    sliderDisplaySphericity.addKeyListener(new KeyAdapter(){
+
+		    sliderDisplaySphericitySup.addKeyListener(new KeyAdapter(){
 	            @Override
 	            public void keyReleased(KeyEvent ke) {
-	                String typed = sliderDisplaySphericity.getText();
-	                sliderSphericity.setValue(0);
+	                String typed = sliderDisplaySphericitySup.getText();
+	                sliderSphericitySup.setValue(0);
 	                if(!typed.matches("\\d+")) {
 	                    return;
 	                }
 	                int value = Integer.parseInt(typed);
-	                sliderSphericity.setValue(value);
+	                sliderSphericitySup.setValue(value);
+	            }
+	        });
+		    sliderDisplaySphericityInf.addKeyListener(new KeyAdapter(){
+	            @Override
+	            public void keyReleased(KeyEvent ke) {
+	                String typed = sliderDisplaySphericityInf.getText();
+	                sliderSphericityInf.setValue(0);
+	                if(!typed.matches("\\d+")) {
+	                    return;
+	                }
+	                int value = Integer.parseInt(typed);
+	                sliderSphericityInf.setValue(value);
 	            }
 	        });
 		    
 		    
-			paneArea.add(btSupSphericity,BorderLayout.WEST);
-			paneArea.add(btInfSphericity,BorderLayout.CENTER);
-			paneArea.add(btEt,BorderLayout.WEST);
-			paneArea.add(btOu,BorderLayout.CENTER);
+			paneSphere.add(btSupSphericity,BorderLayout.WEST);
+			paneSphere.add(sliderSphericitySup);
+			paneSphere.add(sliderDisplaySphericitySup);
+			paneSphere2.add(btInfSphericity,BorderLayout.WEST);
+			paneSphere2.add(sliderSphericityInf);
+			paneSphere2.add(sliderDisplaySphericityInf);
 			
-			rubrique2.add(Area,BorderLayout.NORTH);
-			rubrique2.add(paneArea,BorderLayout.WEST);
-			rubrique2.add(sliderSphericity);
-			rubrique2.add(sliderDisplaySphericity);
+			rubrique3.add(Sphericity,BorderLayout.NORTH);
+			rubrique3.add(paneSphere);
+			rubrique3.add(paneSphere2);
+		
 		
 			
-			//choisir area
+			//choisir Border
 			   
 		rubrique4.setPreferredSize(new Dimension(1200,100));
 		rubrique4.setBackground(Color.white);
 
-		paneBorder.setLayout(new GridLayout(1,4));
+		paneBorder.setLayout(new GridLayout(1,3));
 		paneBorder.setBackground(Color.white);
-		paneBorder.setPreferredSize(new Dimension(300,30));
+		paneBorder.setPreferredSize(new Dimension(400,50));
+		paneBorder2.setLayout(new GridLayout(1,3));
+		paneBorder2.setBackground(Color.white);
+		paneBorder2.setPreferredSize(new Dimension(400,50));
 					
 
-		sliderDisplayBorder.setText("Value of slider");
-		sliderDisplayBorder.setPreferredSize(new Dimension(100,30));
-	    sliderDisplayBorder.setForeground(Color.BLUE);
+		sliderDisplayBorderSup.setText("Value of sup");
+		sliderDisplayBorderSup.setPreferredSize(new Dimension(100,30));
+	    sliderDisplayBorderSup.setForeground(Color.BLUE);
+	    sliderDisplayBorderInf.setText("Value of inf");
+		sliderDisplayBorderInf.setPreferredSize(new Dimension(100,30));
+	    sliderDisplayBorderInf.setForeground(Color.BLUE);
 	    
-		sliderBorder.setMajorTickSpacing(50);
-		sliderBorder.setMinorTickSpacing(1);
-	    sliderBorder.setPaintTicks(true);
-		sliderBorder.setPaintLabels(true);
+		sliderBorderSup.setMajorTickSpacing(50);
+		sliderBorderSup.setMinorTickSpacing(1);
+	    sliderBorderSup.setPaintTicks(true);
+		sliderBorderSup.setPaintLabels(true);
+		
+		sliderBorderInf.setMajorTickSpacing(50);
+		sliderBorderInf.setMinorTickSpacing(1);
+	    sliderBorderInf.setPaintTicks(true);
+		sliderBorderInf.setPaintLabels(true);
 	
-		    sliderDisplayBorder.addKeyListener(new KeyAdapter(){
+		
+		 sliderBorderSup.addChangeListener(this);
+		 sliderBorderInf.addChangeListener(this);
+	
+		   sliderDisplayBorderSup.addKeyListener(new KeyAdapter(){
 	            @Override
 	            public void keyReleased(KeyEvent ke) {
-	                String typed = sliderDisplayBorder.getText();
-	                sliderBorder.setValue(0);
+	                String typed = sliderDisplayBorderSup.getText();
+	                sliderBorderSup.setValue(0);
 	                if(!typed.matches("\\d+")) {
 	                    return;
 	                }
 	                int value = Integer.parseInt(typed);
-	                sliderBorder.setValue(value);
+	                sliderBorderSup.setValue(value);
+	            }
+	        });
+		    sliderDisplayBorderInf.addKeyListener(new KeyAdapter(){
+	            @Override
+	            public void keyReleased(KeyEvent ke) {
+	                String typed = sliderDisplayBorderInf.getText();
+	                sliderBorderInf.setValue(0);
+	                if(!typed.matches("\\d+")) {
+	                    return;
+	                }
+	                int value = Integer.parseInt(typed);
+	                sliderBorderInf.setValue(value);
 	            }
 	        });
 		    
 		    
 		paneBorder.add(btSupBorder,BorderLayout.WEST);
-		paneBorder.add(btInfBorder,BorderLayout.CENTER);
-		paneBorder.add(btEtBorder,BorderLayout.WEST);
-		paneBorder.add(btOuBorder,BorderLayout.CENTER);
+		paneBorder.add(sliderBorderSup);
+		paneBorder.add(sliderDisplayBorderSup);
+		paneBorder2.add(btInfBorder,BorderLayout.WEST);
+		paneBorder2.add(sliderBorderInf);
+		paneBorder2.add(sliderDisplayBorderInf);
 					
 		rubrique4.add(Border,BorderLayout.NORTH);
-		rubrique4.add(paneBorder,BorderLayout.WEST);
-		rubrique4.add(sliderBorder);
-		rubrique4.add(sliderDisplayBorder);
+		rubrique4.add(paneBorder);
+		rubrique4.add(paneBorder2);
+	
 				
 	    paneEnd.setPreferredSize(new Dimension(1200,100));
 	    paneEnd.setBackground(Color.white);
@@ -316,35 +406,53 @@ import javax.swing.event.ChangeListener;
 		}
 	
 	public void stateChanged(ChangeEvent event) {
-	       if(event.getSource() == sliderBorder){
-	                sliderDisplayBorder.setText(String.valueOf(sliderBorder.getValue()));
-	        		System.out.println("Border : " + String.valueOf(sliderBorder.getValue()));
+	       if(event.getSource() == sliderBorderSup){
+	                sliderDisplayBorderSup.setText(String.valueOf(sliderBorderSup.getValue()));
+	        		System.out.println("Border : " + String.valueOf(sliderBorderSup.getValue()));
+
+	            }
+	       if(event.getSource() == sliderBorderInf){
+               sliderDisplayBorderInf.setText(String.valueOf(sliderBorderInf.getValue()));
+       		System.out.println("Border : " + String.valueOf(sliderBorderInf.getValue()));
+
+           }
+	       
+		    
+	       if( event.getSource() == sliderSphericitySup){
+	                sliderDisplaySphericitySup.setText(String.valueOf(sliderSphericitySup.getValue()));
+	        		System.out.println("Sphéericity : " + String.valueOf(sliderSphericitySup.getValue()));
 
 	            }
 	       
-		    
-	       if(sliderSphericity == event.getSource()){
-	                sliderDisplaySphericity.setText(String.valueOf(sliderSphericity.getValue()));
-	        		System.out.println("Sphéericity : " + String.valueOf(sliderSphericity.getValue()));
+	       if( event.getSource() == sliderSphericityInf ){
+               sliderDisplaySphericityInf.setText(String.valueOf(sliderSphericityInf.getValue()));
+       		System.out.println("Sphéericity : " + String.valueOf(sliderSphericityInf.getValue()));
 
-	            }
-	       if(sliderArea == event.getSource()){
+           }
+	       if(sliderAreaSup == event.getSource()){
 
-	                sliderDisplayArea.setText(String.valueOf(sliderArea.getValue()));
-	        		System.out.println("Area : " + String.valueOf(sliderArea.getValue()));
-	        		if(btInfArea.isSelected() ){
+	                sliderDisplayAreaSup.setText(String.valueOf(sliderAreaSup.getValue()));
+	        		System.out.println("Area : " + String.valueOf(sliderAreaSup.getValue()));
+	        		/*if(btInfArea.isSelected() ){
 						//System.out.println("btInfArea is Selected : ");
-						this.stringAreaInf = String.valueOf(sliderArea.getValue());
+						this.stringAreaInf = String.valueOf(sliderAreaInf.getValue());
 						System.out.println("InfArea is : "+this.stringAreaInf);
 
 					}
 	        		if(btSupArea.isSelected()){
-						this.stringAreaSup = String.valueOf(sliderArea.getValue());
+						this.stringAreaSup = String.valueOf(sliderAreaSup.getValue());
 						System.out.println("SupArea is  : "+this.stringAreaSup);
 	
-					}
+					}*/
 
 	            }
+	       if(sliderAreaInf == event.getSource()){
+
+              sliderDisplayAreaInf.setText(String.valueOf(sliderAreaInf.getValue()));
+       		System.out.println("Area : " + String.valueOf(sliderAreaInf.getValue()));
+       		
+
+           }
 	        
 	        
 		
@@ -400,7 +508,7 @@ import javax.swing.event.ChangeListener;
 				
 				if(btSupArea.isSelected()){
 					System.out.println("btSupArea is Selected : ");
-					this.stringAreaSup = sliderDisplayArea.getText();
+					this.stringAreaSup = sliderDisplayAreaSup.getText();
 
 				}
 			}
@@ -408,7 +516,7 @@ import javax.swing.event.ChangeListener;
 				
 				if(btInfArea.isSelected()){
 					System.out.println("btInfArea is Selected : ");
-					this.stringAreaInf = sliderDisplayArea.getText();
+					this.stringAreaInf = sliderDisplayAreaInf.getText();
 
 				}
 			}
