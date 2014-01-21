@@ -49,27 +49,21 @@ import javax.swing.event.ChangeListener;
 		private JButton btFinish=new JButton("Finish");
 		private JButton btApply=new JButton("Apply");
 
-		//private JButton btSupSphericity = new JButton("Sup");
-		//private JButton btInfSphericity = new JButton("Inf");
+	
 		private JCheckBox btSupSphericity = new JCheckBox("Sup");
 	    private JCheckBox btInfSphericity = new JCheckBox("Inf");
-		private JButton btEt = new JButton("ET");
-		private JButton btOu = new JButton("OU");
+	
 		
-		//private JButton btSupArea =new JButton("Sup");
-		//private JButton btInfArea=new JButton("Inf");
+		
 		private JCheckBox btSupArea = new JCheckBox("Sup");
 		private JCheckBox btInfArea = new JCheckBox("Inf");
 
-		private JButton btEt2=new JButton("ET");
-		private JButton btOu2=new JButton("OU");
+	
 		
-		//private JButton btSupBorder=new JButton("Su");
-		//private JButton btInfBorder=new JButton("In");
+	
 		private JCheckBox btSupBorder=new JCheckBox("Sup");
 		private JCheckBox btInfBorder=new JCheckBox("Inf");
-		private JButton btEtBorder=new JButton("ET");
-		private JButton btOuBorder=new JButton("OU");
+		
 		
 		
 		private JSlider sliderSphericitySup =new JSlider(JSlider.HORIZONTAL,SLIDER_MIN,SLIDER_MAX,SLIDER_INIT);
@@ -116,6 +110,10 @@ import javax.swing.event.ChangeListener;
 		private String stringResultOfRequest = "empty";
 		private String stringAreaSup = "0";
 		private String stringAreaInf = "250";
+		private String stringSphericitySup = "0";
+		private String stringSphericityInf = "250";
+		private String stringBorderSup = "0";
+		private String stringBorderInf = "250";
 
 		
 	public RequestFram (){
@@ -408,31 +406,31 @@ import javax.swing.event.ChangeListener;
 	public void stateChanged(ChangeEvent event) {
 	       if(event.getSource() == sliderBorderSup){
 	                sliderDisplayBorderSup.setText(String.valueOf(sliderBorderSup.getValue()));
-	        		System.out.println("Border : " + String.valueOf(sliderBorderSup.getValue()));
+	        		System.out.println("BorderSup : " + String.valueOf(sliderBorderSup.getValue()));
 
 	            }
 	       if(event.getSource() == sliderBorderInf){
                sliderDisplayBorderInf.setText(String.valueOf(sliderBorderInf.getValue()));
-       		System.out.println("Border : " + String.valueOf(sliderBorderInf.getValue()));
+       		System.out.println("BorderInf : " + String.valueOf(sliderBorderInf.getValue()));
 
            }
 	       
 		    
 	       if( event.getSource() == sliderSphericitySup){
 	                sliderDisplaySphericitySup.setText(String.valueOf(sliderSphericitySup.getValue()));
-	        		System.out.println("Sphéericity : " + String.valueOf(sliderSphericitySup.getValue()));
+	        		System.out.println("SphéericitySup : " + String.valueOf(sliderSphericitySup.getValue()));
 
 	            }
 	       
 	       if( event.getSource() == sliderSphericityInf ){
                sliderDisplaySphericityInf.setText(String.valueOf(sliderSphericityInf.getValue()));
-       		System.out.println("Sphéericity : " + String.valueOf(sliderSphericityInf.getValue()));
+       		System.out.println("SphéericityInf : " + String.valueOf(sliderSphericityInf.getValue()));
 
            }
 	       if(sliderAreaSup == event.getSource()){
 
 	                sliderDisplayAreaSup.setText(String.valueOf(sliderAreaSup.getValue()));
-	        		System.out.println("Area : " + String.valueOf(sliderAreaSup.getValue()));
+	        		System.out.println("AreaSup : " + String.valueOf(sliderAreaSup.getValue()));
 	        		/*if(btInfArea.isSelected() ){
 						//System.out.println("btInfArea is Selected : ");
 						this.stringAreaInf = String.valueOf(sliderAreaInf.getValue());
@@ -449,7 +447,7 @@ import javax.swing.event.ChangeListener;
 	       if(sliderAreaInf == event.getSource()){
 
               sliderDisplayAreaInf.setText(String.valueOf(sliderAreaInf.getValue()));
-       		System.out.println("Area : " + String.valueOf(sliderAreaInf.getValue()));
+       		System.out.println("AreaInf : " + String.valueOf(sliderAreaInf.getValue()));
        		
 
            }
@@ -479,13 +477,13 @@ import javax.swing.event.ChangeListener;
 				this.setVisible(false);
 			}
 	
-			if(e.getSource() == btApply ){
+		/*	if(e.getSource() == btApply ){
 				System.out.println("It is apply !");
 				if(btSupArea.isSelected()){
 					System.out.println("btSupArea is Selected : ");
 					System.out.println("Sup Area : "+ this.stringAreaSup);
 				}
-				else
+				else // valeur par defaut
 				{
 					 this.stringAreaSup = "0";
 					 System.out.println("Sup Area : "+ this.stringAreaSup);
@@ -503,12 +501,13 @@ import javax.swing.event.ChangeListener;
 				}
 				
 				this.setVisible(true);
-			}
+			}*/
 			if(e.getSource() == btSupArea ){
 				
 				if(btSupArea.isSelected()){
 					System.out.println("btSupArea is Selected : ");
 					this.stringAreaSup = sliderDisplayAreaSup.getText();
+					System.out.print(String.valueOf(sliderAreaSup.getValue()));
 
 				}
 			}
@@ -517,6 +516,7 @@ import javax.swing.event.ChangeListener;
 				if(btInfArea.isSelected()){
 					System.out.println("btInfArea is Selected : ");
 					this.stringAreaInf = sliderDisplayAreaInf.getText();
+					System.out.print(String.valueOf(sliderAreaInf.getValue()));
 
 				}
 			}
