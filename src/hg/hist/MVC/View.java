@@ -68,6 +68,7 @@ public class View extends JFrame implements ActionListener {
 	
 	private	Font police = new Font("Arial", Font.BOLD, 14);
 
+
 	 private HashMap<String, JMenuItem> JMenuItems = new HashMap<String,JMenuItem>();
 
 	
@@ -159,9 +160,12 @@ public class View extends JFrame implements ActionListener {
 		textFieldRequest.setFont(police);
 		
 
+
+
 		//Add ActionListener elements
 		menu.getExit().addActionListener(this);
 		menu.getOpen().addActionListener(this);
+		menu.getPropertyCells().addActionListener(this);
 		this.btZoomToFit.addActionListener(this);
 		this.btDisplay.addActionListener(this);
 		menu.getRadioButtonMenuItemDisplay().addActionListener(this);
@@ -212,9 +216,6 @@ public class View extends JFrame implements ActionListener {
 
 			JMenuItems.clear();
 
-
-			
-			
 			controller.ChangeColorOfCell(menu,getJMenuItems());
 
 			for(String a : getJMenuItems().keySet()){
@@ -281,6 +282,7 @@ public class View extends JFrame implements ActionListener {
 			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
 		}
+		
 		
 	}
 
