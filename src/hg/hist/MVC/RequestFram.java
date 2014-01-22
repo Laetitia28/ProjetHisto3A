@@ -114,7 +114,11 @@ import javax.swing.event.ChangeListener;
 		private String stringSphericityInf = "250";
 		private String stringBorderSup = "0";
 		private String stringBorderInf = "250";
-
+		private String lastValueAreaSup;
+		private String resultAreaSupDefault;
+		private String resultAreaSup;
+		private String resultAreaInfDefault;
+		private String resultAreaInf;
 		
 	public RequestFram (){
 
@@ -427,32 +431,24 @@ import javax.swing.event.ChangeListener;
        		System.out.println("SphéericityInf : " + String.valueOf(sliderSphericityInf.getValue()));
 
            }
-	       if(sliderAreaSup == event.getSource()){
-
-	                sliderDisplayAreaSup.setText(String.valueOf(sliderAreaSup.getValue()));
-	        		System.out.println("AreaSup : " + String.valueOf(sliderAreaSup.getValue()));
-	        		/*if(btInfArea.isSelected() ){
-						//System.out.println("btInfArea is Selected : ");
-						this.stringAreaInf = String.valueOf(sliderAreaInf.getValue());
-						System.out.println("InfArea is : "+this.stringAreaInf);
-
-					}
-	        		if(btSupArea.isSelected()){
-						this.stringAreaSup = String.valueOf(sliderAreaSup.getValue());
-						System.out.println("SupArea is  : "+this.stringAreaSup);
-	
-					}*/
-
+	       
+	      if(sliderAreaSup == event.getSource()){
+	           sliderDisplayAreaSup.setText(String.valueOf(sliderAreaSup.getValue()));
+	          System.out.println("AreaSup : " + String.valueOf(sliderAreaSup.getValue()));
+	        		lastValueAreaSup = String.valueOf(sliderAreaSup.getValue());
+	        		System.out.println(lastValueAreaSup);
+	        		
+	        		
 	            }
-	       if(sliderAreaInf == event.getSource()){
+	          if(sliderAreaInf == event.getSource()){
 
               sliderDisplayAreaInf.setText(String.valueOf(sliderAreaInf.getValue()));
-       		System.out.println("AreaInf : " + String.valueOf(sliderAreaInf.getValue()));
+       	   	System.out.println("AreaInf : " + String.valueOf(sliderAreaInf.getValue()));
        		
 
            }
 	        
-	        
+	       	        
 		
 	}
 		public String getSelectedButtonText(ButtonGroup buttonGroup) {
@@ -470,6 +466,7 @@ import javax.swing.event.ChangeListener;
 	        return stringResultOfRequest;
 	    }
 
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == btFinish ){
@@ -477,51 +474,64 @@ import javax.swing.event.ChangeListener;
 				this.setVisible(false);
 			}
 	
-		/*	if(e.getSource() == btApply ){
-				System.out.println("It is apply !");
-				if(btSupArea.isSelected()){
-					System.out.println("btSupArea is Selected : ");
-					System.out.println("Sup Area : "+ this.stringAreaSup);
+		//if(e.getSource() == btApply ){
+				//System.out.println("It is apply !");
+			
+			if(e.getSource() == btSupArea ){
+					
+					if(btSupArea.isSelected()){
+						
+					   //this.stringAreaSup = sliderDisplayAreaSup.getText();
+						 resultAreaSup = String.valueOf(sliderAreaSup.getValue())  ;
+						System.out.print("btSupArea is Selected : " + resultAreaSup);
+					    
+
+					}
 				}
 				else // valeur par defaut
 				{
 					 this.stringAreaSup = "0";
-					 System.out.println("Sup Area : "+ this.stringAreaSup);
+					 resultAreaSupDefault = this.stringAreaSup  ;
+					 System.out.println("Sup Area : "+ resultAreaSupDefault);
 
 				}
-				if(btInfArea.isSelected()){
-					System.out.println("btInfArea is Selected : ");
-					System.out.println("Inf Area : "+ this.stringAreaInf);
-				}
+				
+			    if(e.getSource() == btInfArea ){
+					
+					if(btInfArea.isSelected()){
+					
+						//this.stringAreaInf = sliderDisplayAreaInf.getText();
+						 resultAreaInf = String.valueOf(sliderAreaInf.getValue())  ;
+						System.out.println("btInfArea is Selected : " + String.valueOf(sliderAreaInf.getValue()));
+
+					}
 				else
 				{
-					 this.stringAreaSup = "250";
-					 System.out.println("Inf Area : "+ this.stringAreaInf);
+					 this.stringAreaInf = "250";
+					 resultAreaInfDefault= this.stringAreaInf;
+					 System.out.println("Inf Area : "+ resultAreaInfDefault);
 
 				}
+					
+					
 				
 				this.setVisible(true);
-			}*/
-			if(e.getSource() == btSupArea ){
-				
-				if(btSupArea.isSelected()){
-					System.out.println("btSupArea is Selected : ");
-					this.stringAreaSup = sliderDisplayAreaSup.getText();
-					System.out.print(String.valueOf(sliderAreaSup.getValue()));
-
-				}
 			}
-			if(e.getSource() == btInfArea ){
-				
-				if(btInfArea.isSelected()){
-					System.out.println("btInfArea is Selected : ");
-					this.stringAreaInf = sliderDisplayAreaInf.getText();
-					System.out.print(String.valueOf(sliderAreaInf.getValue()));
-
-				}
+			
+			
+			
+			}
+		public void actionPerformed2(ActionEvent e){
+			if (e.getSource() == btApply){
+				System.out.println("It is apply !");
+				//actionPerformed(e);
 			}
 			
 		}
+			
+	//	}
+		
+	
 
 		public String getStringResultOfRequest() {
 			return stringResultOfRequest;
