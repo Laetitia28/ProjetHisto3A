@@ -47,7 +47,6 @@ public class Controller {
 
 	private ImageIcon img = new ImageIcon(img_default);
 	private HashMap<String, String> mapColor = new HashMap<String,String>();
-	private HashMap<String, JMenuItem> JMenuItems = new HashMap<String,JMenuItem>();
 
 
 	private List<Cell> listCells;
@@ -234,8 +233,9 @@ public class Controller {
 		ImageIcon img = new ImageIcon(img_default);
 		img = ImageToIcon.scale(img_default, (int)(img.getIconWidth()*0.4),(int)(img.getIconHeight()*0.4));
 		graphComponent.setBackgroundImage(img);			
-/*
-		ChangeColorOfCell(menu,JMenuItems);			
+
+		/*
+		//ChangeColorOfCell(menu,JMenuItems);			
 		for(String a : JMenuItems.keySet()){
 			JMenuItems.get(a).addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent event){
@@ -244,11 +244,11 @@ public class Controller {
 					jcb.setEditable(false);
 					jcb.getSelectedItem();
 					JOptionPane.showMessageDialog( null, jcb,event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
-					setCellselected(event.getActionCommand());
-					System.out.println("chosenCell:" + getCellselected());
-					setColor(jcb.getSelectedItem().toString());
-					System.out.println("chosenColor:" + getColor());
-					changeMap(getCellselected(), getColor());
+					//controller.setCellselected(event.getActionCommand());
+					//System.out.println("chosenCell:" + getCellselected());
+					//controller.setColor(jcb.getSelectedItem().toString());
+					//System.out.println("chosenColor:" + getColor());
+					//changeMap(getCellselected(), getColor());
 					//displaySelectedCells(getCellselected(),graph);
 				}
 			});	
