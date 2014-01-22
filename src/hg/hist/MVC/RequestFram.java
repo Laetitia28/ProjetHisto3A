@@ -431,6 +431,7 @@ import javax.swing.event.ChangeListener;
 
 	                sliderDisplayAreaSup.setText(String.valueOf(sliderAreaSup.getValue()));
 	        		System.out.println("AreaSup : " + String.valueOf(sliderAreaSup.getValue()));
+	        		this.stringAreaSup = String.valueOf(sliderAreaSup.getValue());
 	        		/*if(btInfArea.isSelected() ){
 						//System.out.println("btInfArea is Selected : ");
 						this.stringAreaInf = String.valueOf(sliderAreaInf.getValue());
@@ -477,7 +478,7 @@ import javax.swing.event.ChangeListener;
 				this.setVisible(false);
 			}
 	
-		/*	if(e.getSource() == btApply ){
+			if(e.getSource() == btApply ){
 				System.out.println("It is apply !");
 				if(btSupArea.isSelected()){
 					System.out.println("btSupArea is Selected : ");
@@ -501,11 +502,12 @@ import javax.swing.event.ChangeListener;
 				}
 				
 				this.setVisible(true);
-			}*/
+			}
+			/*
 			if(e.getSource() == btSupArea ){
 				
 				if(btSupArea.isSelected()){
-					System.out.println("btSupArea is Selected : ");
+					System.out.println("btSupArea is Selected est: ");
 					this.stringAreaSup = sliderDisplayAreaSup.getText();
 					System.out.print(String.valueOf(sliderAreaSup.getValue()));
 
@@ -520,7 +522,7 @@ import javax.swing.event.ChangeListener;
 
 				}
 			}
-			
+			*/
 		}
 
 		public String getStringResultOfRequest() {
