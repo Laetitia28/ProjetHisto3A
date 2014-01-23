@@ -622,7 +622,7 @@ import javax.swing.event.ChangeListener;
 						{
 							this.stringBorderInf= "250";
 							 //resultSphericityInfDefault= this.stringSphericityInf;
-							 System.out.println("Inf Border : "+ this.stringBorderSup);
+							 System.out.println("Inf Border : "+ this.stringBorderInf);
 
 						}
 					
@@ -657,6 +657,14 @@ import javax.swing.event.ChangeListener;
 	//	}
 		
 	
+
+		public JButton getBtApply() {
+			return btApply;
+		}
+
+		public void setBtApply(JButton btApply) {
+			this.btApply = btApply;
+		}
 
 		public String getStringResultOfRequest() {
 			return stringResultOfRequest;

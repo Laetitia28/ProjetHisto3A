@@ -39,7 +39,8 @@ public class View extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private Controller controller;
-	RequestFram rf = new RequestFram ();
+	//RequestFram rf = new RequestFram ();
+	RequestFram  frame2 = new RequestFram();
 	
 
 	private Menu menu=new Menu();
@@ -164,11 +165,14 @@ public class View extends JFrame implements ActionListener {
 		getContentPane().add(optionBox, BorderLayout.EAST);
 		setJMenuBar(menu.buildMenu());
 			
+		// Add actionListener au btApply
 		
+		frame2.getBtApply().addActionListener(this);
 		textFieldRequest.setPreferredSize(new Dimension(950,30));
 		textFieldRequest.setForeground(Color.BLUE);
 		textFieldRequest.setFont(police);
-		textFieldRequest.setText( rf.getStringAreaSup() + ":" + rf.getStringAreaInf() + ":" + rf.getStringSphericitySup() + ":" +rf.getStringSphericityInf() + ":" + rf.getStringBorderSup() +":" + rf.getStringBorderInf() );
+	
+		textFieldRequest.setText( frame2.getStringAreaSup() + ":" + frame2.getStringAreaInf() + ":" + frame2.getStringSphericitySup() + ":" +frame2.getStringSphericityInf() + ":" + frame2.getStringBorderSup() +":" + frame2.getStringBorderInf() );
 		
 
 
@@ -202,6 +206,8 @@ public class View extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		
 		if(e.getSource() == menu.getExit() ){
 			this.setVisible(false);
 		}
@@ -288,11 +294,15 @@ public class View extends JFrame implements ActionListener {
 			}
 		}
 		if(e.getSource() == buttonAdvancedRequest){
-			RequestFram  frame2 = new RequestFram();
-
 			frame2.setVisible(true);
-			
 			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			
+		}
+             if(e.getSource() == frame2.getBtApply()){
+			
+			System.out.println("Je suis dans le champs text");
+			textFieldRequest.setText( frame2.getStringAreaSup() + ":" + frame2.getStringAreaInf() + ":" + frame2.getStringSphericitySup() + ":" +frame2.getStringSphericityInf() + ":" + frame2.getStringBorderSup() +":" + frame2.getStringBorderInf() );
+			
 			
 		}
 		
