@@ -28,6 +28,7 @@ import javax.swing.event.ChangeListener;
 	
 
 		private static final long serialVersionUID = 123456L;
+		//View view = new View();
 		
 		private JLabel LabelChooseType = new JLabel("Choose your Cellule"); 
 		private JLabel Sphericity = new JLabel("Choose your Spherecity");
@@ -115,6 +116,20 @@ import javax.swing.event.ChangeListener;
 		private String stringSphericityInf = "250";
 		private String stringBorderSup = "0";
 		private String stringBorderInf = "250";
+		private String stringCellule = "AllCells";
+
+	
+
+
+		public String getStringCellule() {
+			return stringCellule;
+		}
+
+		public void setStringCellule(String stringCellule) {
+			this.stringCellule = stringCellule;
+		}
+
+
 		private String lastValueAreaSup;
 		private String resultAreaSupDefault;
 		private String resultAreaSup;
@@ -125,45 +140,7 @@ import javax.swing.event.ChangeListener;
 		private String  resultSphericitySupDefault;
 		private String  resultSphericitySup;
 		
-	public String getStringSphericitySup() {
-			return stringSphericitySup;
-		}
 
-		public void setStringSphericitySup(String stringSphericitySup) {
-			this.stringSphericitySup = stringSphericitySup;
-		}
-
-		public String getStringSphericityInf() {
-			return stringSphericityInf;
-		}
-
-		public void setStringSphericityInf(String stringSphericityInf) {
-			this.stringSphericityInf = stringSphericityInf;
-		}
-
-		public String getStringBorderSup() {
-			return stringBorderSup;
-		}
-
-		public void setStringBorderSup(String stringBorderSup) {
-			this.stringBorderSup = stringBorderSup;
-		}
-
-		public String getStringBorderInf() {
-			return stringBorderInf;
-		}
-
-		public void setStringBorderInf(String stringBorderInf) {
-			this.stringBorderInf = stringBorderInf;
-		}
-
-		public String getResultSphericitySup() {
-			return resultSphericitySup;
-		}
-
-		public void setResultSphericitySup(String resultSphericitySup) {
-			this.resultSphericitySup = resultSphericitySup;
-		}
 
 	public RequestFram (){
 
@@ -499,7 +476,7 @@ import javax.swing.event.ChangeListener;
 	        		this.stringAreaSup = String.valueOf(sliderAreaSup.getValue());
 	        		
 	        		
-	        	
+	      }
 	       if(event.getSource() == sliderAreaInf){
 
                    sliderDisplayAreaInf.setText(String.valueOf(sliderAreaInf.getValue()));
@@ -508,8 +485,8 @@ import javax.swing.event.ChangeListener;
        		
 
            }
-	      }
-	       	        
+	      
+	     
 		
 	}
 		public String getSelectedButtonText(ButtonGroup buttonGroup) {
@@ -534,7 +511,7 @@ import javax.swing.event.ChangeListener;
 				System.out.println("It is finish !");
 				this.setVisible(false);
 			}
-			 //System.out.println("source : " + ((JRadioButton)e.getSource()).getText());
+			
 
 		/*if(e.getSource() == btApply ){
 				System.out.println("It is apply !");
@@ -557,17 +534,19 @@ import javax.swing.event.ChangeListener;
 				if(btSupArea.isSelected()){
 					//System.out.println("btSupArea is Selected : ");
 					System.out.println("btSupArea is Selected : "+ this.stringAreaSup);
+					// view.getStringRequest() = this.stringAreaSup;
+				
 
 				}
 				          else // valeur par defaut
 				{
 					      this.stringAreaSup = "0";
-					      resultAreaSupDefault = this.stringAreaSup  ;
-					      System.out.println("Sup Area : "+ resultAreaSupDefault);
+					     // resultAreaSupDefault = this.stringAreaSup  ;
+					      System.out.println("Sup Area : "+ this.stringAreaSup);
 
 				}
 				
-			  /* if(e.getSource() == btInfArea ){
+			  // if(e.getSource() == btInfArea ){
 					
 			    if(btInfArea.isSelected()){
 					
@@ -579,10 +558,10 @@ import javax.swing.event.ChangeListener;
 				        else
 				 {
 					     this.stringAreaInf = "250";
-					     resultAreaInfDefault= this.stringAreaInf;
-					     System.out.println("Inf Area : "+ resultAreaInfDefault);
+					    // resultAreaInfDefault= this.stringAreaInf;
+					     System.out.println("Inf Area : "+ this.stringAreaInf);
 
-				}*/
+				}
 					
 			if(btSupSphericity.isSelected()){
 						//System.out.println("btSupSphericity is Selected : ");
@@ -592,8 +571,8 @@ import javax.swing.event.ChangeListener;
 					else // valeur par defaut
 					{
 						 this.stringSphericitySup = "0";
-						  resultSphericitySupDefault = this.stringSphericitySup  ;
-						 System.out.println("Sup Sphericity : "+ resultSphericitySupDefault);
+						  //resultSphericitySupDefault = this.stringSphericitySup  ;
+						 System.out.println("Sup Sphericity : "+ this.stringSphericitySup);
 
 					}
 					
@@ -602,15 +581,15 @@ import javax.swing.event.ChangeListener;
 						if(btInfSphericity.isSelected()){
 						
 							//this.stringAreaInf = sliderDisplayAreaInf.getText();
-							 resultSphericityInf = String.valueOf(sliderSphericityInf.getValue())  ;
-							System.out.println("btInfSphericity is Selected : " + resultSphericityInf );
+							// resultSphericityInf = String.valueOf(sliderSphericityInf.getValue())  ;
+							System.out.println("btInfSphericity is Selected : " + this.stringAreaInf );
 
 						}
 					else
 					{
 						 this.stringSphericityInf = "250";
-						 resultSphericityInfDefault= this.stringSphericityInf;
-						 System.out.println("Inf Sphericity : "+ resultSphericityInfDefault);
+						// resultSphericityInfDefault= this.stringSphericityInf;
+						 System.out.println("Inf Sphericity : "+ this.stringSphericityInf);
 
 					}
 						
@@ -647,7 +626,7 @@ import javax.swing.event.ChangeListener;
 
 						}
 					
-				
+							
 				this.setVisible(true);
 
 				    }}//}
@@ -703,12 +682,55 @@ import javax.swing.event.ChangeListener;
 			this.stringAreaInf = stringAreaInf;
 		}	
 		
+		public String getStringSphericitySup() {
+			return stringSphericitySup;
+		}
+
+		public void setStringSphericitySup(String stringSphericitySup) {
+			this.stringSphericitySup = stringSphericitySup;
+		}
+
+		public String getStringSphericityInf() {
+			return stringSphericityInf;
+		}
+
+		public void setStringSphericityInf(String stringSphericityInf) {
+			this.stringSphericityInf = stringSphericityInf;
+		}
+
+		public String getStringBorderSup() {
+			return stringBorderSup;
+		}
+
+		public void setStringBorderSup(String stringBorderSup) {
+			this.stringBorderSup = stringBorderSup;
+		}
+
+		public String getStringBorderInf() {
+			return stringBorderInf;
+		}
+
+		public void setStringBorderInf(String stringBorderInf) {
+			this.stringBorderInf = stringBorderInf;
+		}
+
+		public String getResultSphericitySup() {
+			return resultSphericitySup;
+		}
+
+		public void setResultSphericitySup(String resultSphericitySup) {
+			this.resultSphericitySup = resultSphericitySup;
+		}
+		
 		
 		class StateListener implements ActionListener{
-		    public void actionPerformed(ActionEvent e) {
+			//RequestFram rf2 = new RequestFram();
+		    
+			public void actionPerformed(ActionEvent e) {
 		     // System.out.println("source : " + btRadio1.getText() + " - état : " + btRadio1.isSelected());
 		     // System.out.println("source : " + btRadio2.getText() + " - état : " + btRadio2.isSelected());
 		    	 System.out.println("Cellule : " + ((JRadioButton)e.getSource()).getText());
+		    	// rf2.getStringCellule() = ((JRadioButton)e.getSource()).getText();
 		    }
 		  }
 	}

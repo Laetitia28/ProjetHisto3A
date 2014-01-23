@@ -1,5 +1,6 @@
 package hg.hist.MVC;
 
+
 import hg.histo.Menu;
 
 import java.awt.BorderLayout;
@@ -38,6 +39,8 @@ public class View extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private Controller controller;
+	RequestFram rf = new RequestFram ();
+	
 
 	private Menu menu=new Menu();
 
@@ -62,10 +65,17 @@ public class View extends JFrame implements ActionListener {
 	private JCheckBox checkAll = new JCheckBox("All cells");
 	private JCheckBox checkBox ;
 
-	 private JTextField textFieldRequest = new JTextField("Enter Users Requests");
-	 private JLabel label = new JLabel("Request");;
+    private JTextField textFieldRequest = new JTextField("Enter Users Requests");
+	private JLabel label = new JLabel("Request");
+	private String stringRequest;
 
 	
+	public String getStringRequest() {
+		return stringRequest;
+	}
+	public void setStringRequest(String stringRequest) {
+		this.stringRequest = stringRequest;
+	}
 	private	Font police = new Font("Arial", Font.BOLD, 14);
 
 
@@ -158,8 +168,8 @@ public class View extends JFrame implements ActionListener {
 		textFieldRequest.setPreferredSize(new Dimension(950,30));
 		textFieldRequest.setForeground(Color.BLUE);
 		textFieldRequest.setFont(police);
+		textFieldRequest.setText( rf.getStringAreaSup() + ":" + rf.getStringAreaInf() + ":" + rf.getStringSphericitySup() + ":" +rf.getStringSphericityInf() + ":" + rf.getStringBorderSup() +":" + rf.getStringBorderInf() );
 		
-
 
 
 		//Add ActionListener elements
@@ -176,6 +186,9 @@ public class View extends JFrame implements ActionListener {
 		
 		
 		getContentPane().add(graphComponent);
+	}
+	public View() {
+		// TODO Auto-generated constructor stub
 	}
 	public Controller getController() {
 		return controller;
