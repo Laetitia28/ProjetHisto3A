@@ -1,6 +1,6 @@
 package hg.hist.MVC;
 
-import hg.histo.Cell;
+import hg.histo.ImageToIcon;
 import hg.histo.Menu;
 
 import java.awt.BorderLayout;
@@ -11,9 +11,7 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -53,8 +51,8 @@ public class View extends JFrame implements ActionListener {
 	private JButton btZoomToFit = new JButton("Zoom Off");
 	private JButton btDisplay = new JButton("Display");
 	private JButton buttonAdvancedRequest = new JButton("Advanced Request");
-	private JButton buttonCancel = new JButton("Cancel");
-	private JButton buttonGo = new JButton("Go");
+	private JButton buttonClear = new JButton("Clear");
+
 
 	private mxGraph graph = new mxGraph();
 	private Object parent = graph.getDefaultParent();
@@ -73,6 +71,10 @@ public class View extends JFrame implements ActionListener {
 
 	private HashMap<String, JMenuItem> JMenuItems = new HashMap<String, JMenuItem>();
 	private HashMap<String, JCheckBox> listOfCheckBox = new HashMap<String, JCheckBox>();
+
+	public View() {
+
+	}
 
 	public View(Controller controller) {
 		super("Frame Cell! MVC ");
@@ -137,8 +139,7 @@ public class View extends JFrame implements ActionListener {
 
 		panelContainRequestField.add(label);
 		panelContainRequestField.add(textFieldRequest);
-		panelContainRequestField.add(buttonGo);
-		panelContainRequestField.add(buttonCancel);
+		panelContainRequestField.add(buttonClear);
 
 		getContentPane().add(panelContainRequestField, BorderLayout.PAGE_END);
 
@@ -158,6 +159,7 @@ public class View extends JFrame implements ActionListener {
 
 		// Add actionListener au btApply
 
+		frame2.getBtClear().addActionListener(this);
 		frame2.getBtApply().addActionListener(this);
 		this.textFieldRequest.setPreferredSize(new Dimension(950, 30));
 		this.textFieldRequest.setForeground(Color.BLUE);
@@ -172,23 +174,14 @@ public class View extends JFrame implements ActionListener {
 		this.btDisplay.addActionListener(this);
 		menu.getRadioButtonMenuItemDisplay().addActionListener(this);
 		menu.getRadioButtonMenuItemHidden().addActionListener(this);
-		buttonGo.addActionListener(this);
+		buttonClear.addActionListener(this);
 		buttonAdvancedRequest.addActionListener(this);
 
 		getContentPane().add(graphComponent);
 	}
 
-	public View() {
 
-	}
 
-	public Controller getController() {
-		return controller;
-	}
-
-	public void setController(Controller controller) {
-		this.controller = controller;
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -268,9 +261,9 @@ public class View extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == menu.getRadioButtonMenuItemDisplay()) {
 			System.out.println("Hidden");
-			ImageIcon img = new ImageIcon(controller.getPath_image());
-			img = Controller.scale(controller.getPath_image(),
-					(int) (img.getIconWidth() * 0.4),
+			ImageIcon img = new ImageIcon(this.getClass().getClassLoader().getResource(controller.getPath_image()));
+			ImageToIcon a = new ImageToIcon();
+			img = a.scale(controller.getPath_image(), (int) (img.getIconWidth() * 0.4),
 					(int) (img.getIconHeight() * 0.4));
 			graphComponent.setBackgroundImage(img);
 			getContentPane().add(graphComponent);
@@ -297,9 +290,30 @@ public class View extends JFrame implements ActionListener {
 			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		}
+		if(e.getSource() == buttonClear){
+			controller.getTemp().clear();
+			graph.setCellsDeletable(true);
+			this.graph.removeCells(this.graph.getChildVertices(this.parent));
+			graph.refresh();
+			graph.setCellsDeletable(false);
+			controller.changeFrame(controller.getPath_current(), graph,
+					graphComponent);
+		}
+		if(e.getSource() == frame2.getBtClear()){
+			System.out.println("heh");
+			controller.getTemp().clear();
+			graph.setCellsDeletable(true);
+			this.graph.removeCells(this.graph.getChildVertices(this.parent));
+			graph.refresh();
+			graph.setCellsDeletable(false);
+			controller.changeFrame(controller.getPath_current(), graph,
+					graphComponent);
+			
+		}
+
 		if (e.getSource() == frame2.getBtApply()) {
 
-			System.out.println("Je suis dans le champs text");
+			
 			setStringRequest(frame2.getStringTypeCell() + ":"
 					+ frame2.getStringAreaSup() + ":"
 					+ frame2.getStringAreaInf() + ":"
@@ -307,7 +321,7 @@ public class View extends JFrame implements ActionListener {
 					+ frame2.getStringSphericityInf() + ":"
 					+ frame2.getStringBorderSup() + ":"
 					+ frame2.getStringBorderInf());
-
+			System.out.println("Je suis dans le champs text"+ getStringRequest());
 			this.textFieldRequest.setText("Type of Cell : "
 					+ frame2.getStringTypeCell() + "; Area : Sup "
 					+ frame2.getStringAreaSup() + " and Inf "
@@ -316,28 +330,14 @@ public class View extends JFrame implements ActionListener {
 					+ frame2.getStringSphericityInf() + "; Border : Sup "
 					+ frame2.getStringBorderSup() + " and Inf "
 					+ frame2.getStringBorderInf());
-			// tester le type de cellules
-			// methode pour avce type de champs
-			// recuperer la liste
-			List<Cell> listRequestFram = new ArrayList<Cell>();
-			for(Cell c : controller.getListCells()){
-				if(c.getClass_name().equals(frame2.getStringTypeCell())){
-					System.out.println("Type cell selected is "
-							+ c.getClass_name());	
-					listRequestFram.add(c);
-				}
-				else {
-					System.out.println("Type cell selected is "
-							+frame2.getStringTypeCell());
-					listRequestFram=controller.getListCells();
-				}
-				
-			}
-			listRequestFram = controller.SortListCell("Border",  frame2.getStringBorderSup(),  frame2.getStringBorderInf(), listRequestFram);
-			listRequestFram = controller.SortListCell("Area",  frame2.getStringAreaSup(),  frame2.getStringAreaInf(), listRequestFram);
-			listRequestFram = controller.SortListCell("Sphericity",  frame2.getStringSphericitySup(),  frame2.getStringSphericityInf(), listRequestFram);
-
-		
+			
+			graph.setCellsDeletable(true);
+			this.graph.removeCells(this.graph.getChildVertices(this.parent));
+			graph.refresh();
+			graph.setCellsDeletable(false);
+			
+			controller.SecondSortListCell(frame2.getStringBorderSup(), frame2.getStringBorderInf(), frame2.getStringSphericitySup(), frame2.getStringBorderInf(), frame2.getStringAreaSup(), frame2.getStringAreaInf(), frame2.getStringTypeCell(),this.graph);
+	
 			
 		}
 
@@ -357,5 +357,12 @@ public class View extends JFrame implements ActionListener {
 
 	public void setStringRequest(String stringRequest) {
 		this.stringRequest = stringRequest;
+	}
+	public Controller getController() {
+		return controller;
+	}
+
+	public void setController(Controller controller) {
+		this.controller = controller;
 	}
 }
