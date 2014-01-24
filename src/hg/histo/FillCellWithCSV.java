@@ -35,21 +35,7 @@ import java.util.List;
 	            //affichage de cell
 	            this.cells.add(cell);
 	        }
-	        /*
-	        Iterator iter = cells.iterator();
-	        while (iter.hasNext())
-	       {
-	     
-	          System.out.println(iter.next());
-	        }
-	        */
-	        /*
-	        ListIterator<Cell> iter = cells.listIterator();
-		    while (iter.hasNext())
-		   {
-		 
-		      System.out.println("liste_ " + iter.next());
-		    }*/
+	       
 	        return cells;
 	    }
 
@@ -61,7 +47,11 @@ import java.util.List;
 			cell.setInner_y(Double.parseDouble(tab[5]));
 			cell.setScene_ver(Double.parseDouble(tab[2]));
 			cell.setClass_name(tab[7]);
-
+			cell.setBorder_Index(Double.parseDouble(tab[25]));
+			cell.setBorder_Lenght_pxl(Double.parseDouble(tab[23]));
+			cell.setBorder_Length(Double.parseDouble(tab[9]));
+			cell.setArea_pxl(Double.parseDouble(tab[22]));
+			cell.setSphericity(Double.parseDouble(tab[10]));
 		    return cell;
 		}
 
