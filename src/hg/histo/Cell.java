@@ -114,22 +114,22 @@ public class Cell {
 
 		public String toString(){
 			StringBuffer sb = new StringBuffer("");
-			sb.append("scene_name :" + this.scene_name + "\n");
-			sb.append("scene_id :" + this.scene_id + "\n");
+			//sb.append("scene_name :" + this.scene_name + "\n");
+			//sb.append("scene_id :" + this.scene_id + "\n");
 			
-			sb.append("scene_ver :" + this.scene_ver+"\n");
-			sb.append("cntrl_tag :" + this.cntrl_tag+"\n");
+			//sb.append("scene_ver :" + this.scene_ver+"\n");
+			//sb.append("cntrl_tag :" + this.cntrl_tag+"\n");
 			
-			sb.append("inner_x :" + this.inner_x+"\n");
-			sb.append("inner_y :" + this.inner_y+"\n");
+			//sb.append("inner_x :" + this.inner_x+"\n");
+			//sb.append("inner_y :" + this.inner_y+"\n");
 			
 			sb.append("level_name :" + this.level_name+"\n");
 			sb.append("class_name :" + this.class_name+"\n");
 			
-			sb.append("integrated_Intensity :" + this.integrated_Intensity+"\n");
+			//sb.append("integrated_Intensity :" + this.integrated_Intensity+"\n");
 			sb.append("border_Length :" + this.border_Length+"\n");
 			sb.append("sphericity :" + this.sphericity+"\n");
-			
+			/*
 			sb.append("mean_Layer_1 :" + this.mean_Layer_1+"\n");
 			sb.append("mean_Layer_2 :" + this.mean_Layer_2+"\n");
 			sb.append("mean_Layer_3 :" + this.mean_Layer_3+"\n");
@@ -144,8 +144,10 @@ public class Cell {
 			
 			sb.append("hsi_Transformation_Hue :" + this.hsi_Transformation_Hue+"\n");
 			sb.append("hsi_Transformation_Saturation :" + this.hsi_Transformation_Saturation+"\n");
+			*/
 			sb.append("area_pxl :" + this.area_pxl+"\n");
 			sb.append("border_Lenght_pxl :" + this.border_Lenght_pxl+"\n");
+			/*
 			sb.append("ratio_Lenght_Width :" + this.ratio_Lenght_Width+"\n");
 			sb.append("border_Index :" + this.border_Index+"\n");
 			
@@ -171,7 +173,7 @@ public class Cell {
 			
 			sb.append("x_Center_Pxl :" + this.x_Center_Pxl+"\n");
 			sb.append("y_Center_Pxl :" + this.y_Center_Pxl+"\n");
-
+*/
 			
 			return sb.toString();
 		}
