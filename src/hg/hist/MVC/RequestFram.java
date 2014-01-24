@@ -44,6 +44,7 @@ public class RequestFram extends JFrame implements ActionListener,
 
 	private JButton btFinish = new JButton("Finish");
 	private JButton btApply = new JButton("Apply");
+	private JButton btClear = new JButton("Clear");
 
 	private JCheckBox btSupSphericity = new JCheckBox("Sup");
 	private JCheckBox btInfSphericity = new JCheckBox("Inf");
@@ -94,12 +95,20 @@ public class RequestFram extends JFrame implements ActionListener,
 	private JRadioButton btRadio7 = new JRadioButton("Nucleus DAB+");
 
 	private String stringTypeCell = "All Cells";
-	private double stringAreaSup = 0;
-	private double stringAreaInf = 250;
-	private double stringSphericitySup = 0;
-	private double stringSphericityInf = 250;
-	private double stringBorderSup = 0;
-	private double stringBorderInf = 250;
+	
+	private double default_stringAreaSup = 200;
+	private double default_stringAreaInf = 5000;
+	private double default_stringSphericitySup = 0.5;
+	private double default_stringSphericityInf = 0;
+	private double default_stringBorderSup = 200;
+	private double default_stringBorderInf = 500;
+	
+	private double stringAreaSup = default_stringAreaSup;
+	private double stringAreaInf = default_stringAreaInf;
+	private double stringSphericitySup = default_stringSphericitySup;
+	private double stringSphericityInf = default_stringSphericityInf;
+	private double stringBorderSup = default_stringBorderSup;
+	private double stringBorderInf = default_stringBorderInf;
 
 
 	public RequestFram() {
@@ -119,7 +128,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneCellule.setOpaque(true);
 		paneCellule.setBackground(Color.white);
 		paneCellule.setPreferredSize(new Dimension(600, 50));
-		;
+		
 		paneCellule.setLayout(new GridLayout(3, 3));
 
 		groupButton.add(btRadio1);
@@ -165,10 +174,10 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneArea2.setBackground(Color.white);
 		paneArea2.setPreferredSize(new Dimension(400, 50));
 
-		sliderDisplayAreaSup.setText("Value of sup");
+		sliderDisplayAreaSup.setText("Value");
 		sliderDisplayAreaSup.setPreferredSize(new Dimension(100, 30));
 		sliderDisplayAreaSup.setForeground(Color.BLUE);
-		sliderDisplayAreaInf.setText("Value of inf");
+		sliderDisplayAreaInf.setText("Value");
 		sliderDisplayAreaInf.setPreferredSize(new Dimension(100, 30));
 		sliderDisplayAreaInf.setForeground(Color.BLUE);
 
@@ -235,10 +244,10 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneSphere2.setBackground(Color.white);
 		paneSphere2.setPreferredSize(new Dimension(400, 50));
 
-		sliderDisplaySphericitySup.setText("Value of slider");
+		sliderDisplaySphericitySup.setText("Value");
 		sliderDisplaySphericitySup.setPreferredSize(new Dimension(100, 30));
 		sliderDisplaySphericitySup.setForeground(Color.BLUE);
-		sliderDisplaySphericityInf.setText("Value of slider");
+		sliderDisplaySphericityInf.setText("Value");
 		sliderDisplaySphericityInf.setPreferredSize(new Dimension(100, 30));
 		sliderDisplaySphericityInf.setForeground(Color.BLUE);
 
@@ -303,10 +312,10 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneBorder2.setBackground(Color.white);
 		paneBorder2.setPreferredSize(new Dimension(400, 50));
 
-		sliderDisplayBorderSup.setText("Value of sup");
+		sliderDisplayBorderSup.setText("Value");
 		sliderDisplayBorderSup.setPreferredSize(new Dimension(100, 30));
 		sliderDisplayBorderSup.setForeground(Color.BLUE);
-		sliderDisplayBorderInf.setText("Value of inf");
+		sliderDisplayBorderInf.setText("Value");
 		sliderDisplayBorderInf.setPreferredSize(new Dimension(100, 30));
 		sliderDisplayBorderInf.setForeground(Color.BLUE);
 
@@ -365,11 +374,12 @@ public class RequestFram extends JFrame implements ActionListener,
 
 		btFinish.addActionListener(this);
 		btApply.addActionListener(this);
-		btInfArea.addActionListener(this);
-		btSupArea.addActionListener(this);
+		btClear.addActionListener(this);
+	
 
 		paneEnd.add(btFinish, BorderLayout.WEST);
 		paneEnd.add(btApply, BorderLayout.WEST);
+		paneEnd.add(btClear, BorderLayout.WEST);
 
 		panel.add(rubrique1);
 		panel.add(rubrique2);
@@ -378,6 +388,8 @@ public class RequestFram extends JFrame implements ActionListener,
 		panel.add(paneEnd, BorderLayout.SOUTH);
 
 	}
+
+
 
 	public void stateChanged(ChangeEvent event) {
 		// sliderBorderSup
@@ -459,71 +471,91 @@ public class RequestFram extends JFrame implements ActionListener,
 			System.out.println("It is finish !");
 			this.setVisible(false);
 		}
+		if (e.getSource() == btClear) {
+			System.out.println("It is Clear rf !");
+			this.btRadio1.setSelected(true);
+			
+			this.sliderAreaInf.setValue(150);
+			this.sliderAreaSup.setValue(150);
+			this.sliderBorderInf.setValue(150);
+			this.sliderBorderSup.setValue(150);
+			this.sliderSphericityInf.setValue(150);
+			this.sliderSphericitySup.setValue(150);
+		
+			this.sliderDisplayAreaSup.setText("Value");
+			this.sliderDisplayAreaInf.setText("Value");
+			this.sliderDisplayBorderInf.setText("Value");
+			this.sliderDisplayBorderSup.setText("Value");
+			this.sliderDisplaySphericityInf.setText("Value");
+			this.sliderDisplaySphericitySup.setText("Value");
+			this.setVisible(true);
+			
+		}
 
 		if (e.getSource() == btApply) {
 			System.out.println("It is apply from RequestFram !");
 
 			if (btSupArea.isSelected()) {
-				System.out.println("btSupArea is Selected : "
-						+ this.stringAreaSup);
+			//	System.out.println("btSupArea is Selected : "
+//						+ this.stringAreaSup);
 
 			} else // valeur par defaut
 			{
-				this.stringAreaSup = 0;
-				System.out.println("Sup Area : " + this.stringAreaSup);
+				this.stringAreaSup = default_stringAreaSup;
+	//			System.out.println("Sup Area : " + this.stringAreaSup);
 
 			}
 
 			if (btInfArea.isSelected()) {
-				System.out.println("btInfArea is Selected : "
-						+ this.stringAreaInf);
+		//		System.out.println("btInfArea is Selected : "
+			//			+ this.stringAreaInf);
 
 			} else {
-				this.stringAreaInf = 250;
-				System.out.println("Inf Area : " + this.stringAreaInf);
+				this.stringAreaInf = default_stringAreaInf;
+				//System.out.println("Inf Area : " + this.stringAreaInf);
 
 			}
 
 			if (btSupSphericity.isSelected()) {
-				System.out.println("btSupSphericity is Selected : "
-						+ this.stringSphericitySup);
+				//System.out.println("btSupSphericity is Selected : "
+					//	+ this.stringSphericitySup);
 
 			} else // valeur par defaut
 			{
-				this.stringSphericitySup = 0;
-				System.out.println("Sup Sphericity : "
-						+ this.stringSphericitySup);
+				this.stringSphericitySup = default_stringSphericitySup;
+				//System.out.println("Sup Sphericity : "
+				//		+ this.stringSphericitySup);
 
 			}
 
 			if (btInfSphericity.isSelected()) {
-				System.out.println("btInfSphericity is Selected : "
-						+ this.stringAreaInf);
+				//System.out.println("btInfSphericity is Selected : "
+					//	+ this.stringAreaInf);
 
 			} else {
-				this.stringSphericityInf = 250;
-				System.out.println("Inf Sphericity : "
-						+ this.stringSphericityInf);
+				this.stringSphericityInf = default_stringSphericityInf;
+			//	System.out.println("Inf Sphericity : "
+					//	+ this.stringSphericityInf);
 
 			}
 
 			if (btSupBorder.isSelected()) {
-				System.out.println("btSupBorder is Selected  : "
-						+ this.stringBorderSup);
+				//System.out.println("btSupBorder is Selected  : "
+					//	+ this.stringBorderSup);
 
 			} else // valeur par defaut
 			{
-				this.stringBorderSup = 0;
-				System.out.println("Sup Border : " + this.stringBorderSup);
+				this.stringBorderSup = default_stringBorderSup;
+			///	System.out.println("Sup Border : " + this.stringBorderSup);
 
 			}
 			if (btInfBorder.isSelected()) {
-				System.out.println("btInfBorder is Selected : "
-						+ this.stringBorderInf);
+				//System.out.println("btInfBorder is Selected : "
+					//	+ this.stringBorderInf);
 
 			} else {
-				this.stringBorderInf = 250;
-				System.out.println("Inf Border : " + this.stringBorderInf);
+				this.stringBorderInf = default_stringBorderInf;
+			//	System.out.println("Inf Border : " + this.stringBorderInf);
 
 			}
 			this.setVisible(true);
@@ -603,6 +635,15 @@ public class RequestFram extends JFrame implements ActionListener,
 		this.stringBorderInf = stringBorderInf;
 	}
 
-	
+	public JButton getBtClear() {
+		return btClear;
+	}
+
+	public void setBtClear(JButton btClear) {
+		this.btClear = btClear;
+	}
+
+
+
 
 }
