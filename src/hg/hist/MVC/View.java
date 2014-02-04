@@ -191,7 +191,10 @@ public class View extends JFrame implements ActionListener {
 
 		if (e.getSource() == menu.getOpen()) {
 			chooser.showOpenDialog(null);
+			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			
 			chooser.setApproveButtonText("Choose File...");
+			
 			controller.ChangeFile(chooser, graphComponent, graph);
 			for (String key : listOfCheckBox.keySet()) {
 				down.remove(listOfCheckBox.get(key));

@@ -35,8 +35,6 @@ public class Controller {
 	private String path_initial = "";
 	private String color = "black";
 	
-	//private String path_Ressource_cvs_defautl = this.getClass().getResource("/ressources/image0046.csv").getFile();
-
 
 	private SearchFile searchFile;
 
@@ -157,6 +155,7 @@ public class Controller {
 
 	public void ChangeFile(JFileChooser chooser,mxGraphComponent graphComponent, mxGraph graph) {
 		
+
 		path_current = chooser.getSelectedFile().getAbsolutePath();
 		System.out.println("Path selected current : " + path_current);
 
