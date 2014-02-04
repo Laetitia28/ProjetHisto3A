@@ -16,7 +16,7 @@ public class Menu extends JMenuBar{
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menu_bar1;
 	private JMenu File, Edition,PropertyCells;
-	private JMenuItem open, exit, image_show, image_hidden,addCell, changeColor,list;
+	private JMenuItem open, exit, image_show, image_hidden,addCell, changeColor;
 
 	private JRadioButtonMenuItem radioButtonMenuItemDisplay,RadioButtonMenuItemHidden;
   

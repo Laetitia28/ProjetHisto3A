@@ -13,7 +13,7 @@ package hg.histo;
 
 		public TransformCSV(File file) throws IOException{
 			  this.file = file;
-		        init();
+		      init();
 		}
 		
 

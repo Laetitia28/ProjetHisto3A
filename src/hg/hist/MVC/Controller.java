@@ -2,9 +2,9 @@ package hg.hist.MVC;
 
 import hg.histo.Cell;
 import hg.histo.FillCellWithCSV;
-import hg.histo.ImageToIcon;
 import hg.histo.Menu;
 import hg.histo.SearchFile;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -26,19 +26,24 @@ import com.mxgraph.view.mxGraph;
 
 public class Controller {
 
-	private String img_default = "src/ressources/image0046.jpg";
+	private String img_default = "ressources/image0046.jpg";
 	private String path_image = img_default;
-	private String path_excel_default = "src/ressources/image0046.csv";
+	
+	private String path_excel_default = "/ressources/image0046.csv";
 	private String path_current = path_excel_default;
+	
 	private String path_initial = "";
 	private String color = "black";
+	
+	//private String path_Ressource_cvs_defautl = this.getClass().getResource("/ressources/image0046.csv").getFile();
+
 
 	private SearchFile searchFile;
 
 	private String cellselected;
 	private Object key;
 
-	private ImageIcon img = new ImageIcon("img_default");
+	private ImageIcon img ;
 	private HashMap<String, String> mapColor = new HashMap<String, String>();
 
 	private List<Cell> listCells;
@@ -49,25 +54,48 @@ public class Controller {
 
 	//	System.out.println(this.getClass().getClassLoader().getResource("ressources/image0046.jpg")==null);
 		listCells = new ArrayList<Cell>();
-		listCells = setListCell(path_current);
-		img = new ImageIcon(img_default);
+		listCells = setListCell("/ressources/image0046.csv");
+		img = new ImageIcon(this.getClass().getClassLoader().getResource("ressources/image0046.jpg"));
 		temp = new ArrayList<Cell>();
 	}
 
-	public static ImageIcon scale(String source, int width, int height) {
+	public ImageIcon scale(String source, int width, int height) {
 
+		System.out.println("img : "+ source);
+		
+		if(source.equals("ressources/image0046.jpg")){
+			System.out.println(" yes ");
+
+			source = this.getClass().getClassLoader().getResource("ressources/image0046.jpg").getFile();
+		}
+		
 		ImageIcon icon = new ImageIcon(source);
+		
 		Image imag = icon.getImage();
-		BufferedImage bi = new BufferedImage(imag.getWidth(null),
-				imag.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		
+		BufferedImage bi = new BufferedImage(imag.getWidth(null),imag.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bi.createGraphics();
+		
 		g.drawImage(imag, 0, 0, width, height, null);
+		
 		ImageIcon newIcon = new ImageIcon(bi);
+		
 		return newIcon;
 	}
-
+//ok
 	public List<Cell> setListCell(String path) {
+		System.out.println("pathhee :" +path);
+		if(path.equals("/ressources/image0046.csv")){
+			path = this.getClass().getResource(path).getFile();
+		}
+
 		File myFile = new File(path);
+	
+		//debug
+		    System.out.println(path);
+	        System.out.println(myFile.getAbsolutePath());
+	        System.out.println(myFile.exists());
+	        
 		FillCellWithCSV f;
 		try {
 			f = new FillCellWithCSV(myFile);
@@ -75,7 +103,7 @@ public class Controller {
 			return listcells;
 		} catch (IOException e) {
 			e.printStackTrace();
-			setListCell(getPath_excel_default());
+			setListCell(path);
 		}
 		return null;
 	}
@@ -86,7 +114,9 @@ public class Controller {
 		graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
 		graph.refresh();
 		graph.setCellsDeletable(false);
+		
 		this.listCells.clear();
+
 		this.listCells = setListCell(path);
 
 		ChangeMapColor(this.listCells);
@@ -102,14 +132,16 @@ public class Controller {
 		} finally {
 			graph.getModel().endUpdate();
 		}
+		
 		// display background
 		ImageIcon img = new ImageIcon(getPath_image());
-		img = ImageToIcon.scale(path_image, (int) (img.getIconWidth() * 0.4),
+		
+		img = scale(path_image, (int) (img.getIconWidth() * 0.4),
 				(int) (img.getIconHeight() * 0.4));
 		graphComponent.setBackgroundImage(img);
 		return graphComponent;
 	}
-
+//ok
 	public HashMap<String, JMenuItem> ChangeColorOfCell(Menu menu,
 			HashMap<String, JMenuItem> JMenuItems) {
 		JMenuItem newCell;
@@ -123,8 +155,8 @@ public class Controller {
 		return JMenuItems;
 	}
 
-	public void ChangeFile(JFileChooser chooser,
-			mxGraphComponent graphComponent, mxGraph graph) {
+	public void ChangeFile(JFileChooser chooser,mxGraphComponent graphComponent, mxGraph graph) {
+		
 		path_current = chooser.getSelectedFile().getAbsolutePath();
 		System.out.println("Path selected current : " + path_current);
 
@@ -156,35 +188,40 @@ public class Controller {
 			// creation de path.jpg
 			System.out.println("path_initial : " + path_initial);
 			path_image = path_initial + "." + newPath3;
+			
 			System.out.println("path_image " + path_image);
+			
 			// aller chercher path.jpg dans le dossier
 			searchFile = new SearchFile(path_image);
-			boolean found = searchFile.searchFileImage(searchFile.getName(),
-					searchFile.getFilePath());
+			
+			boolean found = searchFile.searchFileImage(searchFile.getName(),searchFile.getFilePath());
+			
 			if (found) {
-				System.out.println("ok found file .jpg ");
-				JOptionPane.showMessageDialog(graphComponent,
-						"File .jpn  found ! Name is :" + path_image,
-						"avertissement", JOptionPane.WARNING_MESSAGE);
+				System.out.println("I found file .jpg ");
+				JOptionPane.showMessageDialog(graphComponent,"File .jpn  found ! Name is :" + path_image,"avertissement", JOptionPane.WARNING_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(graphComponent,
-						"File .jpn not found ! Default image is image0046 ",
-						"avertissement", JOptionPane.ERROR_MESSAGE);
+						"File .jpn not found ! Default image is image0046 ","avertissement", JOptionPane.ERROR_MESSAGE);
 				System.out.println("Ko not found .jpg ");
-				path_image = img_default;
+				
+				path_image = "ressources/images0046.jpg";
 			}
+			
 			// if .cvs is found then display new graph
-			System.out.println("path using with change Frame" + path_current);
+			System.out.println("path using with change Frame " + path_current);
+			
 			changeFrame(path_current, graph, graphComponent);
+			
 		} else if (!extension.equals("csv")) {
+			
 			System.out.println("Ceci n'est pas un bon fichier ");
-			JOptionPane.showMessageDialog(graphComponent,
-					"File choosen is not expected", "avertissement",
-					JOptionPane.ERROR_MESSAGE);
+			
+			JOptionPane.showMessageDialog(graphComponent,"File choosen is not expected", "avertissement",JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	// }
+	//ok
 	public double newScale(mxGraphComponent graphComponent) {
 		double newScale = 1;
 
@@ -210,6 +247,7 @@ public class Controller {
 		return newScale;
 	}
 
+	//ok
 	public void MapColorCell() {
 		mapColor.put("Tumor nucleus", "red");
 		mapColor.put("Granulocyte nucleus", "yellow");
@@ -218,6 +256,7 @@ public class Controller {
 		mapColor.put("Nucleus DAB+", "blue");
 	}
 
+	//ok
 	public mxGraphComponent initFrame(mxGraph graph,
 			mxGraphComponent graphComponent) {
 		graph.getModel().beginUpdate();
@@ -234,10 +273,9 @@ public class Controller {
 			graph.getModel().endUpdate();
 		}
 		// display background
-		graphComponent.setBackgroundImage(new ImageIcon(
-				"src/ressources/image0046.jpg"));
-		ImageIcon img = new ImageIcon(img_default);
-		img = ImageToIcon.scale(img_default, (int) (img.getIconWidth() * 0.4),
+		
+		ImageIcon img = new ImageIcon(this.getClass().getClassLoader().getResource("ressources/image0046.jpg"));
+		img = scale("ressources/image0046.jpg", (int) (img.getIconWidth() * 0.4),
 				(int) (img.getIconHeight() * 0.4));
 		graphComponent.setBackgroundImage(img);
 
@@ -261,6 +299,7 @@ public class Controller {
 		// getContentPane().add(graphComponent, BorderLayout.CENTER);
 	}
 
+	//ok
 	public void displaySelectedCells(String nameSelected, mxGraph graph) {
 		graph.getModel().beginUpdate();
 		try {
@@ -297,6 +336,8 @@ public class Controller {
 		HashMap<String, String> unionMap = new HashMap<String, String>();
 		unionMap.putAll(tmp);
 		unionMap.putAll(getMapColor());
+		
+		//debug
 		for (String e : unionMap.keySet()) {
 			//System.out.println("key : " + e);
 			//System.out.println("object : " + unionMap.get(e));

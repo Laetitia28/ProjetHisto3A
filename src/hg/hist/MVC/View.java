@@ -1,6 +1,5 @@
 package hg.hist.MVC;
 
-import hg.histo.ImageToIcon;
 import hg.histo.Menu;
 
 import java.awt.BorderLayout;
@@ -33,13 +32,10 @@ import com.mxgraph.view.mxGraph;
 
 public class View extends JFrame implements ActionListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private Controller controller;
-	RequestFram frame2 = new RequestFram();
+	private RequestFram frame2 = new RequestFram();
 
 	private Menu menu = new Menu();
 	private JPanel down = new JPanel(new GridLayout(0, 1));
@@ -82,6 +78,8 @@ public class View extends JFrame implements ActionListener {
 
 		// Create mxgraphComponent with properties
 		graphComponent = new mxGraphComponent(graph);
+		
+		//On va chercher private ImageIcon img  de controller
 		graphComponent.setBounds(0, 0, (int) (controller.getImg()
 				.getIconWidth() * 0.4), (int) (controller.getImg()
 				.getIconHeight() * 0.4));
@@ -101,7 +99,7 @@ public class View extends JFrame implements ActionListener {
 		graph.setCellsResizable(false);
 
 		// create list of cells
-		controller.setListCell(controller.getPath_current());
+		controller.setListCell("/ressources/image0046.csv");
 
 		// create color of cell
 		controller.MapColorCell();
@@ -161,6 +159,7 @@ public class View extends JFrame implements ActionListener {
 
 		frame2.getBtClear().addActionListener(this);
 		frame2.getBtApply().addActionListener(this);
+		
 		this.textFieldRequest.setPreferredSize(new Dimension(950, 30));
 		this.textFieldRequest.setForeground(Color.BLUE);
 		this.textFieldRequest.setFont(police);
@@ -253,19 +252,31 @@ public class View extends JFrame implements ActionListener {
 					new Rectangle(0, 0, 0, 0));
 		}
 		if (e.getSource() == menu.getRadioButtonMenuItemHidden()) {
-			System.out.println("Display");
-			graphComponent.setBackgroundImage(new ImageIcon(
-					"src/ressources/Back_White.png"));
+			System.out.println("Hidden");
+			
+			graphComponent.setBackgroundImage(new ImageIcon(this.getClass().getClassLoader().getResource("ressources/Back_White.png").getFile()));
 			getContentPane().add(graphComponent);
 			graphComponent.refresh();
 		}
+		
 		if (e.getSource() == menu.getRadioButtonMenuItemDisplay()) {
-			System.out.println("Hidden");
-			ImageIcon img = new ImageIcon(this.getClass().getClassLoader().getResource(controller.getPath_image()));
-			ImageToIcon a = new ImageToIcon();
-			img = a.scale(controller.getPath_image(), (int) (img.getIconWidth() * 0.4),
+			
+			//debug
+			System.out.println("Display");
+			System.out.println("getpath_image : " + controller.getPath_image());
+			
+			ImageIcon img;
+			if(!(controller.getPath_image()).equals("ressources/image0046.jpg")){
+				img = new ImageIcon(controller.getPath_image());
+			}
+			else{
+				img = new ImageIcon(this.getClass().getClassLoader().getResource("ressources/image0046.jpg"));
+			}
+			img = controller.scale(controller.getPath_image(), (int) (img.getIconWidth() * 0.4),
 					(int) (img.getIconHeight() * 0.4));
+			
 			graphComponent.setBackgroundImage(img);
+			
 			getContentPane().add(graphComponent);
 			graphComponent.refresh();
 		}
@@ -286,28 +297,31 @@ public class View extends JFrame implements ActionListener {
 			}
 		}
 		if (e.getSource() == buttonAdvancedRequest) {
+			
 			frame2.setVisible(true);
 			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		}
 		if(e.getSource() == buttonClear){
+			
 			controller.getTemp().clear();
+			
 			graph.setCellsDeletable(true);
 			this.graph.removeCells(this.graph.getChildVertices(this.parent));
 			graph.refresh();
 			graph.setCellsDeletable(false);
-			controller.changeFrame(controller.getPath_current(), graph,
-					graphComponent);
+			
+			controller.changeFrame(controller.getPath_current(), graph,graphComponent);
 		}
 		if(e.getSource() == frame2.getBtClear()){
-			System.out.println("heh");
+
 			controller.getTemp().clear();
 			graph.setCellsDeletable(true);
 			this.graph.removeCells(this.graph.getChildVertices(this.parent));
 			graph.refresh();
 			graph.setCellsDeletable(false);
-			controller.changeFrame(controller.getPath_current(), graph,
-					graphComponent);
+			
+			controller.changeFrame(controller.getPath_current(), graph,graphComponent);
 			
 		}
 
@@ -321,7 +335,9 @@ public class View extends JFrame implements ActionListener {
 					+ frame2.getStringSphericityInf() + ":"
 					+ frame2.getStringBorderSup() + ":"
 					+ frame2.getStringBorderInf());
+			//degub
 			System.out.println("Je suis dans le champs text"+ getStringRequest());
+			
 			this.textFieldRequest.setText("Type of Cell : "
 					+ frame2.getStringTypeCell() + "; Area : Sup "
 					+ frame2.getStringAreaSup() + " and Inf "
