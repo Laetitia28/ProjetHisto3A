@@ -55,18 +55,12 @@ public class RequestFram extends JFrame implements ActionListener,
 	private JCheckBox btSupBorder = new JCheckBox("Sup");
 	private JCheckBox btInfBorder = new JCheckBox("Inf");
 
-	private JSlider sliderSphericitySup = new JSlider(JSlider.HORIZONTAL,
-			SLIDER_MIN, SLIDER_MAX, SLIDER_INIT);
-	private JSlider sliderSphericityInf = new JSlider(JSlider.HORIZONTAL,
-			SLIDER_MIN, SLIDER_MAX, SLIDER_INIT);
-	private JSlider sliderAreaSup = new JSlider(JSlider.HORIZONTAL, SLIDER_MIN,
-			SLIDER_MAX, SLIDER_INIT);
-	private JSlider sliderAreaInf = new JSlider(JSlider.HORIZONTAL, SLIDER_MIN,
-			SLIDER_MAX, SLIDER_INIT);
-	private JSlider sliderBorderSup = new JSlider(JSlider.HORIZONTAL,
-			SLIDER_MIN, SLIDER_MAX, SLIDER_INIT);
-	private JSlider sliderBorderInf = new JSlider(JSlider.HORIZONTAL,
-			SLIDER_MIN, SLIDER_MAX, SLIDER_INIT);
+	private JSlider sliderSphericitySup ; 
+	private JSlider sliderSphericityInf ;
+	private JSlider sliderAreaSup ;
+	private JSlider sliderAreaInf ;
+	private JSlider sliderBorderSup ;
+	private JSlider sliderBorderInf;
 
 	private JTextField sliderDisplaySphericitySup = new JTextField();
 	private JTextField sliderDisplaySphericityInf = new JTextField();
@@ -80,10 +74,6 @@ public class RequestFram extends JFrame implements ActionListener,
 	private JPanel rubrique3 = new JPanel();
 	private JPanel rubrique4 = new JPanel();
 
-	static final int SLIDER_INIT = 125;
-	static final int SLIDER_MIN = 0;
-	static final int SLIDER_MAX = 250;
-
 	private ButtonGroup groupButton = new ButtonGroup();;
 
 	private JRadioButton btRadio1 = new JRadioButton("All Cells", true);
@@ -96,23 +86,52 @@ public class RequestFram extends JFrame implements ActionListener,
 
 	private String stringTypeCell = "All Cells";
 	
-	private double default_stringAreaSup = 200;
-	private double default_stringAreaInf = 5000;
-	private double default_stringSphericitySup = 0.5;
-	private double default_stringSphericityInf = 0;
-	private double default_stringBorderSup = 200;
-	private double default_stringBorderInf = 500;
+	private double default_stringAreaSup;
+	private double default_stringAreaInf;
+	private double default_stringSphericitySup;
+	private double default_stringSphericityInf;
+	private double default_stringBorderSup ;
+	private double default_stringBorderInf ;
 	
-	private double stringAreaSup = default_stringAreaSup;
-	private double stringAreaInf = default_stringAreaInf;
-	private double stringSphericitySup = default_stringSphericitySup;
-	private double stringSphericityInf = default_stringSphericityInf;
-	private double stringBorderSup = default_stringBorderSup;
-	private double stringBorderInf = default_stringBorderInf;
+	private double stringAreaSup;
+	private double stringAreaInf;
+	private double stringSphericitySup;
+	private double stringSphericityInf;
+	private double stringBorderSup ;
+	private double stringBorderInf;
 
 
-	public RequestFram() {
+	public RequestFram(double maxArea, double maxSphericity, double maxBorder ,double minArea ,double minSphericity , double minBorder ) {
 
+
+		double default_stringAreaSup = minArea;
+		 double default_stringAreaInf = maxArea;
+		 double default_stringSphericitySup = minSphericity;
+		double default_stringSphericityInf = maxSphericity;
+		double default_stringBorderSup = minBorder;
+		double default_stringBorderInf = maxBorder;
+		
+		
+		 double stringAreaSup = default_stringAreaSup;
+		 double stringAreaInf = default_stringAreaInf;
+		 double stringSphericitySup = default_stringSphericitySup;
+		 double stringSphericityInf = default_stringSphericityInf;
+		 double stringBorderSup = default_stringBorderSup;
+		 double stringBorderInf = default_stringBorderInf;
+		
+		sliderSphericitySup = new JSlider(JSlider.HORIZONTAL,
+				(int)minSphericity, (int)maxSphericity,(int) (maxSphericity-minSphericity)/2);
+		
+		sliderSphericityInf = new JSlider(JSlider.HORIZONTAL,
+				(int)minSphericity, (int)maxSphericity,(int) (maxSphericity-minSphericity)/2);
+		sliderAreaSup = new JSlider(JSlider.HORIZONTAL, (int)minArea, (int)maxArea,(int) (maxArea-minArea)/2);
+		sliderAreaInf = new JSlider(JSlider.HORIZONTAL,(int)minArea, (int)maxArea,(int) (maxArea-minArea)/2);
+				
+		sliderBorderSup = new JSlider(JSlider.HORIZONTAL,
+				(int)minBorder, (int)maxBorder,(int) (maxBorder-minBorder)/2);
+		sliderBorderInf = new JSlider(JSlider.HORIZONTAL,
+				(int)minBorder, (int)maxBorder,(int) (maxBorder-minBorder)/2);
+		
 		this.setSize(800, 600);
 
 		panel.setBackground(Color.white);
@@ -170,21 +189,24 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneArea.setLayout(new GridLayout(1, 3));
 		paneArea.setBackground(Color.white);
 		paneArea.setPreferredSize(new Dimension(400, 50));
+		
 		paneArea2.setLayout(new GridLayout(1, 3));
 		paneArea2.setBackground(Color.white);
 		paneArea2.setPreferredSize(new Dimension(400, 50));
 
+		
+		//Area
 		sliderDisplayAreaSup.setText("Value");
 		sliderDisplayAreaSup.setPreferredSize(new Dimension(100, 30));
 		sliderDisplayAreaSup.setForeground(Color.BLUE);
+		
 		sliderDisplayAreaInf.setText("Value");
 		sliderDisplayAreaInf.setPreferredSize(new Dimension(100, 30));
 		sliderDisplayAreaInf.setForeground(Color.BLUE);
 
 
-		sliderAreaSup.setMajorTickSpacing(50);
-		
-		sliderAreaSup.setMinorTickSpacing(1);
+		sliderAreaSup.setMajorTickSpacing(500);
+		sliderAreaSup.setMinorTickSpacing(200);
 		sliderAreaSup.setPaintTicks(true);
 		sliderAreaSup.setPaintLabels(true);
 
@@ -222,8 +244,9 @@ public class RequestFram extends JFrame implements ActionListener,
 		});
 
 		paneArea.add(btSupArea, BorderLayout.WEST);
-		paneArea.add(sliderAreaSup);
+		paneArea.add(sliderAreaSup,BorderLayout.CENTER);
 		paneArea.add(sliderDisplayAreaSup);
+		
 		paneArea2.add(btInfArea, BorderLayout.WEST);
 		paneArea2.add(sliderAreaInf);
 		paneArea2.add(sliderDisplayAreaInf);
@@ -244,9 +267,12 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneSphere2.setBackground(Color.white);
 		paneSphere2.setPreferredSize(new Dimension(400, 50));
 
+		
+		//sphericity
 		sliderDisplaySphericitySup.setText("Value");
 		sliderDisplaySphericitySup.setPreferredSize(new Dimension(100, 30));
 		sliderDisplaySphericitySup.setForeground(Color.BLUE);
+		
 		sliderDisplaySphericityInf.setText("Value");
 		sliderDisplaySphericityInf.setPreferredSize(new Dimension(100, 30));
 		sliderDisplaySphericityInf.setForeground(Color.BLUE);
