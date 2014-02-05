@@ -35,7 +35,7 @@ public class View extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private Controller controller;
-	private RequestFram frame2 = new RequestFram();
+	private RequestFram frame2;
 
 	private Menu menu = new Menu();
 	private JPanel down = new JPanel(new GridLayout(0, 1));
@@ -98,12 +98,7 @@ public class View extends JFrame implements ActionListener {
 		graph.setCellsSelectable(false);
 		graph.setCellsResizable(false);
 
-		// create list of cells
-		controller.setListCell("/ressources/image0046.csv");
-
-		// create color of cell
-		controller.MapColorCell();
-
+		//create the graph
 		controller.initFrame(graph, graphComponent);
 
 		optionBox.setLayout(new BorderLayout());
@@ -155,6 +150,8 @@ public class View extends JFrame implements ActionListener {
 		getContentPane().add(optionBox, BorderLayout.EAST);
 		setJMenuBar(menu.buildMenu());
 
+		
+		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder());
 		// Add actionListener au btApply
 
 		frame2.getBtClear().addActionListener(this);
@@ -188,7 +185,8 @@ public class View extends JFrame implements ActionListener {
 		if (e.getSource() == menu.getExit()) {
 			this.setVisible(false);
 		}
-
+		
+		//Search New File
 		if (e.getSource() == menu.getOpen()) {
 			chooser.showOpenDialog(null);
 			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -249,11 +247,15 @@ public class View extends JFrame implements ActionListener {
 			}
 
 		}
+		
+		//Zoom
 		if (e.getSource() == btZoomToFit) {
 			graphComponent.zoom(controller.newScale(graphComponent));
 			graphComponent.getGraphControl().scrollRectToVisible(
 					new Rectangle(0, 0, 0, 0));
 		}
+		
+		//Hide BakcGround
 		if (e.getSource() == menu.getRadioButtonMenuItemHidden()) {
 			System.out.println("Hidden");
 			
@@ -262,6 +264,7 @@ public class View extends JFrame implements ActionListener {
 			graphComponent.refresh();
 		}
 		
+		//Display BackGround
 		if (e.getSource() == menu.getRadioButtonMenuItemDisplay()) {
 			
 			//debug
@@ -283,6 +286,8 @@ public class View extends JFrame implements ActionListener {
 			getContentPane().add(graphComponent);
 			graphComponent.refresh();
 		}
+		
+		//Show cells selected
 		if (e.getSource() == btDisplay) {
 
 			graph.setCellsDeletable(true);
@@ -299,12 +304,16 @@ public class View extends JFrame implements ActionListener {
 				}
 			}
 		}
+		
+		//open new Frame 
 		if (e.getSource() == buttonAdvancedRequest) {
 			
 			frame2.setVisible(true);
 			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		}
+		
+		//Clear the selection of FrameRequest + remove Cells
 		if(e.getSource() == buttonClear){
 			
 			controller.getTemp().clear();
@@ -316,6 +325,8 @@ public class View extends JFrame implements ActionListener {
 			
 			controller.changeFrame(controller.getPath_current(), graph,graphComponent);
 		}
+		
+		//Clear the selection of FrameRequest + remove Cells
 		if(e.getSource() == frame2.getBtClear()){
 
 			controller.getTemp().clear();
@@ -328,6 +339,7 @@ public class View extends JFrame implements ActionListener {
 			
 		}
 
+		//treat request
 		if (e.getSource() == frame2.getBtApply()) {
 
 			

@@ -35,7 +35,20 @@ public class Controller {
 	private String path_initial = "";
 	private String color = "black";
 	
-
+	
+	final double MAX = 0.0;
+	final double MIN = 20000.0;
+	//Max
+	private double maxSphericity = MAX;
+	private double maxArea = MAX;
+	private double maxBorder = MAX;
+	
+	//Min
+	private double minSphericity = MIN;
+	private double minArea = MIN;
+	private double minBorder = MIN;
+	
+	
 	private SearchFile searchFile;
 
 	private String cellselected;
@@ -62,8 +75,6 @@ public class Controller {
 		System.out.println("img : "+ source);
 		
 		if(source.equals("ressources/image0046.jpg")){
-			System.out.println(" yes ");
-
 			source = this.getClass().getClassLoader().getResource("ressources/image0046.jpg").getFile();
 		}
 		
@@ -115,13 +126,27 @@ public class Controller {
 		
 		this.listCells.clear();
 
-		this.listCells = setListCell(path);
+		setMaxArea(MAX);
+		setMaxBorder(MAX);
+		setMaxSphericity(MAX);
+		setMinArea(MIN);
+		setMinBorder(MIN);
+		setMinSphericity(MIN);
 
+		//change ListCell
+		this.listCells = setListCell(path);
+		
+		//find Max and Min of Boerder,  Area , Sphérictiy
+		getMaxMin(this.listCells);
+		
+		//change color of Cells
 		ChangeMapColor(this.listCells);
+		
+		//draw the grpah
 		graph.getModel().beginUpdate();
 		try {
 			for (Cell c : this.listCells) {
-				Object v2 = graph.insertVertex(graph.getDefaultParent(), null,
+				graph.insertVertex(graph.getDefaultParent(), null,
 						c.getClass_name(), c.getInner_x() * 0.4,
 						c.getInner_y() * 0.4, 10, 10,
 						"shape=ellipse;per=ellipsePerimeter;fillColor="
@@ -259,10 +284,23 @@ public class Controller {
 	public mxGraphComponent initFrame(mxGraph graph,
 			mxGraphComponent graphComponent) {
 		graph.getModel().beginUpdate();
+		
+		// create list of cells
+		setListCell("/ressources/image0046.csv");
 
+		// create color of cell
+		MapColorCell();
+		
+		//find Max and Min of Border, Area, Sphericity
+		getMaxMin(this.listCells);
+		
+		System.out.println("Max Area : " + getMaxArea() +"Max Border :"+  getMaxBorder()+"Max Shpericity" + getMaxSphericity());
+		System.out.println("Min Area : " + getMinArea() +"Min Border :"+  getMinBorder()+"Min Shpericity" + getMinSphericity());
+
+		
 		try {
 			for (Cell c : this.listCells) {
-				Object v1 = graph.insertVertex(graph.getDefaultParent(), null,
+				graph.insertVertex(graph.getDefaultParent(), null,
 						c.getClass_name(), c.getInner_x() * 0.4,
 						c.getInner_y() * 0.4, 10, 10,
 						"shape=ellipse;per=ellipsePerimeter;fillColor="
@@ -305,7 +343,7 @@ public class Controller {
 			for (Cell c : this.listCells) {
 				if (c.getClass_name().equals(nameSelected)) {
 
-					Object v2 = graph.insertVertex(graph.getDefaultParent(),
+					graph.insertVertex(graph.getDefaultParent(),
 							null, c.getClass_name(), c.getInner_x() * 0.4,
 							c.getInner_y() * 0.4, 10, 10,
 							"shape=ellipse;per=ellipsePerimeter;fillColor="
@@ -337,10 +375,10 @@ public class Controller {
 		unionMap.putAll(getMapColor());
 		
 		//debug
-		for (String e : unionMap.keySet()) {
+		//for (String e : unionMap.keySet()) {
 			//System.out.println("key : " + e);
 			//System.out.println("object : " + unionMap.get(e));
-		}
+		//}
 		setMapColor(unionMap);
 		return getMapColor();
 	}
@@ -363,9 +401,11 @@ public class Controller {
 			double valueAreaInf, String type,mxGraph graph) {
 		
 		for (Cell a : FirstSortListCell(type)) {
+			//debug
 			System.out.println("area "+a.getArea_pxl());
 			System.out.println("border "+a.getBorder_Lenght_pxl());
 			System.out.println("sphe "+ a.getSphericity());
+			
 				if (a.getBorder_Lenght_pxl() > valueBorderSup
 						&& a.getBorder_Lenght_pxl() < valueBorderInf &&
 						a.getArea_pxl() > valueAreaSup
@@ -378,7 +418,7 @@ public class Controller {
 		graph.getModel().beginUpdate();
 		try {
 			for (Cell c : this.temp) {
-					Object v2 = graph.insertVertex(graph.getDefaultParent(),
+					graph.insertVertex(graph.getDefaultParent(),
 							null, c.getClass_name(), c.getInner_x() * 0.4,
 							c.getInner_y() * 0.4, 10, 10,
 							"shape=ellipse;per=ellipsePerimeter;fillColor="
@@ -390,6 +430,35 @@ public class Controller {
 		//return this.temp;
 	}
 
+	public void getMaxMin(List<Cell> list){
+	    for(int i=0; i<list.size(); i++){
+	    	//max
+	        if(list.get(i).getSphericity() > getMaxSphericity()){
+	            setMaxSphericity(list.get(i).getSphericity());
+	        }
+	        if(list.get(i).getArea_pxl() > getMaxArea()){
+	        	setMaxArea(list.get(i).getArea_pxl());
+	        }
+	        if(list.get(i).getBorder_Lenght_pxl() > getMaxBorder()){
+	            setMaxBorder(list.get(i).getBorder_Lenght_pxl());
+	        }
+	        //min
+	        
+	        if(list.get(i).getSphericity() < getMinSphericity()){
+	            setMinSphericity(list.get(i).getSphericity());
+	        }
+	        if(list.get(i).getBorder_Lenght_pxl() < getMinBorder()){
+	            setMinBorder(list.get(i).getBorder_Lenght_pxl());
+	        }
+	        if(list.get(i).getArea_pxl()< getMinArea()){
+	        	setMinArea(list.get(i).getArea_pxl());
+	        }
+	    }
+	    
+	}
+	
+	
+	
 	// Getter and Setter
 	public List<Cell> getListCells() {
 		return listCells;
@@ -486,6 +555,54 @@ public class Controller {
 	public void setTemp(List<Cell> temp) {
 		this.temp = temp;
 	}
+	public double getMaxSphericity() {
+		return maxSphericity;
+	}
+
+	public void setMaxSphericity(double maxSphericity) {
+		this.maxSphericity = maxSphericity;
+	}
+
+	public double getMaxArea() {
+		return maxArea;
+	}
+
+	public void setMaxArea(double maxArea) {
+		this.maxArea = maxArea;
+	}
+
+	public double getMaxBorder() {
+		return maxBorder;
+	}
+
+	public void setMaxBorder(double maxBorder) {
+		this.maxBorder = maxBorder;
+	}
+
+	public double getMinSphericity() {
+		return minSphericity;
+	}
+
+	public void setMinSphericity(double minSphericity) {
+		this.minSphericity = minSphericity;
+	}
+
+	public double getMinArea() {
+		return minArea;
+	}
+
+	public void setMinArea(double minArea) {
+		this.minArea = minArea;
+	}
+
+	public double getMinBorder() {
+		return minBorder;
+	}
+
+	public void setMinBorder(double minBorder) {
+		this.minBorder = minBorder;
+	}
+
 
 
 }
