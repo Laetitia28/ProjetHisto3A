@@ -151,6 +151,8 @@ public class View extends JFrame implements ActionListener {
 		setJMenuBar(menu.buildMenu());
 
 		//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
+		
+		//frame2 = new RequestFram();
 		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder());
 		// Add actionListener au btApply
 
@@ -188,9 +190,8 @@ public class View extends JFrame implements ActionListener {
 		
 		//Search New File
 		if (e.getSource() == menu.getOpen()) {
-			//chooser.showOpenDialog(null);
-			//chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			
+			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			chooser.setApproveButtonText("Choose File...");
 			
 			controller.ChangeFile(chooser, graphComponent, graph);
@@ -305,9 +306,10 @@ public class View extends JFrame implements ActionListener {
 			}
 		}
 		
-		//open new Frame 
+		//open new Frame
 		if (e.getSource() == buttonAdvancedRequest) {
 			
+			frame2.init(controller.getMaxArea(), controller.getMaxSphericity(), controller.getMaxBorder(),controller.getMinArea(), controller.getMinSphericity(), controller.getMinBorder());
 			frame2.setVisible(true);
 			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -319,6 +321,7 @@ public class View extends JFrame implements ActionListener {
 			controller.getTemp().clear();
 			
 			graph.setCellsDeletable(true);
+			
 			this.graph.removeCells(this.graph.getChildVertices(this.parent));
 			graph.refresh();
 			graph.setCellsDeletable(false);

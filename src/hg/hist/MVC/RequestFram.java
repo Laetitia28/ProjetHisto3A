@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -23,8 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -33,7 +30,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		ChangeListener {
 
 	private static final long serialVersionUID = 123456L;
-
+	
 	private JLabel LabelChooseType = new JLabel("Choose your Cellule");
 	private JLabel labelSphericity = new JLabel("Choose your Spherecity");
 	private JLabel labelArea = new JLabel("Choose your Area");
@@ -107,7 +104,17 @@ public class RequestFram extends JFrame implements ActionListener,
 	private double stringBorderSup ;
 	private double stringBorderInf;
 
+
+	private double maxArea;
+	private double maxSphericity;
+	private double maxBorder;
+	private double minArea;
+	private double minSphericity;
+	private double minBorder;
+	
 	//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
+	//public RequestFram( ) {
+
 	public RequestFram(double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder ) {
 
 		System.out.println("A : " + maxArea+ "S :" + maxSphericity+ " B" +maxBorder);
@@ -385,13 +392,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		//Inf
 		sliderSphericityInf.setPreferredSize(new Dimension(sliderSphericityInf.getPreferredSize().width+200,sliderSphericityInf.getPreferredSize().height+30));
 		sliderSphericityInf.setMajorTickSpacing(50);
-		sliderSphericityInf.setMinorTickSpacing(10);
-
-		//Create the label table
-		//Hashtable<Integer, JLabel> labelTable = new Hashtable();
-		//labelTable.put((int)maxSphericity, new JLabel("10^-4") );
-		//sliderSphericitySup.setLabelTable( labelTable );
-		
+		sliderSphericityInf.setMinorTickSpacing(10);	
 		sliderSphericityInf.setPaintTicks(true);
 		sliderSphericityInf.setPaintLabels(true);
 
@@ -439,13 +440,15 @@ public class RequestFram extends JFrame implements ActionListener,
 				
 				gcSphericitySup.gridx = 2;
 				gcSphericitySup.gridy = 0 ;
-
+				gcSphericitySup.fill= GridBagConstraints.PAGE_END;
 				JLabel op  = new JLabel("10-4");
 				gcSphericitySup.weighty = GridBagConstraints.BELOW_BASELINE_TRAILING;
 					op.setHorizontalAlignment(JLabel.CENTER);
 				op.setVerticalAlignment(JLabel.BOTTOM);
 				paneSphereSup.add(op);
 				
+				gcSphericitySup.fill = GridBagConstraints.HORIZONTAL;
+
 				gcSphericitySup.gridx = 3;
 				gcSphericitySup.gridy = 0 ;
 				paneSphereSup.add(sliderDisplaySphericitySup,gcSphericitySup);
@@ -480,8 +483,11 @@ public class RequestFram extends JFrame implements ActionListener,
 				
 				contraintesSphericity.gridx = 0;
 				contraintesSphericity.gridy = 0;
-				contraintesSphericity.gridwidth = 2;
-				contraintesSphericity.fill = GridBagConstraints.CENTER;
+				contraintesSphericity.gridwidth = 3;
+				contraintesSphericity.anchor = GridBagConstraints.NORTH;
+			    String j =10+"<sup>-4</sup>";
+
+				labelSphericity.setText("<html>"+ labelSphericity.getText()+" (" + j+" pxl ) </html>");
 				rubrique3.add(labelSphericity,contraintesSphericity);
 				
 				contraintesSphericity.fill = GridBagConstraints.BOTH;
@@ -843,6 +849,10 @@ public class RequestFram extends JFrame implements ActionListener,
 			setStringTypeCell(((JRadioButton) e.getSource()).getText());
 		}
 	}
+	
+	public void init(double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder){
+		sliderSphericityInf.setMaximum(800);
+	}
 
 	public JButton getBtApply() {
 		return btApply;
@@ -917,6 +927,55 @@ public class RequestFram extends JFrame implements ActionListener,
 	}
 
 
+	public double getMaxArea() {
+		return maxArea;
+	}
+
+	public void setMaxArea(double maxArea) {
+		this.maxArea = maxArea;
+	}
+
+	public double getMaxSphericity() {
+		return maxSphericity;
+	}
+
+
+
+	public void setMaxSphericity(double maxSphericity) {
+		this.maxSphericity = maxSphericity;
+	}
+
+	public double getMaxBorder() {
+		return maxBorder;
+	}
+
+	public void setMaxBorder(double maxBorder) {
+		this.maxBorder = maxBorder;
+	}
+
+	public double getMinArea() {
+		return minArea;
+	}
+
+	public void setMinArea(double minArea) {
+		this.minArea = minArea;
+	}
+
+	public double getMinSphericity() {
+		return minSphericity;
+	}
+
+	public void setMinSphericity(double minSphericity) {
+		this.minSphericity = minSphericity;
+	}
+
+	public double getMinBorder() {
+		return minBorder;
+	}
+
+	public void setMinBorder(double minBorder) {
+		this.minBorder = minBorder;
+	}
 
 
 }
