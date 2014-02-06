@@ -294,8 +294,8 @@ public class Controller {
 		//find Max and Min of Border, Area, Sphericity
 		getMaxMin(this.listCells);
 		
-		System.out.println("Max Area : " + getMaxArea() +"Max Border :"+  getMaxBorder()+"Max Shpericity" + getMaxSphericity());
-		System.out.println("Min Area : " + getMinArea() +"Min Border :"+  getMinBorder()+"Min Shpericity" + getMinSphericity());
+		System.out.println("Max Area : " + getMaxArea() +"Max Border : "+  getMaxBorder()+"Max Shpericity : " + getMaxSphericity());
+		System.out.println("Min Area : " + getMinArea() +"Min Border : "+  getMinBorder()+"Min Shpericity : " + getMinSphericity());
 
 		
 		try {

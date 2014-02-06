@@ -3,11 +3,16 @@ package hg.hist.MVC;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Hashtable;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -28,18 +35,18 @@ public class RequestFram extends JFrame implements ActionListener,
 	private static final long serialVersionUID = 123456L;
 
 	private JLabel LabelChooseType = new JLabel("Choose your Cellule");
-	private JLabel Sphericity = new JLabel("Choose your Spherecity");
-	private JLabel Area = new JLabel("Choose your Area");
-	private JLabel Border = new JLabel("Choose your Border");
+	private JLabel labelSphericity = new JLabel("Choose your Spherecity");
+	private JLabel labelArea = new JLabel("Choose your Area");
+	private JLabel labelBorder = new JLabel("Choose your Border");
 
-	private JPanel panel = new JPanel();
+	private JPanel panelTotal = new JPanel();
 	private JPanel paneCellule = new JPanel();
-	private JPanel paneSphere = new JPanel();
-	private JPanel paneSphere2 = new JPanel();
-	private JPanel paneArea = new JPanel();
-	private JPanel paneArea2 = new JPanel();
-	private JPanel paneBorder = new JPanel();
-	private JPanel paneBorder2 = new JPanel();
+	private JPanel paneSphereSup = new JPanel();
+	private JPanel paneSphereInf = new JPanel();
+	private JPanel paneAreaSup = new JPanel();
+	private JPanel paneAreaInf = new JPanel();
+	private JPanel paneBorderSup = new JPanel();
+	private JPanel paneBorderInf = new JPanel();
 	private JPanel paneEnd = new JPanel();
 
 	private JButton btFinish = new JButton("Finish");
@@ -69,10 +76,10 @@ public class RequestFram extends JFrame implements ActionListener,
 	private JTextField sliderDisplayBorderSup = new JTextField();
 	private JTextField sliderDisplayBorderInf = new JTextField();
 
-	private JPanel rubrique1 = new JPanel();
-	private JPanel rubrique2 = new JPanel();
-	private JPanel rubrique3 = new JPanel();
-	private JPanel rubrique4 = new JPanel();
+	private JPanel rubrique1 = new JPanel(new BorderLayout());
+	private JPanel rubrique2 = new JPanel(new GridBagLayout());
+	private JPanel rubrique3 = new JPanel(new GridBagLayout());
+	private JPanel rubrique4 = new JPanel(new GridBagLayout());
 
 	private ButtonGroup groupButton = new ButtonGroup();;
 
@@ -100,52 +107,59 @@ public class RequestFram extends JFrame implements ActionListener,
 	private double stringBorderSup ;
 	private double stringBorderInf;
 
+	//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
+	public RequestFram(double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder ) {
 
-	public RequestFram(double maxArea, double maxSphericity, double maxBorder ,double minArea ,double minSphericity , double minBorder ) {
-
+		System.out.println("A : " + maxArea+ "S :" + maxSphericity+ " B" +maxBorder);
+		System.out.println("A : " + minArea+ "S :" + minSphericity+ " B" +minBorder);
+		//Size of Frame
+		this.setSize(1200, 600);
 
 		double default_stringAreaSup = minArea;
-		 double default_stringAreaInf = maxArea;
-		 double default_stringSphericitySup = minSphericity;
-		double default_stringSphericityInf = maxSphericity;
+		double default_stringAreaInf = maxArea;
+		double default_stringSphericitySup = minSphericity*1000;
+		double default_stringSphericityInf = maxSphericity*1000;
 		double default_stringBorderSup = minBorder;
 		double default_stringBorderInf = maxBorder;
 		
+		minSphericity = minSphericity * 1000;
+		maxSphericity = maxSphericity *1000;
 		
-		 double stringAreaSup = default_stringAreaSup;
-		 double stringAreaInf = default_stringAreaInf;
-		 double stringSphericitySup = default_stringSphericitySup;
-		 double stringSphericityInf = default_stringSphericityInf;
-		 double stringBorderSup = default_stringBorderSup;
-		 double stringBorderInf = default_stringBorderInf;
+		System.out.println("A : " + maxArea+ "S :" + maxSphericity+ " B" +maxBorder);
+		System.out.println("A : " + minArea+ "S :" + minSphericity+ " B" +minBorder);
 		
-		sliderSphericitySup = new JSlider(JSlider.HORIZONTAL,
-				(int)minSphericity, (int)maxSphericity,(int) (maxSphericity-minSphericity)/2);
+		double stringAreaSup = default_stringAreaSup;
+		double stringAreaInf = default_stringAreaInf;
+		double stringSphericitySup = default_stringSphericitySup;
+		double stringSphericityInf = default_stringSphericityInf;
+		double stringBorderSup = default_stringBorderSup;
+		double stringBorderInf = default_stringBorderInf;
+		 
 		
-		sliderSphericityInf = new JSlider(JSlider.HORIZONTAL,
-				(int)minSphericity, (int)maxSphericity,(int) (maxSphericity-minSphericity)/2);
-		sliderAreaSup = new JSlider(JSlider.HORIZONTAL, (int)minArea, (int)maxArea,(int) (maxArea-minArea)/2);
-		sliderAreaInf = new JSlider(JSlider.HORIZONTAL,(int)minArea, (int)maxArea,(int) (maxArea-minArea)/2);
-				
-		sliderBorderSup = new JSlider(JSlider.HORIZONTAL,
-				(int)minBorder, (int)maxBorder,(int) (maxBorder-minBorder)/2);
-		sliderBorderInf = new JSlider(JSlider.HORIZONTAL,
-				(int)minBorder, (int)maxBorder,(int) (maxBorder-minBorder)/2);
+		 //Verifier les valeurs
+		sliderSphericitySup = new JSlider(JSlider.HORIZONTAL,(int)minSphericity, (int)maxSphericity ,(int) (((maxSphericity-minSphericity)/2)+minSphericity));
+		sliderSphericityInf = new JSlider(JSlider.HORIZONTAL,(int)minSphericity, (int)maxSphericity,(int) (((maxSphericity-minSphericity)/2)+minSphericity));
 		
-		this.setSize(800, 600);
-
-		panel.setBackground(Color.white);
-		this.add(panel);
+		sliderAreaSup = new JSlider(JSlider.HORIZONTAL, (int)minArea, (int)maxArea,(int) (((maxArea-minArea)/2)+minArea));
+		sliderAreaInf = new JSlider(JSlider.HORIZONTAL,(int)minArea, (int)maxArea,(int) (((maxArea-minArea)/2)+minArea));				
+		
+		sliderBorderSup = new JSlider(JSlider.HORIZONTAL,(int)minBorder, (int)maxBorder,(int) (((maxBorder-minBorder)/2)+minBorder));
+		sliderBorderInf = new JSlider(JSlider.HORIZONTAL,(int)minBorder, (int)maxBorder,(int) (((maxBorder-minBorder)/2)+minBorder));
+		
+		panelTotal.setBackground(Color.white);
+		
+		this.add(panelTotal);
+		
 		// choisir la cellule
 
-		rubrique1.setPreferredSize(new Dimension(1200, 100));
-		rubrique1.setBackground(Color.white);
+		rubrique1.setPreferredSize(new Dimension(1000, 100));
+		rubrique1.setBackground(Color.RED);
 
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		paneCellule.setBorder(blackline);
 		paneCellule.setBounds(0, 200, 150, 200);
 		paneCellule.setOpaque(true);
-		paneCellule.setBackground(Color.white);
+		paneCellule.setBackground(Color.GREEN);
 		paneCellule.setPreferredSize(new Dimension(600, 50));
 		
 		paneCellule.setLayout(new GridLayout(3, 3));
@@ -177,44 +191,66 @@ public class RequestFram extends JFrame implements ActionListener,
 		btRadio6.addActionListener(new StateListener());
 		btRadio7.addActionListener(new StateListener());
 
-
-		rubrique1.add(LabelChooseType, BorderLayout.NORTH);
-		rubrique1.add(paneCellule, BorderLayout.NORTH);
-
-		// choisir la surface
-
-		rubrique2.setPreferredSize(new Dimension(1200, 100));
-		rubrique2.setBackground(Color.white);
-
-		paneArea.setLayout(new GridLayout(1, 3));
-		paneArea.setBackground(Color.white);
-		paneArea.setPreferredSize(new Dimension(400, 50));
 		
-		paneArea2.setLayout(new GridLayout(1, 3));
-		paneArea2.setBackground(Color.white);
-		paneArea2.setPreferredSize(new Dimension(400, 50));
+		
+		
+		
+		////RUBRIQUE 1
+		//To center le label
+		LabelChooseType.setHorizontalAlignment(JLabel.CENTER);
+		LabelChooseType.setVerticalAlignment(JLabel.CENTER);
+		rubrique1.add(LabelChooseType, BorderLayout.NORTH);
+		rubrique1.add(paneCellule, BorderLayout.CENTER);
+		
+		
+		//RUBRIQUE 2 AREA 
+		
+		rubrique2.setPreferredSize(new Dimension(1100, 100));
+		rubrique2.setBackground(Color.YELLOW);
+				
+		paneAreaSup.setLayout(new GridBagLayout());
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.weightx = 3 ;
+		gc.weighty = 0 ;
+		paneAreaSup.setBackground(Color.BLUE);
+		paneAreaSup.setPreferredSize(new Dimension(600, 50));
+		
+		
+		paneAreaInf.setLayout(new GridBagLayout());
+		GridBagConstraints gcAreaInf = new GridBagConstraints();
+		gcAreaInf.weightx = 3 ;
+		gcAreaInf.weighty = 0 ;
+		paneAreaInf.setBackground(Color.ORANGE);
+		paneAreaInf.setPreferredSize(new Dimension(400, 50));
 
 		
 		//Area
+		//Sup
 		sliderDisplayAreaSup.setText("Value");
-		sliderDisplayAreaSup.setPreferredSize(new Dimension(100, 30));
+		sliderDisplayAreaSup.setPreferredSize(new Dimension(50, 45));
 		sliderDisplayAreaSup.setForeground(Color.BLUE);
 		
+		//Inf
 		sliderDisplayAreaInf.setText("Value");
-		sliderDisplayAreaInf.setPreferredSize(new Dimension(100, 30));
+		sliderDisplayAreaInf.setPreferredSize(new Dimension(50, 45));
 		sliderDisplayAreaInf.setForeground(Color.BLUE);
 
-
-		sliderAreaSup.setMajorTickSpacing(500);
-		sliderAreaSup.setMinorTickSpacing(200);
+		//Sup
+		Dimension d = sliderAreaSup.getPreferredSize();  
+		sliderAreaSup.setPreferredSize(new Dimension(d.width+200,d.height+30)); 	
+		sliderAreaSup.setMajorTickSpacing(1000);
+		sliderAreaSup.setMinorTickSpacing(100);
 		sliderAreaSup.setPaintTicks(true);
 		sliderAreaSup.setPaintLabels(true);
 
-		sliderAreaInf.setMajorTickSpacing(50);
-		sliderAreaInf.setMinorTickSpacing(1);
+		//Inf
+		sliderAreaInf.setPreferredSize(new Dimension(sliderAreaInf.getPreferredSize().width+200,sliderAreaInf.getPreferredSize().height+30)); 
+		sliderAreaInf.setMajorTickSpacing(1000);
+		sliderAreaInf.setMinorTickSpacing(100);
 		sliderAreaInf.setPaintTicks(true);
 		sliderAreaInf.setPaintLabels(true);
 
+		//Listener
 		sliderAreaSup.addChangeListener(this);
 		sliderAreaInf.addChangeListener(this);
 
@@ -242,51 +278,124 @@ public class RequestFram extends JFrame implements ActionListener,
 				sliderAreaInf.setValue(value);
 			}
 		});
-
-		paneArea.add(btSupArea, BorderLayout.WEST);
-		paneArea.add(sliderAreaSup,BorderLayout.CENTER);
-		paneArea.add(sliderDisplayAreaSup);
 		
-		paneArea2.add(btInfArea, BorderLayout.WEST);
-		paneArea2.add(sliderAreaInf);
-		paneArea2.add(sliderDisplayAreaInf);
+		//Sup
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.weightx = 0.5;
+		gc.gridx = 0 ;
+		gc.gridy = 0 ;
+		paneAreaSup.add(btSupArea ,gc);
+		
+		gc.weightx=1;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.gridx = 1;
+		gc.gridy = 0 ; 
+		paneAreaSup.add(sliderAreaSup,gc);
+		
+		gc.gridx = 2;
+		gc.gridy = 0 ; 
+		paneAreaSup.add(sliderDisplayAreaSup,gc);
+		
+		
+		//Inf
+		gcAreaInf.anchor = GridBagConstraints.LINE_START;
+		gcAreaInf.weightx = 0.5;
+		gcAreaInf.gridx = 0 ;
+		gcAreaInf.gridy = 0 ;
+		paneAreaInf.add(btInfArea ,gcAreaInf);
+		
+		gcAreaInf.weightx=1;
+		gcAreaInf.fill = GridBagConstraints.HORIZONTAL;
+		gcAreaInf.gridx = 1;
+		gcAreaInf.gridy = 0 ; 
+		paneAreaInf.add(sliderAreaInf,gcAreaInf);
+		
+		gcAreaInf.gridx = 2;
+		gcAreaInf.gridy = 0 ; 
+		paneAreaInf.add(sliderDisplayAreaInf,gcAreaInf);
+		
 
-		rubrique2.add(Area, BorderLayout.NORTH);
-		rubrique2.add(paneArea);
-		rubrique2.add(paneArea2);
+		//rubrique 2 
+		GridBagConstraints contraintes = new GridBagConstraints();
+		contraintes.fill = GridBagConstraints.BOTH;
+		contraintes.insets = new Insets(5, 5, 5, 5);
 
-		// choisir la sphericité
+		contraintes.ipady=contraintes.anchor=GridBagConstraints.CENTER;;
+		contraintes.weightx = 2;
+		contraintes.weighty = 2;
+		
+		contraintes.gridx = 0;
+		contraintes.gridy = 0;
+		contraintes.gridwidth = 2;
+		contraintes.fill = GridBagConstraints.CENTER;
+		rubrique2.add(labelArea,contraintes);
+		
+		contraintes.fill = GridBagConstraints.BOTH;
+		contraintes.gridx = 0 ;
+		contraintes.gridy = 1;
+		contraintes.gridwidth = 1;
+		rubrique2.add(paneAreaSup,contraintes);
+		
+		contraintes.gridx = 1;
+		contraintes.gridy = 1;
+		contraintes.gridwidth = 1;
+		rubrique2.add(paneAreaInf,contraintes);
 
-		rubrique3.setPreferredSize(new Dimension(1200, 100));
-		rubrique3.setBackground(Color.white);
+		// RUBRIQUE 3 Shpericity
 
-		paneSphere.setLayout(new GridLayout(1, 3));
-		paneSphere.setBackground(Color.white);
-		paneSphere.setPreferredSize(new Dimension(400, 50));
-		paneSphere2.setLayout(new GridLayout(1, 3));
-		paneSphere2.setBackground(Color.white);
-		paneSphere2.setPreferredSize(new Dimension(400, 50));
+		rubrique3.setPreferredSize(new Dimension(1100, 100));
+		rubrique3.setBackground(Color.YELLOW);
+
+		//sup
+		paneSphereSup.setLayout(new GridBagLayout());
+		GridBagConstraints gcSphericitySup = new GridBagConstraints();
+		gcSphericitySup.weightx = 4 ;
+		gcSphericitySup.weighty = 0 ;
+		paneSphereSup.setBackground(Color.RED);
+		paneSphereSup.setPreferredSize(new Dimension(600, 50));
+		
+		//Inf
+		paneSphereInf.setLayout(new GridBagLayout());
+		GridBagConstraints gcSphericityInf = new GridBagConstraints();
+		gcSphericityInf.weightx = 3 ;
+		gcSphericityInf.weighty = 0 ;
+		paneSphereInf.setBackground(Color.GREEN);
+		paneSphereInf.setPreferredSize(new Dimension(600, 50));
 
 		
 		//sphericity
+		//Sup
 		sliderDisplaySphericitySup.setText("Value");
-		sliderDisplaySphericitySup.setPreferredSize(new Dimension(100, 30));
+		sliderDisplaySphericitySup.setPreferredSize(new Dimension(50, 45));
 		sliderDisplaySphericitySup.setForeground(Color.BLUE);
 		
+		//Inf
 		sliderDisplaySphericityInf.setText("Value");
-		sliderDisplaySphericityInf.setPreferredSize(new Dimension(100, 30));
+		sliderDisplaySphericityInf.setPreferredSize(new Dimension(50, 45));
 		sliderDisplaySphericityInf.setForeground(Color.BLUE);
 
+		
+		//Sup
+		sliderSphericitySup.setPreferredSize(new Dimension(sliderSphericitySup.getPreferredSize().width+200,sliderSphericitySup.getPreferredSize().height+30));
 		sliderSphericitySup.setMajorTickSpacing(50);
-		sliderSphericitySup.setMinorTickSpacing(1);
+		sliderSphericitySup.setMinorTickSpacing(10);
 		sliderSphericitySup.setPaintTicks(true);
 		sliderSphericitySup.setPaintLabels(true);
 
+		//Inf
+		sliderSphericityInf.setPreferredSize(new Dimension(sliderSphericityInf.getPreferredSize().width+200,sliderSphericityInf.getPreferredSize().height+30));
 		sliderSphericityInf.setMajorTickSpacing(50);
-		sliderSphericityInf.setMinorTickSpacing(1);
+		sliderSphericityInf.setMinorTickSpacing(10);
+
+		//Create the label table
+		//Hashtable<Integer, JLabel> labelTable = new Hashtable();
+		//labelTable.put((int)maxSphericity, new JLabel("10^-4") );
+		//sliderSphericitySup.setLabelTable( labelTable );
+		
 		sliderSphericityInf.setPaintTicks(true);
 		sliderSphericityInf.setPaintLabels(true);
 
+		//Listeners
 		sliderSphericityInf.addChangeListener(this);
 		sliderSphericitySup.addChangeListener(this);
 
@@ -315,46 +424,123 @@ public class RequestFram extends JFrame implements ActionListener,
 			}
 		});
 
-		paneSphere.add(btSupSphericity, BorderLayout.WEST);
-		paneSphere.add(sliderSphericitySup);
-		paneSphere.add(sliderDisplaySphericitySup);
-		paneSphere2.add(btInfSphericity, BorderLayout.WEST);
-		paneSphere2.add(sliderSphericityInf);
-		paneSphere2.add(sliderDisplaySphericityInf);
+		//Sup
+				gcSphericitySup.anchor = GridBagConstraints.LINE_START;
+				gcSphericitySup.weightx = 0.5;
+				gcSphericitySup.gridx = 0 ;
+				gcSphericitySup.gridy = 0 ;
+				paneSphereSup.add(btSupSphericity ,gcSphericitySup);
+				
+				gcSphericitySup.weightx=1;
+				gcSphericitySup.fill = GridBagConstraints.HORIZONTAL;
+				gcSphericitySup.gridx = 1;
+				gcSphericitySup.gridy = 0 ; 
+				paneSphereSup.add(sliderSphericitySup,gcSphericitySup);
+				
+				gcSphericitySup.gridx = 2;
+				gcSphericitySup.gridy = 0 ;
 
-		rubrique3.add(Sphericity, BorderLayout.NORTH);
-		rubrique3.add(paneSphere);
-		rubrique3.add(paneSphere2);
+				JLabel op  = new JLabel("10-4");
+				gcSphericitySup.weighty = GridBagConstraints.BELOW_BASELINE_TRAILING
+					op.setHorizontalAlignment(JLabel.CENTER);
+				op.setVerticalAlignment(JLabel.BOTTOM);
+				paneSphereSup.add(op);
+				
+				gcSphericitySup.gridx = 3;
+				gcSphericitySup.gridy = 0 ;
+				paneSphereSup.add(sliderDisplaySphericitySup,gcSphericitySup);
+				
+				
+				//Inf
+				gcSphericityInf.anchor = GridBagConstraints.LINE_START;
+				gcSphericityInf.weightx = 0.5;
+				gcSphericityInf.gridx = 0 ;
+				gcSphericityInf.gridy = 0 ;
+				paneSphereInf.add(btInfSphericity ,gcSphericityInf);
+				
+				gcSphericityInf.weightx=1;
+				gcSphericityInf.fill = GridBagConstraints.HORIZONTAL;
+				gcSphericityInf.gridx = 1;
+				gcSphericityInf.gridy = 0 ; 
+				paneSphereInf.add(sliderSphericityInf,gcSphericityInf);
+				
+				gcSphericityInf.gridx = 2;
+				gcSphericityInf.gridy = 0 ; 
+				paneSphereInf.add(sliderDisplaySphericityInf,gcSphericityInf);
+				
 
-		// choisir Border
+				//rubrique 2 
+				GridBagConstraints contraintesSphericity = new GridBagConstraints();
+				contraintesSphericity.fill = GridBagConstraints.BOTH;
+				contraintesSphericity.insets = new Insets(5, 5, 5, 5);
 
-		rubrique4.setPreferredSize(new Dimension(1200, 100));
-		rubrique4.setBackground(Color.white);
+				contraintesSphericity.ipady=contraintesSphericity.anchor=GridBagConstraints.CENTER;;
+				contraintesSphericity.weightx = 2;
+				contraintesSphericity.weighty = 2;
+				
+				contraintesSphericity.gridx = 0;
+				contraintesSphericity.gridy = 0;
+				contraintesSphericity.gridwidth = 2;
+				contraintesSphericity.fill = GridBagConstraints.CENTER;
+				rubrique3.add(labelSphericity,contraintesSphericity);
+				
+				contraintesSphericity.fill = GridBagConstraints.BOTH;
+				contraintesSphericity.gridx = 0 ;
+				contraintesSphericity.gridy = 1;
+				contraintesSphericity.gridwidth = 1;
+				rubrique3.add(paneSphereSup,contraintesSphericity);
+				
+				contraintesSphericity.gridx = 1;
+				contraintesSphericity.gridy = 1;
+				contraintesSphericity.gridwidth = 1;
+				rubrique3.add(paneSphereInf,contraintesSphericity);
 
-		paneBorder.setLayout(new GridLayout(1, 3));
-		paneBorder.setBackground(Color.white);
-		paneBorder.setPreferredSize(new Dimension(400, 50));
-		paneBorder2.setLayout(new GridLayout(1, 3));
-		paneBorder2.setBackground(Color.white);
-		paneBorder2.setPreferredSize(new Dimension(400, 50));
+		// R*uBRIQUE 4 
+		//Border
 
+		rubrique4.setPreferredSize(new Dimension(1100, 100));
+		rubrique4.setBackground(Color.YELLOW);
+
+		paneBorderSup.setLayout(new GridBagLayout());
+		GridBagConstraints gcBorderSup  = new GridBagConstraints();
+		gcBorderSup.weightx = 3;
+		gcBorderSup.weightx = 0;
+		paneBorderSup.setBackground(Color.BLUE);
+		paneBorderSup.setPreferredSize(new Dimension(600, 50));
+		
+		paneBorderInf.setLayout(new GridBagLayout());
+		GridBagConstraints gcBorderInf  = new GridBagConstraints();
+		gcBorderInf.weightx = 3;
+		gcBorderInf.weightx = 0;
+		paneBorderInf.setBackground(Color.white);
+		paneBorderInf.setPreferredSize(new Dimension(600, 50));
+
+		//Border 
+		//Sup
 		sliderDisplayBorderSup.setText("Value");
-		sliderDisplayBorderSup.setPreferredSize(new Dimension(100, 30));
+		sliderDisplayBorderSup.setPreferredSize(new Dimension(50, 45));
 		sliderDisplayBorderSup.setForeground(Color.BLUE);
+		
+		//Inf
 		sliderDisplayBorderInf.setText("Value");
-		sliderDisplayBorderInf.setPreferredSize(new Dimension(100, 30));
+		sliderDisplayBorderInf.setPreferredSize(new Dimension(50, 45));
 		sliderDisplayBorderInf.setForeground(Color.BLUE);
 
+		//Sup
+		sliderBorderSup.setPreferredSize(new Dimension(sliderBorderSup.getPreferredSize().width+200,sliderBorderSup.getPreferredSize().height+30));
 		sliderBorderSup.setMajorTickSpacing(50);
-		sliderBorderSup.setMinorTickSpacing(1);
+		sliderBorderSup.setMinorTickSpacing(10);
 		sliderBorderSup.setPaintTicks(true);
 		sliderBorderSup.setPaintLabels(true);
 
+		//Inf
+		sliderBorderInf.setPreferredSize(new Dimension(sliderBorderInf.getPreferredSize().width+200,sliderBorderInf.getPreferredSize().height+30));
 		sliderBorderInf.setMajorTickSpacing(50);
-		sliderBorderInf.setMinorTickSpacing(1);
+		sliderBorderInf.setMinorTickSpacing(10);
 		sliderBorderInf.setPaintTicks(true);
 		sliderBorderInf.setPaintLabels(true);
 
+		//Listener
 		sliderBorderSup.addChangeListener(this);
 		sliderBorderInf.addChangeListener(this);
 
@@ -384,16 +570,77 @@ public class RequestFram extends JFrame implements ActionListener,
 			}
 		});
 
-		paneBorder.add(btSupBorder, BorderLayout.WEST);
-		paneBorder.add(sliderBorderSup);
-		paneBorder.add(sliderDisplayBorderSup);
-		paneBorder2.add(btInfBorder, BorderLayout.WEST);
-		paneBorder2.add(sliderBorderInf);
-		paneBorder2.add(sliderDisplayBorderInf);
+				//Sup
+				gcBorderSup.anchor = GridBagConstraints.LINE_START;
+				gcBorderSup.weightx = 0.5;
+				gcBorderSup.gridx = 0 ;
+				gcBorderSup.gridy = 0 ;
+				paneBorderSup.add(btSupBorder ,gcBorderSup);
+				
+				gcBorderSup.weightx=1;
+				gcBorderSup.fill = GridBagConstraints.HORIZONTAL;
+				gcBorderSup.gridx = 1;
+				gcBorderSup.gridy = 0 ; 
+				paneBorderSup.add(sliderBorderSup,gcBorderSup);
+				
+				gcBorderSup.gridx = 2;
+				gcBorderSup.gridy = 0 ; 
+				paneBorderSup.add(sliderDisplayBorderSup,gcBorderSup);
+				
+				//Inf
+				gcBorderInf.anchor = GridBagConstraints.LINE_START;
+				gcBorderInf.weightx = 0.5;
+				gcBorderInf.gridx = 0 ;
+				gcBorderInf.gridy = 0 ;
+				paneBorderInf.add(btInfBorder ,gcBorderInf);
+				
+				gcBorderInf.weightx=1;
+				gcBorderInf.fill = GridBagConstraints.HORIZONTAL;
+				gcBorderInf.gridx = 1;
+				gcBorderInf.gridy = 0 ; 
+				paneBorderInf.add(sliderBorderInf,gcBorderInf);
+				
+				gcBorderInf.gridx = 2;
+				gcBorderInf.gridy = 0 ; 
+				paneBorderInf.add(sliderDisplayBorderInf,gcBorderInf);
+				
+				//rubrique 4 
+				GridBagConstraints contraintesBorder = new GridBagConstraints();
+				contraintesBorder.fill = GridBagConstraints.BOTH;
+				contraintesBorder.insets = new Insets(5, 5, 5, 5);
 
-		rubrique4.add(Border, BorderLayout.NORTH);
-		rubrique4.add(paneBorder);
-		rubrique4.add(paneBorder2);
+				contraintesBorder.ipady=contraintesBorder.anchor=GridBagConstraints.CENTER;;
+				contraintesBorder.weightx = 2;
+				contraintesBorder.weighty = 2;
+				
+				contraintesBorder.gridx = 0;
+				contraintesBorder.gridy = 0;
+				contraintesBorder.gridwidth = 2;
+				contraintesBorder.fill = GridBagConstraints.CENTER;
+				rubrique4.add(labelBorder,contraintesBorder);
+				
+				contraintesBorder.fill = GridBagConstraints.BOTH;
+				contraintesBorder.gridx = 0 ;
+				contraintesBorder.gridy = 1;
+				contraintesBorder.gridwidth = 1;
+				rubrique4.add(paneBorderSup,contraintesBorder);
+				
+				contraintesBorder.gridx = 1;
+				contraintesBorder.gridy = 1;
+				contraintesBorder.gridwidth = 1;
+				rubrique4.add(paneBorderInf,contraintesBorder);
+				/*
+		paneBorderSup.add(btSupBorder, BorderLayout.WEST);
+		paneBorderSup.add(sliderBorderSup);
+		paneBorderSup.add(sliderDisplayBorderSup);
+		paneBorderInf.add(btInfBorder, BorderLayout.WEST);
+		paneBorderInf.add(sliderBorderInf);
+		paneBorderInf.add(sliderDisplayBorderInf);
+
+		rubrique4.add(labelBorder, BorderLayout.NORTH);
+		rubrique4.add(paneBorderSup);
+		rubrique4.add(paneBorderSup);
+		*/
 
 		paneEnd.setPreferredSize(new Dimension(1200, 100));
 		paneEnd.setBackground(Color.white);
@@ -407,11 +654,11 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneEnd.add(btApply, BorderLayout.WEST);
 		paneEnd.add(btClear, BorderLayout.WEST);
 
-		panel.add(rubrique1);
-		panel.add(rubrique2);
-		panel.add(rubrique3);
-		panel.add(rubrique4);
-		panel.add(paneEnd, BorderLayout.SOUTH);
+		panelTotal.add(rubrique1);
+		panelTotal.add(rubrique2);
+		panelTotal.add(rubrique3);
+		panelTotal.add(rubrique4);
+		panelTotal.add(paneEnd, BorderLayout.SOUTH);
 
 	}
 

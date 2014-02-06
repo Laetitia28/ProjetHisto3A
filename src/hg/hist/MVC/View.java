@@ -150,7 +150,7 @@ public class View extends JFrame implements ActionListener {
 		getContentPane().add(optionBox, BorderLayout.EAST);
 		setJMenuBar(menu.buildMenu());
 
-		
+		//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
 		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder());
 		// Add actionListener au btApply
 
