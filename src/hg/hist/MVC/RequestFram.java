@@ -441,7 +441,7 @@ public class RequestFram extends JFrame implements ActionListener,
 				gcSphericitySup.gridy = 0 ;
 
 				JLabel op  = new JLabel("10-4");
-				gcSphericitySup.weighty = GridBagConstraints.BELOW_BASELINE_TRAILING
+				gcSphericitySup.weighty = GridBagConstraints.BELOW_BASELINE_TRAILING;
 					op.setHorizontalAlignment(JLabel.CENTER);
 				op.setVerticalAlignment(JLabel.BOTTOM);
 				paneSphereSup.add(op);
