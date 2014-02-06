@@ -188,8 +188,8 @@ public class View extends JFrame implements ActionListener {
 		
 		//Search New File
 		if (e.getSource() == menu.getOpen()) {
-			chooser.showOpenDialog(null);
-			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			//chooser.showOpenDialog(null);
+			//chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			
 			chooser.setApproveButtonText("Choose File...");
 			

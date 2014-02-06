@@ -180,9 +180,13 @@ public class Controller {
 
 	public void ChangeFile(JFileChooser chooser,mxGraphComponent graphComponent, mxGraph graph) {
 		
-
-		path_current = chooser.getSelectedFile().getAbsolutePath();
-		System.out.println("Path selected current : " + path_current);
+		int val = chooser.showOpenDialog(chooser);
+		
+		if(val == JFileChooser.APPROVE_OPTION){
+		
+			path_current = chooser.getSelectedFile().getAbsolutePath();
+		
+			System.out.println("Path selected current : " + path_current);
 
 		StringTokenizer st = new StringTokenizer(path_current, ".");
 
@@ -241,6 +245,11 @@ public class Controller {
 			System.out.println("Ceci n'est pas un bon fichier ");
 			
 			JOptionPane.showMessageDialog(graphComponent,"File choosen is not expected", "avertissement",JOptionPane.ERROR_MESSAGE);
+		}
+		}
+		else 
+		{
+			System.out.println("Open command cancelled by user.\n");
 		}
 	}
 
