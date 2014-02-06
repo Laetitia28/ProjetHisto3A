@@ -852,6 +852,8 @@ public class RequestFram extends JFrame implements ActionListener,
 	
 	public void init(double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder){
 		sliderSphericityInf.setMaximum(800);
+	
+		//continue
 	}
 
 	public JButton getBtApply() {
