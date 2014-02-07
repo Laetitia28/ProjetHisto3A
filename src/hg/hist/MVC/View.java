@@ -160,7 +160,7 @@ public class View extends JFrame implements ActionListener {
 			System.out.println("key : "+ e);
 
 		}
-		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder(),controller.getMapColor());
+		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder());
 		// Add actionListener au btApply
 
 		frame2.getBtClear().addActionListener(this);
@@ -316,7 +316,7 @@ public class View extends JFrame implements ActionListener {
 		//open new Frame
 		if (e.getSource() == buttonAdvancedRequest) {
 			
-			frame2.init(controller.getMaxArea(), controller.getMaxSphericity(), controller.getMaxBorder(),controller.getMinArea(), controller.getMinSphericity(), controller.getMinBorder());
+			frame2.init(controller.getMaxArea(), controller.getMaxSphericity(), controller.getMaxBorder(),controller.getMinArea(), controller.getMinSphericity(), controller.getMinBorder(),controller.getMapColor());
 			
 			frame2.setVisible(true);
 			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -326,6 +326,8 @@ public class View extends JFrame implements ActionListener {
 		//Clear the selection of FrameRequest + remove Cells
 		if(e.getSource() == buttonClear){
 			
+			textFieldRequest.setText("No Request ");
+
 			controller.getTemp().clear();
 			
 			graph.setCellsDeletable(true);
@@ -340,6 +342,7 @@ public class View extends JFrame implements ActionListener {
 		//Clear the selection of FrameRequest + remove Cells
 		if(e.getSource() == frame2.getBtClear()){
 
+			textFieldRequest.setText("No Request ");
 			controller.getTemp().clear();
 			graph.setCellsDeletable(true);
 			this.graph.removeCells(this.graph.getChildVertices(this.parent));

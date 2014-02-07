@@ -394,7 +394,9 @@ public class Controller {
 
 	public List<Cell> FirstSortListCell(String typeName){
 		List<Cell> list_tmp =new ArrayList<Cell>();
+	//	System.out.println("type" + typeName);
 		for(Cell a : getListCells()){
+			//System.out.println(a.getClass_name());
 			if(a.getClass_name().equals(typeName)){
 				list_tmp.add(a);
 			}
@@ -411,10 +413,11 @@ public class Controller {
 		
 		for (Cell a : FirstSortListCell(type)) {
 			//debug
-			//System.out.println("area "+a.getArea_pxl());
-			//System.out.println("border "+a.getBorder_Lenght_pxl());
-			//System.out.println("sphe "+ a.getSphericity());
-			
+			/*
+			System.out.println("area "+a.getArea_pxl());
+			System.out.println("border "+a.getBorder_Lenght_pxl());
+			System.out.println("sphe "+ a.getSphericity());
+			*/
 				if (a.getBorder_Lenght_pxl() > valueBorderSup
 						&& a.getBorder_Lenght_pxl() < valueBorderInf &&
 						a.getArea_pxl() > valueAreaSup
@@ -422,6 +425,7 @@ public class Controller {
 						a.getSphericity() > valueSphericitySup
 						&& a.getSphericity() < valueSphericityInf) {					
 					this.temp.add(a);
+					System.out.println("I add in finale list");
 				}				
 		}
 		graph.getModel().beginUpdate();
