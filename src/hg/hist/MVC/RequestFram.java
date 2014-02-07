@@ -16,16 +16,21 @@ import java.util.HashMap;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.JPopupMenu.Separator;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -611,11 +616,16 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneEnd.add(btApply, BorderLayout.WEST);
 		paneEnd.add(btClear, BorderLayout.WEST);
 
+		JSeparator p = new JSeparator(SwingConstants.HORIZONTAL);
+		p.setBackground(Color.BLACK);
+		p.setPreferredSize(new Dimension(p.getWidth()+100, p.getHeight()+20));
+		
 		panelTotal.add(rubrique1);
 		panelTotal.add(rubrique2);
 		panelTotal.add(rubrique3);
 		panelTotal.add(rubrique4);
-		panelTotal.add(paneEnd, BorderLayout.SOUTH);
+		panelTotal.add(p);
+		panelTotal.add(paneEnd);
 
 	}
 

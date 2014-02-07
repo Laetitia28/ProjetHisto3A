@@ -160,16 +160,9 @@ public class View extends JFrame implements ActionListener {
 		setJMenuBar(menu.buildMenu());
 
 		//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
-		
 		//frame2 = new RequestFram();
-		
-		for (String e : controller.getMapColor().keySet()) {
-			
-			System.out.println("value : "+ controller.getMapColor().get(e));
-			System.out.println("key : "+ e);
-
-		}
 		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder());
+		
 		// Add actionListener au btApply
 
 		frame2.getBtClear().addActionListener(this);
