@@ -82,12 +82,14 @@ public class RequestFram extends JFrame implements ActionListener,
 	private ButtonGroup groupButton = new ButtonGroup();;
 
 	private JRadioButton btRadio1 = new JRadioButton("All Cells", true);
+	/*
 	private JRadioButton btRadio2 = new JRadioButton("Nucleus DAB+ PRD+");
 	private JRadioButton btRadio3 = new JRadioButton("Lymphocyte Nucleus");
 	private JRadioButton btRadio4 = new JRadioButton("Tumor nucleus");
 	private JRadioButton btRadio5 = new JRadioButton("NucleusPRD+");
 	private JRadioButton btRadio6 = new JRadioButton("Granulocyte nucleus");
 	private JRadioButton btRadio7 = new JRadioButton("Nucleus DAB+");
+	*/
 
 	private String stringTypeCell = "All Cells";
 	
@@ -176,17 +178,17 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneCellule.setLayout(new GridLayout(3, 3));
 
 		groupButton.add(btRadio1);
-		groupButton.add(btRadio2);
+		/*groupButton.add(btRadio2);
 		groupButton.add(btRadio3);
 		groupButton.add(btRadio4);
 		groupButton.add(btRadio4);
 		groupButton.add(btRadio5);
 		groupButton.add(btRadio6);
 		groupButton.add(btRadio7);
-
+*/
 
 		paneCellule.add(btRadio1);
-		paneCellule.add(btRadio2);
+	/*	paneCellule.add(btRadio2);
 		paneCellule.add(btRadio3);
 		paneCellule.add(btRadio4);
 		paneCellule.add(btRadio5);
@@ -201,7 +203,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		btRadio5.addActionListener(new StateListener());
 		btRadio6.addActionListener(new StateListener());
 		btRadio7.addActionListener(new StateListener());
-
+*/
 		////RUBRIQUE 1
 		//To center le label
 		LabelChooseType.setHorizontalAlignment(JLabel.CENTER);
@@ -902,6 +904,14 @@ public class RequestFram extends JFrame implements ActionListener,
 		
 		System.out.println("Init 2  A : " + stringAreaSup+ " S :" + stringSphericitySup+ " B : " +stringBorderSup);
 		System.out.println("Init  2 A : " + stringAreaInf+ " S :" + stringSphericityInf+ " B : " +stringBorderInf);
+		
+		//Bouttons radios 
+		
+		JRadioButton btRadio2 = new JRadioButton("Nucleus DAB+ PRD+");
+		
+		groupButton.add(btRadio2);
+		groupButton.remove(btRadio2);
+		
 		
 	}
 
