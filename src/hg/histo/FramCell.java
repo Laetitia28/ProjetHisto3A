@@ -3,7 +3,6 @@ package hg.histo;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -11,25 +10,15 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout.Group;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -37,18 +26,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
@@ -234,7 +216,7 @@ public class FramCell extends JFrame implements ActionListener {
 		{
 			for (Cell c : listCells) {
 
-				Object v1 = graph
+				graph
 						.insertVertex(parent, null, c.getClass_name(),
 								c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 								"shape=ellipse;per=ellipsePerimeter;fillColor="
@@ -277,7 +259,7 @@ public class FramCell extends JFrame implements ActionListener {
 		{
 			for (Cell c : listCells) {
 
-				Object v2 = graph
+				 graph
 						.insertVertex(parent, null, c.getClass_name(),
 								c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 								"shape=ellipse;per=ellipsePerimeter;fillColor="
@@ -304,7 +286,7 @@ public class FramCell extends JFrame implements ActionListener {
 			for (Cell c : listCells) {
 				if(c.getClass_name().equals(nameSelected)){
 
-					Object v2 = graph
+					 graph
 							.insertVertex(parent, null, c.getClass_name(),
 									c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 									"shape=ellipse;per=ellipsePerimeter;fillColor="

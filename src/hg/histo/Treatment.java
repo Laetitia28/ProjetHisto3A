@@ -6,13 +6,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
@@ -91,7 +88,7 @@ public class Treatment {
 		{
 			for (Cell c : this.listCells) {
 
-				Object v1 = graph
+				graph
 						.insertVertex(graph.getDefaultParent(), null, c.getClass_name(),
 								c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 								"shape=ellipse;per=ellipsePerimeter;fillColor="
@@ -123,7 +120,7 @@ public class Treatment {
 		{
 			for (Cell c : this.listCells) {
 
-				Object v2 = graph
+				graph
 						.insertVertex(graph.getDefaultParent(), null, c.getClass_name(),
 								c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 								"shape=ellipse;per=ellipsePerimeter;fillColor="
@@ -150,7 +147,7 @@ public class Treatment {
 			for (Cell c : this.listCells) {
 				if(c.getClass_name().equals(nameSelected)){
 
-					Object v2 = graph
+					graph
 							.insertVertex(graph.getDefaultParent(), null, c.getClass_name(),
 									c.getInner_x()*0.4, c.getInner_y()*0.4 , 10, 10,
 									"shape=ellipse;per=ellipsePerimeter;fillColor="
@@ -268,7 +265,7 @@ public class Treatment {
 		for (Cell c : listCells) {
 			tmp.put(c.getClass_name(),color);
 		}
-		Set<String> k=tmp.keySet();
+		//Set<String> k=tmp.keySet();
 		
 			for(String j : tmp.keySet() ){
 				System.out.println(j.replaceAll(" ", "_"));

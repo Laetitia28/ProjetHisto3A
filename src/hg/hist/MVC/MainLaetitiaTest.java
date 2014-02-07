@@ -1,6 +1,5 @@
 package hg.hist.MVC;
 
-import javax.swing.JFrame;
 
 public class MainLaetitiaTest {
 
