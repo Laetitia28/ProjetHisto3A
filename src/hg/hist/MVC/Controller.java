@@ -58,6 +58,7 @@ public class Controller {
 	private HashMap<String, String> mapColor = new HashMap<String, String>();
 
 	private List<Cell> listCells;
+	//C'est la liste de cellule qui est selectionner dans la fenetre request
 	private List<Cell> temp ;
 
 

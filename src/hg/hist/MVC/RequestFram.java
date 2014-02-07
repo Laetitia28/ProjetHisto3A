@@ -35,9 +35,9 @@ public class RequestFram extends JFrame implements ActionListener,
 	private static final long serialVersionUID = 123456L;
 	
 	private JLabel LabelChooseType = new JLabel("Choose your Cellule type");
-	private JLabel labelSphericity = new JLabel("Choose your Spherecity");
-	private JLabel labelArea = new JLabel("Choose your Area");
-	private JLabel labelBorder = new JLabel("Choose your Border");
+	private JLabel labelSphericity = new JLabel("Choose your spherecity ");
+	private JLabel labelArea = new JLabel("Choose your area (pxl) ");
+	private JLabel labelBorder = new JLabel("Choose your border (pxl) ");
 
 	private JPanel panelTotal = new JPanel();
 	private JPanel paneCellule = new JPanel();
@@ -171,38 +171,12 @@ public class RequestFram extends JFrame implements ActionListener,
 		paneCellule.setPreferredSize(new Dimension(600, 50));
 		
 		paneCellule.setLayout(new GridLayout(3, 3));
-
 		groupButton.add(btRadio1);
-		/*groupButton.add(btRadio2);
-		groupButton.add(btRadio3);
-		groupButton.add(btRadio4);
-		groupButton.add(btRadio4);
-		groupButton.add(btRadio5);
-		groupButton.add(btRadio6);
-		groupButton.add(btRadio7);
-*/
-
 		paneCellule.add(btRadio1);
-		/*
-		paneCellule.add(btRadio2);
-		paneCellule.add(btRadio3);
-		paneCellule.add(btRadio4);
-		paneCellule.add(btRadio5);
-		paneCellule.add(btRadio6);
-		paneCellule.add(btRadio7);
-*/
-
 		btRadio1.addActionListener(new StateListener());
-	/*	btRadio2.addActionListener(new StateListener());
-		btRadio3.addActionListener(new StateListener());
-		btRadio4.addActionListener(new StateListener());
-		btRadio5.addActionListener(new StateListener());
-		btRadio6.addActionListener(new StateListener());
-		btRadio7.addActionListener(new StateListener());
-		*/
 		
 		////RUBRIQUE 1
-		//To center le label
+		//To center the label
 		LabelChooseType.setHorizontalAlignment(JLabel.CENTER);
 		LabelChooseType.setVerticalAlignment(JLabel.CENTER);
 		rubrique1.add(LabelChooseType, BorderLayout.NORTH);
@@ -611,7 +585,7 @@ public class RequestFram extends JFrame implements ActionListener,
 				contraintesBorder.gridx = 0;
 				contraintesBorder.gridy = 0;
 				contraintesBorder.gridwidth = 2;
-				contraintesSphericity.anchor = GridBagConstraints.NORTH;
+				contraintesBorder.anchor = GridBagConstraints.NORTH;
 				rubrique4.add(labelBorder,contraintesBorder);
 				
 				contraintesBorder.fill = GridBagConstraints.BOTH;
@@ -624,18 +598,6 @@ public class RequestFram extends JFrame implements ActionListener,
 				contraintesBorder.gridy = 1;
 				contraintesBorder.gridwidth = 1;
 				rubrique4.add(paneBorderInf,contraintesBorder);
-				/*
-		paneBorderSup.add(btSupBorder, BorderLayout.WEST);
-		paneBorderSup.add(sliderBorderSup);
-		paneBorderSup.add(sliderDisplayBorderSup);
-		paneBorderInf.add(btInfBorder, BorderLayout.WEST);
-		paneBorderInf.add(sliderBorderInf);
-		paneBorderInf.add(sliderDisplayBorderInf);
-
-		rubrique4.add(labelBorder, BorderLayout.NORTH);
-		rubrique4.add(paneBorderSup);
-		rubrique4.add(paneBorderSup);
-		*/
 
 		paneEnd.setPreferredSize(new Dimension(1200, 100));
 		paneEnd.setBackground(Color.white);
@@ -730,10 +692,36 @@ public class RequestFram extends JFrame implements ActionListener,
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btFinish) {
 			System.out.println("It is finish !");
+			
+this.btRadio1.setSelected(true);
+			
+			this.btInfArea.setSelected(false);
+			this.btSupArea.setSelected(false);
+			this.btInfBorder.setSelected(false);
+			this.btSupBorder.setSelected(false);
+			this.btInfSphericity.setSelected(false);
+			this.btSupSphericity.setSelected(false);
+			
+			this.sliderAreaInf.setValue((int)default_stringAreaInf);
+			this.sliderAreaSup.setValue((int)default_stringAreaSup);
+			this.sliderBorderInf.setValue((int)default_stringBorderInf);
+			this.sliderBorderSup.setValue((int)default_stringBorderSup);
+			this.sliderSphericityInf.setValue((int)default_stringSphericityInf);
+			this.sliderSphericitySup.setValue((int)default_stringSphericitySup);
+
+			this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(default_stringAreaSup*1e5)/1e5));
+			this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(default_stringAreaInf*1e5)/1e5));
+			this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(default_stringBorderSup*1e5)/1e5));
+			this.sliderDisplayBorderSup.setText(String.valueOf(Math.floor(default_stringBorderInf*1e5)/1e5));
+			this.sliderDisplaySphericityInf.setText(String.valueOf(Math.floor(default_stringSphericitySup*1e5)/1e5));
+			this.sliderDisplaySphericitySup.setText(String.valueOf(Math.floor(default_stringSphericityInf*1e5)/1e5));
+			
+			this.setVisible(true);
+			
 			this.setVisible(false);
 		}
 		if (e.getSource() == btClear) {
-			System.out.println("It is Clear rf !");
+			System.out.println("It is Clear RequestFrame !");
 			
 			this.btRadio1.setSelected(true);
 			
@@ -856,37 +844,37 @@ public class RequestFram extends JFrame implements ActionListener,
 		
 		sliderSphericityInf.setMaximum((int)maxSphericity);
 		sliderSphericityInf.setMinimum((int)minSphericity);
-		sliderSphericityInf.setValue((int)((maxSphericity-minSphericity)/2 - minSphericity));
+		sliderSphericityInf.setValue((int)maxSphericity);
 		sliderSphericityInf.setMajorTickSpacing(50);
 		sliderSphericityInf.setMinorTickSpacing(10);
 		
 		sliderSphericitySup.setMaximum((int)maxSphericity);
 		sliderSphericitySup.setMinimum((int)minSphericity);
-		sliderSphericitySup.setValue((int)((maxSphericity-minSphericity)/2 - minSphericity));
+		sliderSphericitySup.setValue((int)minSphericity);
 		sliderSphericitySup.setMajorTickSpacing(50);
 		sliderSphericitySup.setMinorTickSpacing(10);
 		
 		sliderAreaInf.setMaximum((int)maxArea);
 		sliderAreaInf.setMinimum((int)minArea);
-		sliderAreaInf.setValue((int)((maxArea-minArea)/2 - minArea));
+		sliderAreaInf.setValue((int)maxArea);
 		sliderAreaInf.setMajorTickSpacing(1000);
 		sliderAreaInf.setMinorTickSpacing(100);
 		
 		sliderAreaSup.setMaximum((int)maxArea);
 		sliderAreaSup.setMinimum((int)minArea);
-		sliderAreaSup.setValue((int)((maxArea-minArea)/2 - minArea));
+		sliderAreaSup.setValue((int)minArea);
 		sliderAreaSup.setMajorTickSpacing(1000);
 		sliderAreaSup.setMinorTickSpacing(100);
 		
 		sliderBorderInf.setMaximum((int)maxBorder);
 		sliderBorderInf.setMinimum((int)minBorder);
-		sliderBorderInf.setValue((int)((maxBorder-minBorder)/2 - minBorder));
+		sliderBorderInf.setValue((int)maxBorder);
 		sliderBorderInf.setMajorTickSpacing(50);
 		sliderBorderInf.setMinorTickSpacing(10);
 		
 		sliderBorderSup.setMaximum((int) maxBorder);
 		sliderBorderSup.setMinimum((int) minBorder);
-		sliderBorderSup.setValue((int) ((maxBorder - minBorder) / 2 - minBorder));
+		sliderBorderSup.setValue((int)minBorder);
 		sliderBorderSup.setMajorTickSpacing(50);
 		sliderBorderSup.setMinorTickSpacing(10);
 

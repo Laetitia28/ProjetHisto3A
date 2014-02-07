@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -25,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
@@ -41,13 +43,13 @@ public class View extends JFrame implements ActionListener {
 	private JPanel down = new JPanel(new GridLayout(0, 1));
 	private JPanel optionBox = new JPanel();
 	private JPanel buttonBar = new JPanel();
-	private JPanel panelContainRequestField = new JPanel();;
-	private JPanel panelAdvancedRequest = new JPanel();
+	private JPanel panelContainRequestField = new JPanel(new BorderLayout());;
+	private JPanel panelAdvancedRequest = new JPanel(new BorderLayout());
 
 	private JButton btZoomToFit = new JButton("Zoom Off");
 	private JButton btDisplay = new JButton("Display");
 	private JButton buttonAdvancedRequest = new JButton("Advanced Request");
-	private JButton buttonClear = new JButton("Clear");
+	private JButton buttonClear = new JButton("Clear Request");
 
 
 	private mxGraph graph = new mxGraph();
@@ -59,8 +61,11 @@ public class View extends JFrame implements ActionListener {
 	private JCheckBox checkAll = new JCheckBox("All cells");
 	private JCheckBox checkBox;
 
-	private JTextField textFieldRequest = new JTextField("Enter Users Requests");
-	private JLabel label = new JLabel("Request");
+	
+	//private JTextField textFieldRequest = new JTextField("Enter Users Requests");
+	private JLabel textFieldRequest = new JLabel("Enter Users Requests");
+	
+	private JLabel labelTitleRequest = new JLabel("Request : ");
 	private String stringRequest;
 
 	private Font police = new Font("Arial", Font.BOLD, 14);
@@ -74,6 +79,7 @@ public class View extends JFrame implements ActionListener {
 
 	public View(Controller controller) {
 		super("Frame Cell! MVC ");
+
 		this.controller = controller;
 
 		// Create mxgraphComponent with properties
@@ -129,14 +135,17 @@ public class View extends JFrame implements ActionListener {
 			listOfCheckBox.put(key.toString(), checkBox);
 			down.add(checkBox);
 		}
-
-		panelContainRequestField.add(label);
+		
+		labelTitleRequest.setBorder(new EmptyBorder(0,10,0,0));
+		this.labelTitleRequest.setFont(police);
+		panelContainRequestField.add(labelTitleRequest,BorderLayout.WEST);
 		panelContainRequestField.add(textFieldRequest);
-		panelContainRequestField.add(buttonClear);
 
 		getContentPane().add(panelContainRequestField, BorderLayout.PAGE_END);
 
-		panelAdvancedRequest.add(buttonAdvancedRequest);
+		panelAdvancedRequest.add(buttonAdvancedRequest,BorderLayout.NORTH);
+		panelAdvancedRequest.add(Box.createRigidArea(new Dimension(5,15)));
+		panelAdvancedRequest.add(buttonClear,BorderLayout.SOUTH);
 
 		// Ada ButtonDisplay in down JPanel
 		down.add(btDisplay, BorderLayout.CENTER);
@@ -166,7 +175,7 @@ public class View extends JFrame implements ActionListener {
 		frame2.getBtClear().addActionListener(this);
 		frame2.getBtApply().addActionListener(this);
 		
-		this.textFieldRequest.setPreferredSize(new Dimension(950, 30));
+		this.textFieldRequest.setPreferredSize(new Dimension(900, 40));
 		this.textFieldRequest.setForeground(Color.BLUE);
 		this.textFieldRequest.setFont(police);
 		this.textFieldRequest.setText("No request advanced");
@@ -343,7 +352,10 @@ public class View extends JFrame implements ActionListener {
 		if(e.getSource() == frame2.getBtClear()){
 
 			textFieldRequest.setText("No Request ");
+			
+			//Clear list 
 			controller.getTemp().clear();
+			
 			graph.setCellsDeletable(true);
 			this.graph.removeCells(this.graph.getChildVertices(this.parent));
 			graph.refresh();
@@ -353,6 +365,7 @@ public class View extends JFrame implements ActionListener {
 			
 		}
 
+		
 		//treat request
 		if (e.getSource() == frame2.getBtApply()) {
 
