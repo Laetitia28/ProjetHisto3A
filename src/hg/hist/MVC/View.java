@@ -153,7 +153,14 @@ public class View extends JFrame implements ActionListener {
 		//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
 		
 		//frame2 = new RequestFram();
-		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder());
+		
+		for (String e : controller.getMapColor().keySet()) {
+			
+			System.out.println("value : "+ controller.getMapColor().get(e));
+			System.out.println("key : "+ e);
+
+		}
+		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder(),controller.getMapColor());
 		// Add actionListener au btApply
 
 		frame2.getBtClear().addActionListener(this);
@@ -310,6 +317,7 @@ public class View extends JFrame implements ActionListener {
 		if (e.getSource() == buttonAdvancedRequest) {
 			
 			frame2.init(controller.getMaxArea(), controller.getMaxSphericity(), controller.getMaxBorder(),controller.getMinArea(), controller.getMinSphericity(), controller.getMinBorder());
+			
 			frame2.setVisible(true);
 			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -346,18 +354,18 @@ public class View extends JFrame implements ActionListener {
 		if (e.getSource() == frame2.getBtApply()) {
 
 			
-			setStringRequest(frame2.getStringTypeCell() + ":"
-					+ frame2.getStringAreaSup() + ":"
-					+ frame2.getStringAreaInf() + ":"
-					+ frame2.getStringSphericitySup() + ":"
-					+ frame2.getStringSphericityInf() + ":"
-					+ frame2.getStringBorderSup() + ":"
-					+ frame2.getStringBorderInf());
+			setStringRequest(frame2.getStringTypeCell() + "Type  "
+					+ frame2.getStringAreaSup() + " Area Sup  "
+					+ frame2.getStringAreaInf() + " Area Inf  "
+					+ frame2.getStringSphericitySup() + " Shpericity Sup  "
+					+ frame2.getStringSphericityInf() + " Sphericity Inf  "
+					+ frame2.getStringBorderSup() + " Border Sup  "
+					+ frame2.getStringBorderInf()+ " Border Inf  ");
 			//degub
-			System.out.println("Je suis dans le champs text"+ getStringRequest());
+			System.out.println("Je suis dans le champs text ; "+ getStringRequest());
 			
 			this.textFieldRequest.setText("Type of Cell : "
-					+ frame2.getStringTypeCell() + "; Area : Sup "
+					+ frame2.getStringTypeCell() + " ; Area : Sup "
 					+ frame2.getStringAreaSup() + " and Inf "
 					+ frame2.getStringAreaInf() + "; Sphericity : Sup "
 					+ frame2.getStringSphericitySup() + " and Inf "

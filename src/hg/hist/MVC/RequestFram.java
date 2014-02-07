@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -104,46 +105,49 @@ public class RequestFram extends JFrame implements ActionListener,
 	private double stringBorderSup ;
 	private double stringBorderInf;
 
-
+/*
 	private double maxArea;
 	private double maxSphericity;
 	private double maxBorder;
 	private double minArea;
 	private double minSphericity;
 	private double minBorder;
-	
+	*/
 	//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
 	//public RequestFram( ) {
 
-	public RequestFram(double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder ) {
+	public RequestFram(double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder,HashMap<String, String> mapForRadioButton) {
 
 		System.out.println("A : " + maxArea+ "S :" + maxSphericity+ " B" +maxBorder);
 		System.out.println("A : " + minArea+ "S :" + minSphericity+ " B" +minBorder);
 		//Size of Frame
 		this.setSize(1200, 600);
+		
+		 default_stringAreaSup = minArea;
+		 default_stringAreaInf = maxArea;
+		 default_stringSphericitySup = minSphericity;
+		 default_stringSphericityInf = maxSphericity;
+		 default_stringBorderSup = minBorder;
+		 default_stringBorderInf = maxBorder;
 
-		double default_stringAreaSup = minArea;
-		double default_stringAreaInf = maxArea;
-		double default_stringSphericitySup = minSphericity*1000;
-		double default_stringSphericityInf = maxSphericity*1000;
-		double default_stringBorderSup = minBorder;
-		double default_stringBorderInf = maxBorder;
+		 stringAreaSup = default_stringAreaSup;
+		 stringAreaInf = default_stringAreaInf;
+		 stringSphericitySup = default_stringSphericitySup;
+		 stringSphericityInf = default_stringSphericityInf;
+		 stringBorderSup = default_stringBorderSup;
+		 stringBorderInf = default_stringBorderInf;
 		
-		minSphericity = minSphericity * 1000;
-		maxSphericity = maxSphericity *1000;
-		
+		maxArea = adaptValue(maxArea);
+		maxSphericity = adaptValue(maxSphericity);
+		maxBorder = adaptValue(maxBorder);
+		minArea = adaptValue(minArea);
+		minSphericity = adaptValue(minSphericity);
+		minBorder = adaptValue(minBorder);	
+					
 		System.out.println("A : " + maxArea+ "S :" + maxSphericity+ " B" +maxBorder);
 		System.out.println("A : " + minArea+ "S :" + minSphericity+ " B" +minBorder);
-		
-		double stringAreaSup = default_stringAreaSup;
-		double stringAreaInf = default_stringAreaInf;
-		double stringSphericitySup = default_stringSphericitySup;
-		double stringSphericityInf = default_stringSphericityInf;
-		double stringBorderSup = default_stringBorderSup;
-		double stringBorderInf = default_stringBorderInf;
-		 
-		
-		 //Verifier les valeurs
+			
+		//Verifier les valeurs
 		sliderSphericitySup = new JSlider(JSlider.HORIZONTAL,(int)minSphericity, (int)maxSphericity ,(int) (((maxSphericity-minSphericity)/2)+minSphericity));
 		sliderSphericityInf = new JSlider(JSlider.HORIZONTAL,(int)minSphericity, (int)maxSphericity,(int) (((maxSphericity-minSphericity)/2)+minSphericity));
 		
@@ -198,10 +202,6 @@ public class RequestFram extends JFrame implements ActionListener,
 		btRadio6.addActionListener(new StateListener());
 		btRadio7.addActionListener(new StateListener());
 
-		
-		
-		
-		
 		////RUBRIQUE 1
 		//To center le label
 		LabelChooseType.setHorizontalAlignment(JLabel.CENTER);
@@ -356,7 +356,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		//sup
 		paneSphereSup.setLayout(new GridBagLayout());
 		GridBagConstraints gcSphericitySup = new GridBagConstraints();
-		gcSphericitySup.weightx = 4 ;
+		gcSphericitySup.weightx = 3 ;
 		gcSphericitySup.weighty = 0 ;
 		paneSphereSup.setBackground(Color.RED);
 		paneSphereSup.setPreferredSize(new Dimension(600, 50));
@@ -437,19 +437,9 @@ public class RequestFram extends JFrame implements ActionListener,
 				gcSphericitySup.gridx = 1;
 				gcSphericitySup.gridy = 0 ; 
 				paneSphereSup.add(sliderSphericitySup,gcSphericitySup);
-				
-				gcSphericitySup.gridx = 2;
-				gcSphericitySup.gridy = 0 ;
-				gcSphericitySup.fill= GridBagConstraints.PAGE_END;
-				JLabel op  = new JLabel("10-4");
-				gcSphericitySup.weighty = GridBagConstraints.BELOW_BASELINE_TRAILING;
-					op.setHorizontalAlignment(JLabel.CENTER);
-				op.setVerticalAlignment(JLabel.BOTTOM);
-				paneSphereSup.add(op);
-				
+							
 				gcSphericitySup.fill = GridBagConstraints.HORIZONTAL;
-
-				gcSphericitySup.gridx = 3;
+				gcSphericitySup.gridx = 2;
 				gcSphericitySup.gridy = 0 ;
 				paneSphereSup.add(sliderDisplaySphericitySup,gcSphericitySup);
 				
@@ -675,40 +665,33 @@ public class RequestFram extends JFrame implements ActionListener,
 		if (event.getSource() == sliderBorderSup) {
 			sliderDisplayBorderSup.setText(String.valueOf(sliderBorderSup
 					.getValue()));
-			System.out.println("BorderSup : "
-					+ String.valueOf(sliderBorderSup.getValue()));
+			System.out.println("BorderSup : "+ String.valueOf(sliderBorderSup.getValue()));
 			this.stringBorderSup = Double.valueOf(sliderBorderSup.getValue());
 
 		}
 		// SliderBorderInf
 		if (event.getSource() == sliderBorderInf) {
-			sliderDisplayBorderInf.setText(String.valueOf(sliderBorderInf
-					.getValue()));
-			System.out.println("BorderInf : "
-					+ String.valueOf(sliderBorderInf.getValue()));
+			sliderDisplayBorderInf.setText(String.valueOf(sliderBorderInf.getValue()));
+			System.out.println("BorderInf : "+ String.valueOf(sliderBorderInf.getValue()));
 			this.stringBorderInf = Double.valueOf(sliderBorderInf.getValue());
 
 		}
+		
 		// SliderSphericitySup
-
 		if (event.getSource() == sliderSphericitySup) {
-			sliderDisplaySphericitySup.setText(String
-					.valueOf(sliderSphericitySup.getValue()));
-			System.out.println("SphéericitySup : "
-					+ String.valueOf(sliderSphericitySup.getValue()));
-			this.stringSphericitySup = Double.valueOf(sliderSphericitySup
-					.getValue());
+			sliderDisplaySphericitySup.setText(String.valueOf(sliderSphericitySup.getValue()*0.001));
+			System.out.println("SphéericitySup : "+ String.valueOf(sliderSphericitySup.getValue()*0.001));
+			this.stringSphericitySup = Double.valueOf(sliderSphericitySup.getValue()*0.001);
 
 		}
 		// SliderSphericityInf
 		if (event.getSource() == sliderSphericityInf) {
-			sliderDisplaySphericityInf.setText(String
-					.valueOf(sliderSphericityInf.getValue()));
-			System.out.println("SphéericityInf : "
-					+ String.valueOf(sliderSphericityInf.getValue()));
-			this.stringSphericityInf = Double.valueOf(sliderSphericityInf
-					.getValue());
-
+			
+			sliderDisplaySphericityInf.setText(String.valueOf(sliderSphericityInf.getValue()*0.001));
+			System.out.println("SphéericityInf : "+ String.valueOf(sliderSphericityInf.getValue()*0.001));
+			if(btInfSphericity.isSelected()){
+				this.stringSphericityInf = Double.valueOf(sliderSphericityInf.getValue()*0.001);
+			}
 		}
 
 		// SliderAreaSup
@@ -752,6 +735,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		}
 		if (e.getSource() == btClear) {
 			System.out.println("It is Clear rf !");
+			
 			this.btRadio1.setSelected(true);
 			
 			this.sliderAreaInf.setValue(150);
@@ -780,8 +764,9 @@ public class RequestFram extends JFrame implements ActionListener,
 
 			} else // valeur par defaut
 			{
-				this.stringAreaSup = default_stringAreaSup;
+				this.stringAreaSup = Math.floor(default_stringAreaSup*1e5)/1e5;
 	//			System.out.println("Sup Area : " + this.stringAreaSup);
+				sliderDisplayAreaSup.setText(String.valueOf(this.stringAreaSup));
 
 			}
 
@@ -790,31 +775,31 @@ public class RequestFram extends JFrame implements ActionListener,
 			//			+ this.stringAreaInf);
 
 			} else {
-				this.stringAreaInf = default_stringAreaInf;
+				this.stringAreaInf = Math.floor(default_stringAreaInf*1e5)/1e5;
 				//System.out.println("Inf Area : " + this.stringAreaInf);
+				sliderDisplayAreaInf.setText(String.valueOf(this.stringAreaInf));
 
 			}
 
 			if (btSupSphericity.isSelected()) {
-				//System.out.println("btSupSphericity is Selected : "
-					//	+ this.stringSphericitySup);
+				System.out.println("btSupSphericity is Selected : "+ this.stringSphericitySup);
 
 			} else // valeur par defaut
 			{
-				this.stringSphericitySup = default_stringSphericitySup;
-				//System.out.println("Sup Sphericity : "
-				//		+ this.stringSphericitySup);
+				this.stringSphericitySup = Math.floor(default_stringSphericitySup*1e5)/1e5;
+				System.out.println("Sup Sphericity defualt: "+ this.stringSphericitySup);
+				sliderDisplaySphericitySup.setText(String.valueOf(this.stringSphericitySup));
 
 			}
 
 			if (btInfSphericity.isSelected()) {
-				//System.out.println("btInfSphericity is Selected : "
-					//	+ this.stringAreaInf);
+				System.out.println("btInfSphericity is Selected : "
+						+ this.stringSphericityInf);
 
 			} else {
-				this.stringSphericityInf = default_stringSphericityInf;
-			//	System.out.println("Inf Sphericity : "
-					//	+ this.stringSphericityInf);
+				this.stringSphericityInf = Math.floor(default_stringSphericityInf * 1e5)/1e5;
+				System.out.println("Inf Sphericity  default: "+ this.stringSphericityInf);			
+				sliderDisplaySphericityInf.setText(String.valueOf(this.stringSphericityInf));
 
 			}
 
@@ -824,8 +809,10 @@ public class RequestFram extends JFrame implements ActionListener,
 
 			} else // valeur par defaut
 			{
-				this.stringBorderSup = default_stringBorderSup;
-			///	System.out.println("Sup Border : " + this.stringBorderSup);
+				this.stringBorderSup =  Math.floor(default_stringBorderSup * 1e5)/1e5;;
+				sliderDisplayBorderSup.setText(String.valueOf(this.stringBorderSup));
+
+				///	System.out.println("Sup Border : " + this.stringBorderSup);
 
 			}
 			if (btInfBorder.isSelected()) {
@@ -833,7 +820,8 @@ public class RequestFram extends JFrame implements ActionListener,
 					//	+ this.stringBorderInf);
 
 			} else {
-				this.stringBorderInf = default_stringBorderInf;
+				this.stringBorderInf =  Math.floor(default_stringBorderInf * 1e5)/1e5;;
+				sliderDisplayBorderInf.setText(String.valueOf(this.stringBorderInf));
 			//	System.out.println("Inf Border : " + this.stringBorderInf);
 
 			}
@@ -851,11 +839,78 @@ public class RequestFram extends JFrame implements ActionListener,
 	}
 	
 	public void init(double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder){
-		sliderSphericityInf.setMaximum(800);
-	
-		//continue
+		
+		maxArea = adaptValue(maxArea);
+		maxSphericity = adaptValue(maxSphericity);
+		maxBorder = adaptValue(maxBorder);
+		minArea = adaptValue(minArea);
+		minSphericity = adaptValue(minSphericity);
+		minBorder = adaptValue(minBorder);	
+		
+		sliderSphericityInf.setMaximum((int)maxSphericity);
+		sliderSphericityInf.setMinimum((int)minSphericity);
+		sliderSphericityInf.setValue((int)((maxSphericity-minSphericity)/2 - minSphericity));
+		sliderSphericityInf.setMajorTickSpacing(50);
+		sliderSphericityInf.setMinorTickSpacing(10);
+		
+		sliderSphericitySup.setMaximum((int)maxSphericity);
+		sliderSphericitySup.setMinimum((int)minSphericity);
+		sliderSphericitySup.setValue((int)((maxSphericity-minSphericity)/2 - minSphericity));
+		sliderSphericitySup.setMajorTickSpacing(50);
+		sliderSphericitySup.setMinorTickSpacing(10);
+		
+		sliderAreaInf.setMaximum((int)maxArea);
+		sliderAreaInf.setMinimum((int)minArea);
+		sliderAreaInf.setValue((int)((maxArea-minArea)/2 - minArea));
+		sliderAreaInf.setMajorTickSpacing(1000);
+		sliderAreaInf.setMinorTickSpacing(100);
+		
+		sliderAreaSup.setMaximum((int)maxArea);
+		sliderAreaSup.setMinimum((int)minArea);
+		sliderAreaSup.setValue((int)((maxArea-minArea)/2 - minArea));
+		sliderAreaSup.setMajorTickSpacing(1000);
+		sliderAreaSup.setMinorTickSpacing(100);
+		
+		sliderBorderInf.setMaximum((int)maxBorder);
+		sliderBorderInf.setMinimum((int)minBorder);
+		sliderBorderInf.setValue((int)((maxBorder-minBorder)/2 - minBorder));
+		sliderBorderInf.setMajorTickSpacing(50);
+		sliderBorderInf.setMinorTickSpacing(10);
+		
+		sliderBorderSup.setMaximum((int) maxBorder);
+		sliderBorderSup.setMinimum((int) minBorder);
+		sliderBorderSup.setValue((int) ((maxBorder - minBorder) / 2 - minBorder));
+		sliderBorderSup.setMajorTickSpacing(50);
+		sliderBorderSup.setMinorTickSpacing(10);
+
+		default_stringAreaSup = minArea;
+		default_stringAreaInf = maxArea;
+		default_stringSphericitySup = minSphericity * 0.001;
+		default_stringSphericityInf = maxSphericity * 0.001;
+		default_stringBorderSup = minBorder;
+		default_stringBorderInf = maxBorder;
+		
+		 setStringAreaSup(default_stringAreaSup);
+		 setStringAreaInf(default_stringAreaInf);
+		 setStringSphericitySup( default_stringSphericitySup*0.001);
+		 setStringSphericityInf( default_stringSphericityInf*0.001);
+		 setStringBorderSup(default_stringBorderSup);
+		 setStringBorderInf( default_stringBorderInf);
+		
+		System.out.println("Init A : " + maxArea+ " S :" + maxSphericity+ " B : " +maxBorder);
+		System.out.println("Init A : " + minArea+ " S :" + minSphericity+ " B : " +minBorder);
+		
+		System.out.println("Init 2  A : " + stringAreaSup+ " S :" + stringSphericitySup+ " B : " +stringBorderSup);
+		System.out.println("Init  2 A : " + stringAreaInf+ " S :" + stringSphericityInf+ " B : " +stringBorderInf);
+		
 	}
 
+	public double adaptValue(double e){
+		if(e<1){
+			e = e *1000;
+		}
+		return e;
+	}
 	public JButton getBtApply() {
 		return btApply;
 	}
@@ -928,7 +983,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		this.btClear = btClear;
 	}
 
-
+/*
 	public double getMaxArea() {
 		return maxArea;
 	}
@@ -978,6 +1033,6 @@ public class RequestFram extends JFrame implements ActionListener,
 	public void setMinBorder(double minBorder) {
 		this.minBorder = minBorder;
 	}
-
+*/
 
 }

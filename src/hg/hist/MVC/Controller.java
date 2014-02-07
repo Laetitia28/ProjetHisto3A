@@ -411,9 +411,9 @@ public class Controller {
 		
 		for (Cell a : FirstSortListCell(type)) {
 			//debug
-			System.out.println("area "+a.getArea_pxl());
-			System.out.println("border "+a.getBorder_Lenght_pxl());
-			System.out.println("sphe "+ a.getSphericity());
+			//System.out.println("area "+a.getArea_pxl());
+			//System.out.println("border "+a.getBorder_Lenght_pxl());
+			//System.out.println("sphe "+ a.getSphericity());
 			
 				if (a.getBorder_Lenght_pxl() > valueBorderSup
 						&& a.getBorder_Lenght_pxl() < valueBorderInf &&
