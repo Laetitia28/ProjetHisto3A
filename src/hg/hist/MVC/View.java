@@ -66,7 +66,7 @@ public class View extends JFrame implements ActionListener {
 
 	private Font police = new Font("Arial", Font.BOLD, 14);
 
-	private HashMap<String, JMenuItem> JMenuItems = new HashMap<String, JMenuItem>();
+	//private HashMap<String, JMenuItem> JMenuItems = new HashMap<String, JMenuItem>();
 	private HashMap<String, JCheckBox> listOfCheckBox = new HashMap<String, JCheckBox>();
 
 	public View() {
@@ -134,7 +134,7 @@ public class View extends JFrame implements ActionListener {
 			down.add(checkBox);
 		}
 		
-		labelTitleRequest.setBorder(new EmptyBorder(0,10,0,0));
+		this.labelTitleRequest.setBorder(new EmptyBorder(0,10,0,0));
 		this.labelTitleRequest.setFont(police);
 		panelContainRequestField.add(labelTitleRequest,BorderLayout.WEST);
 		panelContainRequestField.add(textFieldRequest);
@@ -150,8 +150,7 @@ public class View extends JFrame implements ActionListener {
 
 		// Ada JPanel down ie check box in OptionBox JPanel
 		optionBox.add(down);
-		optionBox.add(buttonBar, BorderLayout.CENTER);// because Zoom is on
-														// NORTH
+		optionBox.add(buttonBar, BorderLayout.CENTER);// because Zoom is on NORTH
 		optionBox.add(panelAdvancedRequest, BorderLayout.AFTER_LAST_LINE);
 
 		getContentPane().add(optionBox, BorderLayout.EAST);
@@ -161,7 +160,6 @@ public class View extends JFrame implements ActionListener {
 		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder());
 		
 		// Add actionListener au btApply
-
 		frame2.getBtClear().addActionListener(this);
 		frame2.getBtApply().addActionListener(this);
 		
@@ -170,6 +168,35 @@ public class View extends JFrame implements ActionListener {
 		this.textFieldRequest.setFont(police);
 		this.textFieldRequest.setText("No request advanced");
 
+		
+		for(String key : controller.getMapColor().keySet()){
+			JMenuItem a = new JMenuItem(key.toString());
+			a.setName("menuItem_"+key.toString());
+			a.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent event) {
+					// TODO Auto-generated method stub
+					JComboBox comboBox = new JComboBox(getController().getListColor());
+					comboBox.setEditable(false);
+					comboBox.getSelectedItem();
+					JOptionPane.showMessageDialog(null, comboBox, event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
+					//debug
+					System.out.println("chosen Cell : "+event.getActionCommand() );
+					System.out.println("chosen Color : " + comboBox.getSelectedItem().toString());
+					//change mapColor with new value of type cell selected
+					getController().changeMapColor(event.getActionCommand(),comboBox.getSelectedItem().toString());
+					graph.setCellsDeletable(true);
+					graph.removeCells(graph.getChildVertices(parent));
+					graph.refresh();
+					graph.setCellsDeletable(false);
+					getController().changeFrame(getController().getPath_current(), graph,graphComponent);
+				}
+			});
+			menu.getPropertyCells().add(a);
+			
+		}
+		
 		// Add ActionListener elements
 		menu.getExit().addActionListener(this);
 		menu.getOpen().addActionListener(this);
@@ -218,41 +245,35 @@ public class View extends JFrame implements ActionListener {
 			down.add(btDisplay, BorderLayout.CENTER);
 			this.setVisible(true);
 
-			JMenuItems.clear();
-
-			controller.ChangeColorOfCell(menu, getJMenuItems());
-
-			for (String a : getJMenuItems().keySet()) {
-				System.out.println("jk : " + a);
-			}
-			for (String a : getJMenuItems().keySet()) {
-				getJMenuItems().get(a).addActionListener(new ActionListener() {
+			menu.getPropertyCells().removeAll();
+		
+			for(String key : controller.getMapColor().keySet()){
+				JMenuItem a = new JMenuItem(key.toString());
+				a.setName("menuItem_"+key.toString());
+				a.addActionListener(new ActionListener() {
+					
+					@Override
 					public void actionPerformed(ActionEvent event) {
-						String[] list = { "red", "green", "blue", "yellow",
-								"black", "white", "orange", "purple" };
-						JComboBox jcb = new JComboBox(list);
-						jcb.setEditable(false);
-						jcb.getSelectedItem();
-						JOptionPane.showMessageDialog(null, jcb,
-								event.getActionCommand(),
-								JOptionPane.QUESTION_MESSAGE);
-						getController().setCellselected(
-								event.getActionCommand());
-						System.out.println("chosenCell:"
-								+ getController().getCellselected());
-						getController().setColor(
-								jcb.getSelectedItem().toString());
-						System.out.println("chosenColor:"
-								+ getController().getColor());
-						getController().changeMap(
-								getController().getCellselected(),
-								getController().getColor());
-						getController().displaySelectedCells(
-								getController().getCellselected(), graph);
+						// TODO Auto-generated method stub
+						JComboBox comboBox = new JComboBox(getController().getListColor());
+						comboBox.setEditable(false);
+						comboBox.getSelectedItem();
+						JOptionPane.showMessageDialog(null, comboBox, event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
+						//debug
+						System.out.println("chosen Cell : "+event.getActionCommand() );
+						System.out.println("chosen Color : " + comboBox.getSelectedItem().toString());
+						//change mapColor with new value of type cell selected
+						getController().changeMapColor(event.getActionCommand(),comboBox.getSelectedItem().toString());
+						graph.setCellsDeletable(true);
+						graph.removeCells(graph.getChildVertices(parent));
+						graph.refresh();
+						graph.setCellsDeletable(false);
+						getController().changeFrame(getController().getPath_current(), graph,graphComponent);
 					}
 				});
+				menu.getPropertyCells().add(a);
+				
 			}
-
 		}
 		
 		//Zoom
@@ -389,14 +410,6 @@ public class View extends JFrame implements ActionListener {
 			
 		}
 
-	}
-
-	public HashMap<String, JMenuItem> getJMenuItems() {
-		return JMenuItems;
-	}
-
-	public void setJMenuItems(HashMap<String, JMenuItem> jMenuItems) {
-		JMenuItems = jMenuItems;
 	}
 
 	public String getStringRequest() {

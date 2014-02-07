@@ -16,7 +16,7 @@ public class Menu extends JMenuBar{
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menu_bar1;
 	private JMenu File, Edition,PropertyCells;
-	private JMenuItem open, exit, image_show, image_hidden,addCell, changeColor;
+	private JMenuItem open, exit, image_show, image_hidden;
 
 	private JRadioButtonMenuItem radioButtonMenuItemDisplay,RadioButtonMenuItemHidden;
   
@@ -27,14 +27,7 @@ public class Menu extends JMenuBar{
 
 	}
 	
-	public JMenuItem getAddCell() {
-		return addCell;
-	}
-
-	public void setAddCell(JMenuItem addCell) {
-		this.addCell = addCell;
-	}
-
+/*
 	public JMenuItem getChangeColor() {
 		return changeColor;
 	}
@@ -42,7 +35,7 @@ public class Menu extends JMenuBar{
 	public void setChangeColor(JMenuItem changeColor) {
 		this.changeColor = changeColor;
 	}
-
+*/
 	public JMenuItem getImage_hidden() {
 		return image_hidden;
 	}
@@ -79,6 +72,7 @@ public class Menu extends JMenuBar{
 		File = new JMenu("File");
 		Edition = new JMenu("Edition");
 		PropertyCells = new JMenu("PropertyCells");
+		
 		menu_bar1.add(File);
 		menu_bar1.add(Edition);
 		menu_bar1.add(PropertyCells);

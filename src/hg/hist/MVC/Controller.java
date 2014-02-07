@@ -2,9 +2,7 @@ package hg.hist.MVC;
 
 import hg.histo.Cell;
 import hg.histo.FillCellWithCSV;
-import hg.histo.Menu;
 import hg.histo.SearchFile;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -15,12 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
@@ -51,9 +46,6 @@ public class Controller {
 	
 	private SearchFile searchFile;
 
-	private String cellselected;
-	private Object key;
-
 	private ImageIcon img ;
 	private HashMap<String, String> mapColor = new HashMap<String, String>();
 
@@ -61,6 +53,10 @@ public class Controller {
 	//C'est la liste de cellule qui est selectionner dans la fenetre request
 	private List<Cell> temp ;
 
+	private String[] listColor = {"red","yellow","green","black","blue","cyan","darkGray","gray","magenta","orange","pink","white","purple"};
+
+
+	
 
 	public Controller() {
 
@@ -140,8 +136,8 @@ public class Controller {
 		//find Max and Min of Boerder,  Area , Sphérictiy
 		getMaxMin(this.listCells);
 		
-		//change color of Cells
-		ChangeMapColor(this.listCells);
+		//change map of cell color
+		CreateNewMapColor(this.listCells);
 		
 		//draw the grpah
 		graph.getModel().beginUpdate();
@@ -175,19 +171,6 @@ public class Controller {
 		graphComponent.setBackgroundImage(img);
 		}
 		return graphComponent;
-	}
-//ok
-	public HashMap<String, JMenuItem> ChangeColorOfCell(Menu menu,
-			HashMap<String, JMenuItem> JMenuItems) {
-		JMenuItem newCell;
-		for (String j : getMapColor().keySet()) {
-			newCell = new JMenuItem(j);
-			menu.getPropertyCells().add(newCell);
-			JMenuItems.put(j.toString(), newCell);
-			// System.out.println("element de la JMenuItems:" +
-			// JMenuItems.keySet());
-		}
-		return JMenuItems;
 	}
 
 	public void ChangeFile(JFileChooser chooser,mxGraphComponent graphComponent, mxGraph graph) {
@@ -293,7 +276,7 @@ public class Controller {
 	}
 
 	//ok
-	public void MapColorCell() {
+	public void MapColorCellInit() {
 		mapColor.put("Tumor nucleus", "red");
 		mapColor.put("Granulocyte nucleus", "yellow");
 		mapColor.put("Lymphocyte Nucleus", "green");
@@ -310,7 +293,7 @@ public class Controller {
 		setListCell("/ressources/image0046.csv");
 
 		// create color of cell
-		MapColorCell();
+		MapColorCellInit();
 		
 		//find Max and Min of Border, Area, Sphericity
 		getMaxMin(this.listCells);
@@ -337,22 +320,6 @@ public class Controller {
 				(int) (img.getIconHeight() * 0.4));
 		graphComponent.setBackgroundImage(img);
 
-		/*
-		 * //ChangeColorOfCell(menu,JMenuItems); for(String a :
-		 * JMenuItems.keySet()){ JMenuItems.get(a).addActionListener(new
-		 * ActionListener(){ public void actionPerformed(ActionEvent event){
-		 * String[] list = {"red", "green", "blue","yellow", "black",
-		 * "white","orange", "purple"}; JComboBox jcb = new JComboBox(list);
-		 * jcb.setEditable(false); jcb.getSelectedItem();
-		 * JOptionPane.showMessageDialog( null,
-		 * jcb,event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
-		 * //controller.setCellselected(event.getActionCommand());
-		 * //System.out.println("chosenCell:" + getCellselected());
-		 * //controller.setColor(jcb.getSelectedItem().toString());
-		 * //System.out.println("chosenColor:" + getColor());
-		 * //changeMap(getCellselected(), getColor());
-		 * //displaySelectedCells(getCellselected(),graph); } }); }
-		 */
 		return graphComponent;
 		// getContentPane().add(graphComponent, BorderLayout.CENTER);
 	}
@@ -376,32 +343,51 @@ public class Controller {
 		}
 	}
 
-	public void changeMap(String typeCell, String typeColor) {
-		for (String e : getMapColor().keySet()) {
-			if (typeCell.equals(e)) {
-				getMapColor().put(e, typeColor);
+	//Add a new color value for a specify type
+	public void changeMapColor(String typeCell, String typeColor) {
+		for (String type : getMapColor().keySet()) {
+			if (typeCell.equals(type)) {
+				getMapColor().put(type, typeColor);
 			}
 		}
 	}
 
-	public HashMap<String, String> ChangeMapColor(List<Cell> myNewList) {
-		System.out.println("ChangeMapColor method");
-
-		HashMap<String, String> tmp = new HashMap<String, String>();
-		for (Cell c : myNewList) {
-			tmp.put(c.getClass_name(), "orange");
+	//Create new MapColor when change file 
+	public void CreateNewMapColor(List<Cell> newList) {
+		System.out.println("CreateNewMapColor method");
+		HashMap<String, String> tmp_map = new HashMap<String, String>();
+		
+		for(int i = 0 ; i<newList.size();i++){
+			tmp_map.put(newList.get(i).getClass_name(), listColor[5]);
+			
 		}
 		HashMap<String, String> unionMap = new HashMap<String, String>();
-		unionMap.putAll(tmp);
+		
+		unionMap.putAll(tmp_map);
+
 		unionMap.putAll(getMapColor());
 		
+		int i = 0;
+		for (String mapKeyUnion : unionMap.keySet()) {
+			boolean found = false;
+			for (String mapKey : getMapColor().keySet()) {
+				if(mapKey.equals(mapKeyUnion)){
+					found = true;
+				}
+			}
+			if(found == false){
+				unionMap.put(mapKeyUnion, listColor[5+i]);
+				i = i+1 ;
+			}
+		}
+		
 		//debug
-		//for (String e : unionMap.keySet()) {
-			//System.out.println("key : " + e);
-			//System.out.println("object : " + unionMap.get(e));
-		//}
+		for (String e : unionMap.keySet()) {
+			System.out.println("key : " + e);
+			System.out.println("object : " + unionMap.get(e));
+		}
+		
 		setMapColor(unionMap);
-		return getMapColor();
 	}
 
 	public List<Cell> FirstSortListCell(String typeName){
@@ -584,22 +570,6 @@ public class Controller {
 		this.mapColor = m;
 	}
 
-	public Object getKey() {
-		return key;
-	}
-
-	public void setKey(Object key) {
-		this.key = key;
-	}
-
-	public String getCellselected() {
-		return cellselected;
-	}
-
-	public void setCellselected(String cellselected) {
-		this.cellselected = cellselected;
-	}
-
 	public List<Cell> getTemp() {
 		return temp;
 	}
@@ -654,7 +624,9 @@ public class Controller {
 	public void setMinBorder(double minBorder) {
 		this.minBorder = minBorder;
 	}
-
+	public String[] getListColor() {
+		return listColor;
+	}
 
 
 }
