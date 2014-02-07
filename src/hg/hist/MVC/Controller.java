@@ -156,12 +156,23 @@ public class Controller {
 			graph.getModel().endUpdate();
 		}
 		
+		System.out.println("path changeFrame : "+ path);
+		if(path.equals("/ressources/image0046.csv")){
+			
+			ImageIcon img = new ImageIcon(this.getClass().getClassLoader().getResource("ressources/image0046.jpg"));
+			img = scale("ressources/image0046.jpg", (int) (img.getIconWidth() * 0.4),
+					(int) (img.getIconHeight() * 0.4));
+			graphComponent.setBackgroundImage(img);
+			
+		}
+		else {
 		// display background
 		ImageIcon img = new ImageIcon(getPath_image());
 		
 		img = scale(path_image, (int) (img.getIconWidth() * 0.4),
 				(int) (img.getIconHeight() * 0.4));
 		graphComponent.setBackgroundImage(img);
+		}
 		return graphComponent;
 	}
 //ok

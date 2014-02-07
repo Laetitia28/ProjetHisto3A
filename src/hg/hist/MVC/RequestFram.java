@@ -333,7 +333,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		contraintes.gridx = 0;
 		contraintes.gridy = 0;
 		contraintes.gridwidth = 2;
-		contraintes.fill = GridBagConstraints.CENTER;
+		contraintes.anchor = GridBagConstraints.NORTH;
 		rubrique2.add(labelArea,contraintes);
 		
 		contraintes.fill = GridBagConstraints.BOTH;
@@ -611,7 +611,7 @@ public class RequestFram extends JFrame implements ActionListener,
 				contraintesBorder.gridx = 0;
 				contraintesBorder.gridy = 0;
 				contraintesBorder.gridwidth = 2;
-				contraintesBorder.fill = GridBagConstraints.CENTER;
+				contraintesSphericity.anchor = GridBagConstraints.NORTH;
 				rubrique4.add(labelBorder,contraintesBorder);
 				
 				contraintesBorder.fill = GridBagConstraints.BOTH;
