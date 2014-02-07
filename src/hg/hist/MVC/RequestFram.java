@@ -11,8 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Enumeration;
 import java.util.HashMap;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -32,7 +34,7 @@ public class RequestFram extends JFrame implements ActionListener,
 
 	private static final long serialVersionUID = 123456L;
 	
-	private JLabel LabelChooseType = new JLabel("Choose your Cellule");
+	private JLabel LabelChooseType = new JLabel("Choose your Cellule type");
 	private JLabel labelSphericity = new JLabel("Choose your Spherecity");
 	private JLabel labelArea = new JLabel("Choose your Area");
 	private JLabel labelBorder = new JLabel("Choose your Border");
@@ -79,17 +81,10 @@ public class RequestFram extends JFrame implements ActionListener,
 	private JPanel rubrique3 = new JPanel(new GridBagLayout());
 	private JPanel rubrique4 = new JPanel(new GridBagLayout());
 
-	private ButtonGroup groupButton = new ButtonGroup();;
+	private ButtonGroup groupButton = new ButtonGroup();
 
 	private JRadioButton btRadio1 = new JRadioButton("All Cells", true);
-	/*
-	private JRadioButton btRadio2 = new JRadioButton("Nucleus DAB+ PRD+");
-	private JRadioButton btRadio3 = new JRadioButton("Lymphocyte Nucleus");
-	private JRadioButton btRadio4 = new JRadioButton("Tumor nucleus");
-	private JRadioButton btRadio5 = new JRadioButton("NucleusPRD+");
-	private JRadioButton btRadio6 = new JRadioButton("Granulocyte nucleus");
-	private JRadioButton btRadio7 = new JRadioButton("Nucleus DAB+");
-	*/
+
 
 	private String stringTypeCell = "All Cells";
 	
@@ -118,7 +113,7 @@ public class RequestFram extends JFrame implements ActionListener,
 	//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
 	//public RequestFram( ) {
 
-	public RequestFram(double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder,HashMap<String, String> mapForRadioButton) {
+	public RequestFram(double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder) {
 
 		System.out.println("A : " + maxArea+ "S :" + maxSphericity+ " B" +maxBorder);
 		System.out.println("A : " + minArea+ "S :" + minSphericity+ " B" +minBorder);
@@ -188,22 +183,24 @@ public class RequestFram extends JFrame implements ActionListener,
 */
 
 		paneCellule.add(btRadio1);
-	/*	paneCellule.add(btRadio2);
+		/*
+		paneCellule.add(btRadio2);
 		paneCellule.add(btRadio3);
 		paneCellule.add(btRadio4);
 		paneCellule.add(btRadio5);
 		paneCellule.add(btRadio6);
 		paneCellule.add(btRadio7);
-
+*/
 
 		btRadio1.addActionListener(new StateListener());
-		btRadio2.addActionListener(new StateListener());
+	/*	btRadio2.addActionListener(new StateListener());
 		btRadio3.addActionListener(new StateListener());
 		btRadio4.addActionListener(new StateListener());
 		btRadio5.addActionListener(new StateListener());
 		btRadio6.addActionListener(new StateListener());
 		btRadio7.addActionListener(new StateListener());
-*/
+		*/
+		
 		////RUBRIQUE 1
 		//To center le label
 		LabelChooseType.setHorizontalAlignment(JLabel.CENTER);
@@ -740,19 +737,27 @@ public class RequestFram extends JFrame implements ActionListener,
 			
 			this.btRadio1.setSelected(true);
 			
-			this.sliderAreaInf.setValue(150);
-			this.sliderAreaSup.setValue(150);
-			this.sliderBorderInf.setValue(150);
-			this.sliderBorderSup.setValue(150);
-			this.sliderSphericityInf.setValue(150);
-			this.sliderSphericitySup.setValue(150);
-		
-			this.sliderDisplayAreaSup.setText("Value");
-			this.sliderDisplayAreaInf.setText("Value");
-			this.sliderDisplayBorderInf.setText("Value");
-			this.sliderDisplayBorderSup.setText("Value");
-			this.sliderDisplaySphericityInf.setText("Value");
-			this.sliderDisplaySphericitySup.setText("Value");
+			this.btInfArea.setSelected(false);
+			this.btSupArea.setSelected(false);
+			this.btInfBorder.setSelected(false);
+			this.btSupBorder.setSelected(false);
+			this.btInfSphericity.setSelected(false);
+			this.btSupSphericity.setSelected(false);
+			
+			this.sliderAreaInf.setValue((int)default_stringAreaInf);
+			this.sliderAreaSup.setValue((int)default_stringAreaSup);
+			this.sliderBorderInf.setValue((int)default_stringBorderInf);
+			this.sliderBorderSup.setValue((int)default_stringBorderSup);
+			this.sliderSphericityInf.setValue((int)default_stringSphericityInf);
+			this.sliderSphericitySup.setValue((int)default_stringSphericitySup);
+
+			this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(default_stringAreaSup*1e5)/1e5));
+			this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(default_stringAreaInf*1e5)/1e5));
+			this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(default_stringBorderSup*1e5)/1e5));
+			this.sliderDisplayBorderSup.setText(String.valueOf(Math.floor(default_stringBorderInf*1e5)/1e5));
+			this.sliderDisplaySphericityInf.setText(String.valueOf(Math.floor(default_stringSphericitySup*1e5)/1e5));
+			this.sliderDisplaySphericitySup.setText(String.valueOf(Math.floor(default_stringSphericityInf*1e5)/1e5));
+			
 			this.setVisible(true);
 			
 		}
@@ -840,7 +845,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		}
 	}
 	
-	public void init(double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder){
+	public void init(double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder,HashMap<String, String> mapForRadioButton){
 		
 		maxArea = adaptValue(maxArea);
 		maxSphericity = adaptValue(maxSphericity);
@@ -887,31 +892,53 @@ public class RequestFram extends JFrame implements ActionListener,
 
 		default_stringAreaSup = minArea;
 		default_stringAreaInf = maxArea;
-		default_stringSphericitySup = minSphericity * 0.001;
-		default_stringSphericityInf = maxSphericity * 0.001;
+		default_stringSphericitySup = minSphericity*0.001;
+		default_stringSphericityInf = maxSphericity*0.001;
 		default_stringBorderSup = minBorder;
 		default_stringBorderInf = maxBorder;
 		
 		 setStringAreaSup(default_stringAreaSup);
 		 setStringAreaInf(default_stringAreaInf);
-		 setStringSphericitySup( default_stringSphericitySup*0.001);
-		 setStringSphericityInf( default_stringSphericityInf*0.001);
+		 setStringSphericitySup(default_stringSphericitySup);
+		 setStringSphericityInf(default_stringSphericityInf);
 		 setStringBorderSup(default_stringBorderSup);
 		 setStringBorderInf( default_stringBorderInf);
 		
-		System.out.println("Init A : " + maxArea+ " S :" + maxSphericity+ " B : " +maxBorder);
-		System.out.println("Init A : " + minArea+ " S :" + minSphericity+ " B : " +minBorder);
+		System.out.println("Init max : " + maxArea+ " S :" + maxSphericity+ " B : " +maxBorder);
+		System.out.println("Init min : " + minArea+ " S :" + minSphericity+ " B : " +minBorder);
 		
-		System.out.println("Init 2  A : " + stringAreaSup+ " S :" + stringSphericitySup+ " B : " +stringBorderSup);
-		System.out.println("Init  2 A : " + stringAreaInf+ " S :" + stringSphericityInf+ " B : " +stringBorderInf);
+		System.out.println("Init string : " + stringAreaSup+ " S :" + stringSphericitySup+ " B : " +stringBorderSup);
+		System.out.println("Init  string : " + stringAreaInf+ " S :" + stringSphericityInf+ " B : " +stringBorderInf);
+		
+		System.out.println("Init default : " + default_stringAreaSup+ " S :" +  default_stringSphericitySup+ " B : " +  default_stringBorderSup);
+		System.out.println("Init default : " +  default_stringAreaInf+ " S :" +  default_stringSphericityInf+ " B : " +  default_stringBorderInf);
 		
 		//Bouttons radios 
+		//delete all buttons in GroupButton
+		 Enumeration<AbstractButton> elements = groupButton.getElements();
+		    while (elements.hasMoreElements()) {
+		    	System.out.println("delete");
+		          AbstractButton button = (AbstractButton)elements.nextElement();
+		          groupButton.remove(button);
+		}
+		//delete in paneCell
+		paneCellule.removeAll(); 
 		
-		JRadioButton btRadio2 = new JRadioButton("Nucleus DAB+ PRD+");
-		
-		groupButton.add(btRadio2);
-		groupButton.remove(btRadio2);
-		
+		//Recreate buttons in groupButton
+		btRadio1.setSelected(true);
+		groupButton.add(btRadio1);
+		paneCellule.add(btRadio1);
+		for(String e : mapForRadioButton.keySet()){
+			System.out.println("e : "+ e);
+			JRadioButton btRadio_Map = new JRadioButton(e);
+			btRadio_Map.setName("bt_"+e);
+			groupButton.add(btRadio_Map);
+			btRadio_Map.addActionListener(new StateListener());
+			paneCellule.add(btRadio_Map);
+
+		}
+		rubrique1.add(paneCellule);
+		System.out.println("count : "+ groupButton.getButtonCount() );
 		
 	}
 

@@ -7,6 +7,5 @@
 			<attribute name="javadoc_location" value="file:/C:/Users/Laetitia/Documents/Telechargement_Firefox/jgraphx-2_1_0_9/jgraphx/docs/api/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ayat/Documents/jgraphx.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
