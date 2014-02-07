@@ -16,21 +16,18 @@ import java.util.HashMap;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.JPopupMenu.Separator;
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -43,6 +40,8 @@ public class RequestFram extends JFrame implements ActionListener,
 	private JLabel labelSphericity = new JLabel("Choose your spherecity ");
 	private JLabel labelArea = new JLabel("Choose your area (pxl) ");
 	private JLabel labelBorder = new JLabel("Choose your border (pxl) ");
+	private JLabel labelNeighbourhood = new JLabel("Neighbourhood");
+	private JLabel labelTypeCellSelected = new JLabel("Type cell selected : ");
 
 	private JPanel panelTotal = new JPanel();
 	private JPanel paneCellule = new JPanel();
@@ -52,6 +51,7 @@ public class RequestFram extends JFrame implements ActionListener,
 	private JPanel paneAreaInf = new JPanel();
 	private JPanel paneBorderSup = new JPanel();
 	private JPanel paneBorderInf = new JPanel();
+	private JPanel paneNeighbourhood = new JPanel(new BorderLayout());
 	private JPanel paneEnd = new JPanel();
 
 	private JButton btFinish = new JButton("Finish");
@@ -85,11 +85,11 @@ public class RequestFram extends JFrame implements ActionListener,
 	private JPanel rubrique2 = new JPanel(new GridBagLayout());
 	private JPanel rubrique3 = new JPanel(new GridBagLayout());
 	private JPanel rubrique4 = new JPanel(new GridBagLayout());
-
+	private JPanel rubrique5 = new JPanel(new GridBagLayout());
+	
 	private ButtonGroup groupButton = new ButtonGroup();
 
 	private JRadioButton btRadio1 = new JRadioButton("All Cells", true);
-
 
 	private String stringTypeCell = "All Cells";
 	
@@ -107,14 +107,6 @@ public class RequestFram extends JFrame implements ActionListener,
 	private double stringBorderSup ;
 	private double stringBorderInf;
 
-/*
-	private double maxArea;
-	private double maxSphericity;
-	private double maxBorder;
-	private double minArea;
-	private double minSphericity;
-	private double minBorder;
-	*/
 	//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
 	//public RequestFram( ) {
 
@@ -122,6 +114,7 @@ public class RequestFram extends JFrame implements ActionListener,
 
 		System.out.println("A : " + maxArea+ "S :" + maxSphericity+ " B" +maxBorder);
 		System.out.println("A : " + minArea+ "S :" + minSphericity+ " B" +minBorder);
+		
 		//Size of Frame
 		this.setSize(1200, 600);
 		
@@ -603,7 +596,11 @@ public class RequestFram extends JFrame implements ActionListener,
 				contraintesBorder.gridy = 1;
 				contraintesBorder.gridwidth = 1;
 				rubrique4.add(paneBorderInf,contraintesBorder);
-
+				
+				
+				
+				
+				
 		paneEnd.setPreferredSize(new Dimension(1200, 100));
 		paneEnd.setBackground(Color.white);
 
@@ -612,6 +609,10 @@ public class RequestFram extends JFrame implements ActionListener,
 		btClear.addActionListener(this);
 	
 
+		paneNeighbourhood.add(labelNeighbourhood,BorderLayout.LINE_START);
+		paneNeighbourhood.add(labelTypeCellSelected);
+		
+		
 		paneEnd.add(btFinish, BorderLayout.WEST);
 		paneEnd.add(btApply, BorderLayout.WEST);
 		paneEnd.add(btClear, BorderLayout.WEST);
@@ -625,6 +626,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		panelTotal.add(rubrique3);
 		panelTotal.add(rubrique4);
 		panelTotal.add(p);
+		panelTotal.add(paneNeighbourhood);
 		panelTotal.add(paneEnd);
 
 	}

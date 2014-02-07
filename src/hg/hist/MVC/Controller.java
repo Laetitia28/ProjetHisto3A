@@ -482,7 +482,34 @@ public class Controller {
 	    
 	}
 	
+	public void neighbourhood(){
+	long startTime = System.nanoTime();
+	System.out.println("time begin "+startTime+"ns");
+
+	System.out.println("size" + getListCells().size());
+	int a = 0; 
+	//a ramplacer par une liste deja sort 
+	for (Cell lamerde : getListCells()) {
+		//System.out.println("type" + lamerde.getClass_name());
+		if ((lamerde.getClass_name()).equals("Tumor nucleus")) {
+			
+			for (Cell merde : getListCells()) {
+				if ((Math.abs(merde.getInner_x() - lamerde.getInner_x()) < 3) && (Math.abs(merde.getInner_y() - lamerde.getInner_y()) < 3)) {
+					a = a+1;
+					System.out.println("in"+a);
+				}
+
+			}
+
+		}
+	}
+
+	long endTime = System.nanoTime();
+	System.out.println("time end "+endTime+"ns");
+	long duration = endTime - startTime;
+	System.out.println("time duration "+duration*Math.pow(10,-9)+"s");
 	
+	}
 	
 	// Getter and Setter
 	public List<Cell> getListCells() {

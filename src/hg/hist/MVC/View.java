@@ -1,7 +1,6 @@
 package hg.hist.MVC;
 
 import hg.histo.Menu;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +10,6 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -24,10 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.view.mxGraph;
@@ -82,6 +78,7 @@ public class View extends JFrame implements ActionListener {
 
 		this.controller = controller;
 
+		
 		// Create mxgraphComponent with properties
 		graphComponent = new mxGraphComponent(graph);
 		
@@ -106,7 +103,8 @@ public class View extends JFrame implements ActionListener {
 
 		//create the graph
 		controller.initFrame(graph, graphComponent);
-
+		
+		
 		optionBox.setLayout(new BorderLayout());
 		optionBox.setPreferredSize(new Dimension(200, 200));
 		buttonBar.add(btZoomToFit);
@@ -159,7 +157,6 @@ public class View extends JFrame implements ActionListener {
 		getContentPane().add(optionBox, BorderLayout.EAST);
 		setJMenuBar(menu.buildMenu());
 
-		//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
 		//frame2 = new RequestFram();
 		frame2 =  new RequestFram(controller.getMaxArea(),controller.getMaxSphericity(),controller.getMaxBorder(),controller.getMinArea(),controller.getMinSphericity(),controller.getMinBorder());
 		
