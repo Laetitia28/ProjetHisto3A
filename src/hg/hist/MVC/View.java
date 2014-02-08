@@ -45,7 +45,7 @@ public class View extends JFrame implements ActionListener {
 	private JButton btZoomToFit = new JButton("Zoom Off");
 	private JButton btDisplay = new JButton("Display");
 	private JButton buttonAdvancedRequest = new JButton("Advanced Request");
-	private JButton buttonClear = new JButton("Clear Request");
+	private JButton buttonClear = new JButton("Init Request");
 
 
 	private mxGraph graph = new mxGraph();
@@ -117,7 +117,7 @@ public class View extends JFrame implements ActionListener {
 		// Check Box
 		Border border = BorderFactory.createTitledBorder("Selected Cell");
 		down.setBorder(border);
-		down.setBackground(Color.GREEN);
+		//down.setBackground(Color.GREEN);
 		down.setBounds(0, 200, 200, 300);
 		down.setOpaque(true);
 		down.setLayout(new GridLayout(10, 1));
@@ -130,6 +130,8 @@ public class View extends JFrame implements ActionListener {
 			checkBox = new JCheckBox(key.toString());
 			checkBox.setName("CheckBox_" + key.toString());
 			checkBox.setSelected(false);
+			checkBox.setForeground(getController().stringToColor(getController().getMapColor().get(key)));
+			//checkBox.setBackground(getController().stringToColor(getController().getMapColor().get(key)));
 			listOfCheckBox.put(key.toString(), checkBox);
 			down.add(checkBox);
 		}
@@ -176,14 +178,16 @@ public class View extends JFrame implements ActionListener {
 				
 				@Override
 				public void actionPerformed(ActionEvent event) {
-					// TODO Auto-generated method stub
+
 					JComboBox comboBox = new JComboBox(getController().getListColor());
 					comboBox.setEditable(false);
 					comboBox.getSelectedItem();
 					JOptionPane.showMessageDialog(null, comboBox, event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
+					
 					//debug
 					System.out.println("chosen Cell : "+event.getActionCommand() );
 					System.out.println("chosen Color : " + comboBox.getSelectedItem().toString());
+					
 					//change mapColor with new value of type cell selected
 					getController().changeMapColor(event.getActionCommand(),comboBox.getSelectedItem().toString());
 					graph.setCellsDeletable(true);
@@ -236,8 +240,9 @@ public class View extends JFrame implements ActionListener {
 			listOfCheckBox.clear();
 			for (String key : controller.getMapColor().keySet()) {
 				checkBox = new JCheckBox(key.toString());
-				// checkBox.setName("CheckBox_" + key.toString());
+				checkBox.setName("CheckBox_" + key.toString());
 				checkBox.setSelected(false);
+				checkBox.setForeground(getController().stringToColor(getController().getMapColor().get(key)));
 				listOfCheckBox.put(key.toString(), checkBox);
 				// System.out.println("key : "+key);
 				down.add(checkBox);
@@ -254,14 +259,16 @@ public class View extends JFrame implements ActionListener {
 					
 					@Override
 					public void actionPerformed(ActionEvent event) {
-						// TODO Auto-generated method stub
+
 						JComboBox comboBox = new JComboBox(getController().getListColor());
 						comboBox.setEditable(false);
 						comboBox.getSelectedItem();
 						JOptionPane.showMessageDialog(null, comboBox, event.getActionCommand(),JOptionPane.QUESTION_MESSAGE);
+						
 						//debug
 						System.out.println("chosen Cell : "+event.getActionCommand() );
 						System.out.println("chosen Color : " + comboBox.getSelectedItem().toString());
+						
 						//change mapColor with new value of type cell selected
 						getController().changeMapColor(event.getActionCommand(),comboBox.getSelectedItem().toString());
 						graph.setCellsDeletable(true);
@@ -405,7 +412,7 @@ public class View extends JFrame implements ActionListener {
 			graph.refresh();
 			graph.setCellsDeletable(false);
 			
-			controller.SecondSortListCell(frame2.getStringBorderSup(), frame2.getStringBorderInf(), frame2.getStringSphericitySup(), frame2.getStringBorderInf(), frame2.getStringAreaSup(), frame2.getStringAreaInf(), frame2.getStringTypeCell(),this.graph);
+			controller.secondSortListCell(frame2.getStringBorderSup(), frame2.getStringBorderInf(), frame2.getStringSphericitySup(), frame2.getStringBorderInf(), frame2.getStringAreaSup(), frame2.getStringAreaInf(), frame2.getStringTypeCell(),this.graph);
 	
 			
 		}

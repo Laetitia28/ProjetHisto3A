@@ -3,6 +3,8 @@ package hg.hist.MVC;
 import hg.histo.Cell;
 import hg.histo.FillCellWithCSV;
 import hg.histo.SearchFile;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -13,9 +15,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
@@ -53,7 +57,7 @@ public class Controller {
 	//C'est la liste de cellule qui est selectionner dans la fenetre request
 	private List<Cell> temp ;
 
-	private String[] listColor = {"red","yellow","green","black","blue","cyan","darkGray","gray","magenta","orange","pink","white","purple"};
+	private String[] listColor = {"red","white","green","black","blue","cyan","darkGray","gray","magenta","orange","pink","yellow"};
 
 
 	
@@ -137,7 +141,7 @@ public class Controller {
 		getMaxMin(this.listCells);
 		
 		//change map of cell color
-		CreateNewMapColor(this.listCells);
+		createNewMapColor(this.listCells);
 		
 		//draw the grpah
 		graph.getModel().beginUpdate();
@@ -276,9 +280,9 @@ public class Controller {
 	}
 
 	//ok
-	public void MapColorCellInit() {
+	public void mapColorCellInit() {
 		mapColor.put("Tumor nucleus", "red");
-		mapColor.put("Granulocyte nucleus", "yellow");
+		mapColor.put("Granulocyte nucleus", "pink");
 		mapColor.put("Lymphocyte Nucleus", "green");
 		mapColor.put("Nucleus DAB+ PRD+", "black");
 		mapColor.put("Nucleus DAB+", "blue");
@@ -293,7 +297,7 @@ public class Controller {
 		setListCell("/ressources/image0046.csv");
 
 		// create color of cell
-		MapColorCellInit();
+		mapColorCellInit();
 		
 		//find Max and Min of Border, Area, Sphericity
 		getMaxMin(this.listCells);
@@ -353,7 +357,7 @@ public class Controller {
 	}
 
 	//Create new MapColor when change file 
-	public void CreateNewMapColor(List<Cell> newList) {
+	public void createNewMapColor(List<Cell> newList) {
 		System.out.println("CreateNewMapColor method");
 		HashMap<String, String> tmp_map = new HashMap<String, String>();
 		
@@ -390,7 +394,7 @@ public class Controller {
 		setMapColor(unionMap);
 	}
 
-	public List<Cell> FirstSortListCell(String typeName){
+	public List<Cell> firstSortListCell(String typeName){
 		List<Cell> list_tmp =new ArrayList<Cell>();
 	//	System.out.println("type" + typeName);
 		for(Cell a : getListCells()){
@@ -404,12 +408,51 @@ public class Controller {
 		}
 		return list_tmp;
 	}
-	public void SecondSortListCell(double valueBorderSup,
+
+	public Color stringToColor(String mrd){
+		if(mrd.equals("red")){
+			return Color.red;
+		}
+		else if(mrd.equals("yellow")){
+			return Color.yellow;
+		}
+		else if(mrd.equals("blue")){
+			return Color.blue;
+		}
+		else if(mrd.equals("cyan")){
+			return Color.cyan;
+		}
+		else if(mrd.equals("darkGray")){
+			return Color.darkGray;
+		}
+		else if(mrd.equals("gray")){
+			return Color.gray;
+		}
+		else if(mrd.equals("magenta")){
+			return Color.magenta;
+		}
+		else if(mrd.equals("orange")){
+			return Color.orange;
+		}
+		else if(mrd.equals("pink")){
+			return Color.pink;
+		}
+		else if(mrd.equals("white")){
+			return Color.white;
+		}
+		else if(mrd.equals("green")){
+			return Color.green;
+		}
+		else {
+		return Color.black;
+		}
+	} 
+	public void secondSortListCell(double valueBorderSup,
 			double valueBorderInf, double valueSphericitySup ,
 			double  valueSphericityInf , double valueAreaSup,
 			double valueAreaInf, String type,mxGraph graph) {
 		
-		for (Cell a : FirstSortListCell(type)) {
+		for (Cell a : firstSortListCell(type)) {
 			//debug
 			/*
 			System.out.println("area "+a.getArea_pxl());

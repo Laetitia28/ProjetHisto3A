@@ -10,9 +10,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 public class Menu extends JMenuBar{
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menu_bar1;
 	private JMenu File, Edition,PropertyCells;
@@ -20,52 +18,12 @@ public class Menu extends JMenuBar{
 
 	private JRadioButtonMenuItem radioButtonMenuItemDisplay,RadioButtonMenuItemHidden;
   
-	FramCell fr;
-
 
 	public Menu() {
 
 	}
 	
-/*
-	public JMenuItem getChangeColor() {
-		return changeColor;
-	}
-
-	public void setChangeColor(JMenuItem changeColor) {
-		this.changeColor = changeColor;
-	}
-*/
-	public JMenuItem getImage_hidden() {
-		return image_hidden;
-	}
-
-	public void setImage_hidden(JMenuItem image_hidden) {
-		this.image_hidden = image_hidden;
-	}
-	public JMenuItem getExit() {
-		return exit;
-	}
-
-	public JMenuItem getOpen() {
-		return open;
-	}
-
-	public void setOpen(JMenuItem open) {
-		this.open = open;
-	}
-
-	public JMenuItem getImage() {
-		return image_show;
-	}
-
-	public void setImage(JMenuItem image) {
-		this.image_show = image;
-	}
-
-	public void setExit(JMenuItem exit) {
-		this.exit = exit;
-	}
+	
 
 	public JMenuBar buildMenu() {
 		menu_bar1 = new JMenuBar();
@@ -134,6 +92,36 @@ public class Menu extends JMenuBar{
 
 	public void setRadioButtonMenuItemHidden(JRadioButtonMenuItem radioButtonMenuItemHidden) {
 		RadioButtonMenuItemHidden = radioButtonMenuItemHidden;
+	}
+	public JMenuItem getImage_hidden() {
+		return image_hidden;
+	}
+
+	public void setImage_hidden(JMenuItem image_hidden) {
+		this.image_hidden = image_hidden;
+	}
+	public JMenuItem getExit() {
+		return exit;
+	}
+
+	public JMenuItem getOpen() {
+		return open;
+	}
+
+	public void setOpen(JMenuItem open) {
+		this.open = open;
+	}
+
+	public JMenuItem getImage() {
+		return image_show;
+	}
+
+	public void setImage(JMenuItem image) {
+		this.image_show = image;
+	}
+
+	public void setExit(JMenuItem exit) {
+		this.exit = exit;
 	}
 }
 
