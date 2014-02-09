@@ -7,7 +7,6 @@ public class MainMVC {
 		// TODO Auto-generated method stub		
 		
 		Controller controller = new Controller();
-		
 		View frame = new View(controller);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1200, 700);

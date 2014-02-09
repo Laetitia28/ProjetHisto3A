@@ -13,8 +13,8 @@ public class Menu extends JMenuBar{
 
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menu_bar1;
-	private JMenu File, Edition,PropertyCells;
-	private JMenuItem open, exit, image_show, image_hidden;
+	private JMenu File, Edition,PropertyCells,Information;
+	private JMenuItem open, exit, image_show, image_hidden,moreInformations;
 
 	private JRadioButtonMenuItem radioButtonMenuItemDisplay,RadioButtonMenuItemHidden;
   
@@ -30,22 +30,21 @@ public class Menu extends JMenuBar{
 		File = new JMenu("File");
 		Edition = new JMenu("Edition");
 		PropertyCells = new JMenu("PropertyCells");
-		
+		Information = new JMenu("Informations");
 		menu_bar1.add(File);
 		menu_bar1.add(Edition);
 		menu_bar1.add(PropertyCells);
+		menu_bar1.add(Information);
 		
 		open = new JMenuItem("Open File");
 		exit = new JMenuItem("Exit");
-
+		moreInformations = new JMenuItem("more informations");
 		
 		
 		radioButtonMenuItemDisplay = new JRadioButtonMenuItem("Display Image radio");
 		radioButtonMenuItemDisplay.setMnemonic(KeyEvent.VK_R);
 		RadioButtonMenuItemHidden = new JRadioButtonMenuItem("Hidden Image radio");
 		RadioButtonMenuItemHidden.setMnemonic(KeyEvent.VK_O);
-        
-
         
 		File.add(open);
 		File.add(exit);
@@ -57,7 +56,7 @@ public class Menu extends JMenuBar{
        Edition.add(radioButtonMenuItemDisplay);
        Edition.add(RadioButtonMenuItemHidden);
 		
-
+       Information.add(moreInformations);
 
 		return menu_bar1;
 	}
@@ -122,6 +121,9 @@ public class Menu extends JMenuBar{
 
 	public void setExit(JMenuItem exit) {
 		this.exit = exit;
+	}
+	public JMenuItem getMoreInformations() {
+		return moreInformations;
 	}
 }
 

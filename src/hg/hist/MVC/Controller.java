@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -55,7 +56,7 @@ public class Controller {
 
 	private List<Cell> listCells;
 	//C'est la liste de cellule qui est selectionner dans la fenetre request
-	private List<Cell> temp ;
+	private List<Cell> tempList ;
 
 	private String[] listColor = {"red","white","green","black","blue","cyan","darkGray","gray","magenta","orange","pink","yellow"};
 
@@ -68,7 +69,7 @@ public class Controller {
 		listCells = new ArrayList<Cell>();
 		listCells = setListCell("/ressources/image0046.csv");
 		img = new ImageIcon(this.getClass().getClassLoader().getResource("ressources/image0046.jpg"));
-		temp = new ArrayList<Cell>();
+		tempList = new ArrayList<Cell>();
 	}
 
 	public ImageIcon scale(String source, int width, int height) {
@@ -393,7 +394,7 @@ public class Controller {
 		
 		setMapColor(unionMap);
 	}
-
+/*
 	public List<Cell> firstSortListCell(String typeName){
 		List<Cell> list_tmp =new ArrayList<Cell>();
 	//	System.out.println("type" + typeName);
@@ -408,7 +409,7 @@ public class Controller {
 		}
 		return list_tmp;
 	}
-
+*/
 	public Color stringToColor(String mrd){
 		if(mrd.equals("red")){
 			return Color.red;
@@ -447,7 +448,7 @@ public class Controller {
 		return Color.black;
 		}
 	} 
-	public void secondSortListCell(double valueBorderSup,
+/*	public void secondSortListCell(double valueBorderSup,
 			double valueBorderInf, double valueSphericitySup ,
 			double  valueSphericityInf , double valueAreaSup,
 			double valueAreaInf, String type,mxGraph graph) {
@@ -458,7 +459,7 @@ public class Controller {
 			System.out.println("area "+a.getArea_pxl());
 			System.out.println("border "+a.getBorder_Lenght_pxl());
 			System.out.println("sphe "+ a.getSphericity());
-			*/
+			
 				if (a.getBorder_Lenght_pxl() > valueBorderSup
 						&& a.getBorder_Lenght_pxl() < valueBorderInf &&
 						a.getArea_pxl() > valueAreaSup
@@ -483,7 +484,7 @@ public class Controller {
 		}
 		//return this.temp;
 	}
-
+*/
 	public void getMaxMin(List<Cell> list){
 	    for(int i=0; i<list.size(); i++){
 	    	//max
@@ -538,6 +539,83 @@ public class Controller {
 	long duration = endTime - startTime;
 	System.out.println("time duration "+duration*Math.pow(10,-9)+"s");
 	
+	}
+	public void sortListFromRequest(List<CellRequested> listRequest,mxGraph graph){
+		System.out.println("sort \n");
+		
+		/*
+		// debug
+		for (int i = 0; i < listRequest.size(); i++) {
+			System.out.println("element :" + listRequest.get(i).toString());
+		}*/
+		tempList = new ArrayList<Cell>();
+		for (CellRequested element : listRequest) {
+			
+			if (element.isSelected() == true) {
+				System.out.println("isSelected " + element.getName());
+				
+				for (Cell c : getListCells()) {
+					//System.out.println("c : " + c.toString());
+					System.out.println("element : " + element.toString());
+
+					if (((element.getName()).equals(c.getClass_name()))
+							&& (c.getArea_pxl() < element.getAreaInf())
+							&& (c.getArea_pxl() > element.getAreaSup())
+							&& (c.getSphericity() < element.getSphericityInf())
+							&& (c.getSphericity() > element.getSphericitySup())
+							&& (c.getBorder_Lenght_pxl() < element.getBorderInf())
+							&& (c.getBorder_Lenght_pxl() > element.getBorderSup())) {
+						//ajout dans la liste triée de l'element
+						getTempList().add(c);
+					}
+					if((element.getName()).equals("All Cells") 
+							&& (c.getArea_pxl() < element.getAreaInf())
+							&& (c.getArea_pxl() > element.getAreaSup())
+							&& (c.getSphericity() < element.getSphericityInf())
+							&& (c.getSphericity() > element.getSphericitySup())
+							&& (c.getBorder_Lenght_pxl() < element.getBorderInf())
+							&& (c.getBorder_Lenght_pxl() > element.getBorderSup())
+							){
+								//ajout dans la liste triée de l'element
+								getTempList().add(c);
+						
+					}
+					
+				}
+				
+
+			}
+		}
+	
+		
+		graph.getModel().beginUpdate();
+		try {
+			for (Cell c : getTempList()) {
+					graph.insertVertex(graph.getDefaultParent(),
+							null, c.getClass_name(), c.getInner_x() * 0.4,
+							c.getInner_y() * 0.4, 10, 10,
+							"shape=ellipse;per=ellipsePerimeter;fillColor="
+									+ getMapColor().get(c.getClass_name()));
+				}
+		} finally {
+			graph.getModel().endUpdate();
+		}
+	}
+	
+	public HashMap<String, Integer> giveMeInformations(){
+		HashMap<String, Integer > mp = new HashMap<String,Integer>();
+		int occurence = 0;
+
+			for(String key : getMapColor().keySet()){
+			occurence = 0;
+				for(Cell r : getListCells()){
+					if(r.getClass_name().equals(key)){
+						occurence = occurence + 1 ;
+					}
+				}
+			mp.put(key, occurence);
+			}
+		return mp;
 	}
 	
 	// Getter and Setter
@@ -613,12 +691,12 @@ public class Controller {
 		this.mapColor = m;
 	}
 
-	public List<Cell> getTemp() {
-		return temp;
+	public List<Cell> getTempList() {
+		return tempList;
 	}
 
-	public void setTemp(List<Cell> temp) {
-		this.temp = temp;
+	public void setTempList(List<Cell> temp) {
+		this.tempList = temp;
 	}
 	public double getMaxSphericity() {
 		return maxSphericity;
