@@ -552,7 +552,11 @@ public class Controller {
 			
 			if (element.isSelected() == true) {
 				System.out.println("isSelected " + element.getName());
-				
+				/*if(element.getName().equals("All Cells")){
+					for (Cell c : getListCells()) {
+						
+					}
+				}*/
 				for (Cell c : getListCells()) {
 					//System.out.println("c : " + c.toString());
 					System.out.println("element : " + element.toString());
@@ -567,6 +571,8 @@ public class Controller {
 						//ajout dans la liste triée de l'element
 						getTempList().add(c);
 					}
+				}
+				/*
 					if((element.getName()).equals("All Cells") 
 							&& (c.getArea_pxl() < element.getAreaInf())
 							&& (c.getArea_pxl() > element.getAreaSup())
@@ -579,12 +585,12 @@ public class Controller {
 								getTempList().add(c);
 						
 					}
-					
+					*/
 				}
 				
 
 			}
-		}
+		
 	
 		
 		graph.getModel().beginUpdate();

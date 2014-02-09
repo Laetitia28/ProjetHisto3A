@@ -1,12 +1,12 @@
-	package hg.hist.MVC;
-
-	import java.awt.BorderLayout;
+package hg.hist.MVC;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -16,7 +16,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
-	import javax.swing.AbstractButton;
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -32,20 +32,20 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-	
-	public class RequestFrameLaetitia extends JFrame implements ActionListener,
-			ChangeListener {
 		
-
+			
+public class RequestFrameLaetitia extends JFrame implements ActionListener,
+					ChangeListener {
+				
+		
 		private static final long serialVersionUID = 123456L;
-		
+			
 		private JLabel labelDisplayTypeCell = new JLabel("Choose cells to display");
 		private JLabel labelChooseType = new JLabel("Choose your Cellule type");
 		private JLabel labelSphericity = new JLabel("Choose your spherecity ");
 		private JLabel labelArea = new JLabel("Choose your area (pxl) ");
 		private JLabel labelBorder = new JLabel("Choose your border (pxl) ");
-
+		
 		private JPanel panelTotal = new JPanel();
 		
 		private JPanel paneCellDisplay = new JPanel();
@@ -57,25 +57,25 @@ import javax.swing.event.ChangeListener;
 		private JPanel paneBorderSup = new JPanel();
 		private JPanel paneBorderInf = new JPanel();
 		private JPanel paneEnd = new JPanel();
-
+		
 		private JButton btFinish = new JButton("Finish");
 		private JButton btApply = new JButton("Apply");
 		private JButton btClear = new JButton("Clear");
-
+		
 		private JSlider sliderSphericitySup ; 
 		private JSlider sliderSphericityInf ;
 		private JSlider sliderAreaSup ;
 		private JSlider sliderAreaInf ;
 		private JSlider sliderBorderSup ;
 		private JSlider sliderBorderInf;
-
+		
 		private JTextField sliderDisplaySphericitySup = new JTextField();
 		private JTextField sliderDisplaySphericityInf = new JTextField();
 		private JTextField sliderDisplayAreaSup = new JTextField();
 		private JTextField sliderDisplayAreaInf = new JTextField();
 		private JTextField sliderDisplayBorderSup = new JTextField();
 		private JTextField sliderDisplayBorderInf = new JTextField();
-
+		
 		private JPanel rubrique0 = new JPanel(new BorderLayout());
 		private JPanel rubrique1 = new JPanel(new BorderLayout());
 		private JPanel rubrique2 = new JPanel(new GridBagLayout());
@@ -83,36 +83,27 @@ import javax.swing.event.ChangeListener;
 		private JPanel rubrique4 = new JPanel(new GridBagLayout());
 		
 		private ButtonGroup groupButton = new ButtonGroup();
-		private JRadioButton btRadio_AllCell = new JRadioButton("All Cells", true);
-
-		private JCheckBox btCheck_AllCell = new JCheckBox("All Cells",true);
+		private JRadioButton btRadio_AllCell = new JRadioButton("All Cells");
 		
+		private JCheckBox btCheck_AllCell = new JCheckBox("All Cells");		
 		private List<JCheckBox> listCheckBox = new ArrayList<JCheckBox>();
-		
-	//	private List<CellRequested> listRequested = new ArrayList<CellRequested>();
 		private String radioSelected = "All Cells";
-	/*	
-		private double default_AreaSup;
-		private double default_AreaInf;
-		private double default_SphericitySup;
-		private double default_SphericityInf;
-		private double default_BorderSup ;
-		private double default_BorderInf ;
-		*/
 
+		
 		//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
 		private ControllerRequest contR;
 		
 		public RequestFrameLaetitia(ControllerRequest contR,double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder) 
 		{
-
+		
 			this.contR = contR;
 			
 			System.out.println("MaxParams \n"+ " Area : " + maxArea+ " Sphericity :" + maxSphericity+ " Border : " +maxBorder);
 			System.out.println("MinParams \n "+" Area : " + minArea+ " Sphericity :" + minSphericity+ " Border : " +minBorder);
 			
 			//Size of Frame
-			this.setSize(950, 600);
+			//this.setSize(950, 600);
+			this.setSize(500 , 561);
 			
 		// If value < 0 then this.slider not works , so change value
 		contR.setDefault_AreaSup(adaptValue(maxArea));
@@ -121,7 +112,7 @@ import javax.swing.event.ChangeListener;
 		contR.setDefault_SphericityInf(adaptValue(minSphericity));
 		contR.setDefault_BorderSup (adaptValue(maxBorder));
 		contR.setDefault_BorderInf (adaptValue(minBorder));
-
+		
 			System.out.println("Max default \n "+"Area : " + contR.getDefault_AreaSup()+ " Sphericity : " + contR.getDefault_SphericitySup()+ " Border : " +contR.getDefault_BorderSup());
 			System.out.println("Min defualt \n "+"Area : " + contR.getDefault_AreaInf()+ " Sphericity : " +contR.getDefault_SphericityInf()+ " Border : " +contR.getDefault_BorderInf());
 				
@@ -140,13 +131,13 @@ import javax.swing.event.ChangeListener;
 			this.add(panelTotal);
 			
 			// choisir la cellule
-
+		
 		//	this.rubrique0.setPreferredSize(new Dimention(1000,100));
 			this.rubrique0.setBackground(Color.GREEN);
 			
 		//	this.rubrique1.setPreferredSize(new Dimension(1000, 100));
 			this.rubrique1.setBackground(Color.RED);
-
+		
 			//put a line a separator
 			Border blackline = BorderFactory.createLineBorder(Color.black);
 			this.paneCellule.setBorder(blackline);
@@ -166,8 +157,10 @@ import javax.swing.event.ChangeListener;
 			
 			this.btCheck_AllCell.setName("All Cells");
 			this.listCheckBox.add(btCheck_AllCell);
+			this.btCheck_AllCell.addActionListener(this);
 			this.paneCellDisplay.add(btCheck_AllCell);
-
+			
+		
 			
 			this.groupButton.add(btRadio_AllCell);			
 			this.paneCellule.add(btRadio_AllCell);
@@ -199,7 +192,7 @@ import javax.swing.event.ChangeListener;
 			gc.weightx = 3 ;
 			gc.weighty = 1 ;
 			this.paneAreaSup.setBackground(Color.ORANGE);
-		//	this.paneAreaSup.setPreferredSize(new Dimension(600, 50));
+			this.paneAreaSup.setPreferredSize(new Dimension(435, 60));
 			
 			
 			this.paneAreaInf.setLayout(new GridBagLayout());
@@ -207,8 +200,8 @@ import javax.swing.event.ChangeListener;
 			gcAreaInf.weightx = 3 ;
 			gcAreaInf.weighty = 1 ;
 			this.paneAreaInf.setBackground(Color.ORANGE);
-		//	this.paneAreaInf.setPreferredSize(new Dimension(600, 50));
-
+			this.paneAreaInf.setPreferredSize(new Dimension(435, 60));
+		
 			
 			//Area
 			//Sup
@@ -220,7 +213,7 @@ import javax.swing.event.ChangeListener;
 			this.sliderDisplayAreaInf.setText("Value");
 			this.sliderDisplayAreaInf.setPreferredSize(new Dimension(50, 45));
 			this.sliderDisplayAreaInf.setForeground(Color.BLUE);
-
+		
 			//Sup
 			Dimension d = this.sliderAreaSup.getPreferredSize();  
 			this.sliderAreaSup.setPreferredSize(new Dimension(d.width+200,d.height+30)); 	
@@ -228,18 +221,18 @@ import javax.swing.event.ChangeListener;
 			this.sliderAreaSup.setMinorTickSpacing(100);
 			this.sliderAreaSup.setPaintTicks(true);
 			this.sliderAreaSup.setPaintLabels(true);
-
+		
 			//Inf
 			this.sliderAreaInf.setPreferredSize(new Dimension(this.sliderAreaInf.getPreferredSize().width+200,this.sliderAreaInf.getPreferredSize().height+30)); 
 			this.sliderAreaInf.setMajorTickSpacing(1000);
 			this.sliderAreaInf.setMinorTickSpacing(100);
 			this.sliderAreaInf.setPaintTicks(true);
 			this.sliderAreaInf.setPaintLabels(true);
-
+		
 			//Listener
 			this.sliderAreaSup.addChangeListener(this);
 			this.sliderAreaInf.addChangeListener(this);
-
+		
 			this.sliderDisplayAreaSup.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent ke) {
@@ -280,7 +273,10 @@ import javax.swing.event.ChangeListener;
 			gc.gridwidth = 1;
 			this.paneAreaSup.add(this.sliderAreaSup,gc);
 			
-			gc.gridx = 2;
+			gc.fill = GridBagConstraints.BOTH;
+		
+			gc.weightx = 0.7 ;
+			gc.gridx = 3;
 			gc.gridy = 1 ; 
 			this.paneAreaSup.add(this.sliderDisplayAreaSup,gc);
 			
@@ -299,25 +295,34 @@ import javax.swing.event.ChangeListener;
 			gcAreaInf.gridwidth = 1;
 			this.paneAreaInf.add(this.sliderAreaInf,gcAreaInf);
 			
-			gcAreaInf.gridx = 2;
+			gcAreaInf.fill = GridBagConstraints.BOTH;
+			gcAreaInf.weightx = 0.7;
+			gcAreaInf.gridx = 3;
 			gcAreaInf.gridy = 1 ; 
 			this.paneAreaInf.add(this.sliderDisplayAreaInf,gcAreaInf);
 			
-
+		
 			//this.rubrique 2 
 			GridBagConstraints contraintes = new GridBagConstraints();
 			contraintes.fill = GridBagConstraints.BOTH;
 			contraintes.insets = new Insets(5, 5, 5, 5);
-
+		
 			contraintes.ipady=contraintes.anchor=GridBagConstraints.CENTER;;
 			contraintes.weightx = 2;
 			contraintes.weighty = 2;
-			
+			//contraintes.weightx = 1;
+			//contraintes.weighty = 3;
+		/*
+			contraintes.gridx = 0;
+			contraintes.gridy = 0;
+			contraintes.gridwidth = 1;
+			*/
 			contraintes.gridx = 0;
 			contraintes.gridy = 0;
 			contraintes.gridwidth = 2;
 			contraintes.anchor = GridBagConstraints.NORTH;
-			
+			contraintes.fill = GridBagConstraints.BOTH;
+
 			this.rubrique2.add(this.labelArea,contraintes);
 			
 			contraintes.fill = GridBagConstraints.BOTH;
@@ -325,17 +330,20 @@ import javax.swing.event.ChangeListener;
 			contraintes.gridy = 1;
 			contraintes.gridwidth = 1;
 			this.rubrique2.add(this.paneAreaSup,contraintes);
-			
+			/*
+			contraintes.gridx = 0;
+			contraintes.gridy = 2;
+			*/
 			contraintes.gridx = 1;
 			contraintes.gridy = 1;
 			contraintes.gridwidth = 1;
 			this.rubrique2.add(this.paneAreaInf,contraintes);
-
+		
 			// RUBRIQUE 3 Shpericity
-
+		
 			//this.rubrique3.setPreferredSize(new Dimension(1100, 100));
 			this.rubrique3.setBackground(Color.YELLOW);
-
+		
 			//sup
 			this.paneSphereSup.setLayout(new GridBagLayout());
 			GridBagConstraints gcSphericitySup = new GridBagConstraints();
@@ -351,7 +359,7 @@ import javax.swing.event.ChangeListener;
 			gcSphericityInf.weighty = 1 ;
 			this.paneSphereInf.setBackground(Color.GREEN);
 			//this.paneSphereInf.setPreferredSize(new Dimension(600, 50));
-
+		
 			
 			//sphericity
 			//Sup
@@ -363,7 +371,7 @@ import javax.swing.event.ChangeListener;
 			this.sliderDisplaySphericityInf.setText("Value");
 			this.sliderDisplaySphericityInf.setPreferredSize(new Dimension(50, 45));
 			this.sliderDisplaySphericityInf.setForeground(Color.BLUE);
-
+		
 			
 			//Sup
 			this.sliderSphericitySup.setPreferredSize(new Dimension(this.sliderSphericitySup.getPreferredSize().width+200,this.sliderSphericitySup.getPreferredSize().height+30));
@@ -371,18 +379,18 @@ import javax.swing.event.ChangeListener;
 			this.sliderSphericitySup.setMinorTickSpacing(10);
 			this.sliderSphericitySup.setPaintTicks(true);
 			this.sliderSphericitySup.setPaintLabels(true);
-
+		
 			//Inf
 			this.sliderSphericityInf.setPreferredSize(new Dimension(this.sliderSphericityInf.getPreferredSize().width+200,this.sliderSphericityInf.getPreferredSize().height+30));
 			this.sliderSphericityInf.setMajorTickSpacing(50);
 			this.sliderSphericityInf.setMinorTickSpacing(10);	
 			this.sliderSphericityInf.setPaintTicks(true);
 			this.sliderSphericityInf.setPaintLabels(true);
-
+		
 			//Listeners
 			this.sliderSphericityInf.addChangeListener(this);
 			this.sliderSphericitySup.addChangeListener(this);
-
+		
 			this.sliderDisplaySphericitySup.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent ke) {
@@ -407,7 +415,7 @@ import javax.swing.event.ChangeListener;
 					sliderSphericityInf.setValue(value);
 				}
 			});
-
+		
 			//Sup
 					gcSphericitySup.anchor = GridBagConstraints.LINE_START;					
 					gcSphericitySup.fill = GridBagConstraints.HORIZONTAL;
@@ -448,12 +456,12 @@ import javax.swing.event.ChangeListener;
 					gcSphericityInf.gridy = 1; 
 					this.paneSphereInf.add(this.sliderDisplaySphericityInf,gcSphericityInf);
 					
-
+		
 					//this.rubrique 2 
 					GridBagConstraints contraintesSphericity = new GridBagConstraints();
 					contraintesSphericity.fill = GridBagConstraints.BOTH;
 					contraintesSphericity.insets = new Insets(5, 5, 5, 5);
-
+		
 					contraintesSphericity.ipady=contraintesSphericity.anchor=GridBagConstraints.CENTER;;
 					contraintesSphericity.weightx = 2;
 					contraintesSphericity.weighty = 2;
@@ -463,7 +471,7 @@ import javax.swing.event.ChangeListener;
 					contraintesSphericity.gridwidth = 2;
 					contraintesSphericity.anchor = GridBagConstraints.NORTH;
 				    String j =10+"<sup>-4</sup>";
-
+		
 					this.labelSphericity.setText("<html>"+ this.labelSphericity.getText()+" (" + j+" pxl ) </html>");
 					this.rubrique3.add(this.labelSphericity,contraintesSphericity);
 					
@@ -477,27 +485,27 @@ import javax.swing.event.ChangeListener;
 					contraintesSphericity.gridy = 1;
 					contraintesSphericity.gridwidth = 1;
 					this.rubrique3.add(this.paneSphereInf,contraintesSphericity);
-
+		
 			// RuBRIQUE 4 
 			//Border
-
+		
 			//this.rubrique4.setPreferredSize(new Dimension(1100, 100));
 			this.rubrique4.setBackground(Color.YELLOW);
-
+		
 			this.paneBorderSup.setLayout(new GridBagLayout());
 			GridBagConstraints gcBorderSup  = new GridBagConstraints();
 			gcBorderSup.weightx = 3;
-			gcBorderSup.weightx = 1;
+			gcBorderSup.weighty = 1;
 			this.paneBorderSup.setBackground(Color.BLUE);
 			//this.paneBorderSup.setPreferredSize(new Dimension(600, 50));
 			
 			this.paneBorderInf.setLayout(new GridBagLayout());
 			GridBagConstraints gcBorderInf  = new GridBagConstraints();
 			gcBorderInf.weightx = 3;
-			gcBorderInf.weightx = 1;
+			gcBorderInf.weighty = 1;
 			this.paneBorderInf.setBackground(Color.white);
 			//this.paneBorderInf.setPreferredSize(new Dimension(600, 50));
-
+		
 			//Border 
 			//Sup
 			this.sliderDisplayBorderSup.setText("Value");
@@ -508,25 +516,25 @@ import javax.swing.event.ChangeListener;
 			this.sliderDisplayBorderInf.setText("Value");
 			this.sliderDisplayBorderInf.setPreferredSize(new Dimension(50, 45));
 			this.sliderDisplayBorderInf.setForeground(Color.BLUE);
-
+		
 			//Sup
 			this.sliderBorderSup.setPreferredSize(new Dimension(this.sliderBorderSup.getPreferredSize().width+200,this.sliderBorderSup.getPreferredSize().height+30));
 			this.sliderBorderSup.setMajorTickSpacing(50);
 			this.sliderBorderSup.setMinorTickSpacing(10);
 			this.sliderBorderSup.setPaintTicks(true);
 			this.sliderBorderSup.setPaintLabels(true);
-
+		
 			//Inf
 			this.sliderBorderInf.setPreferredSize(new Dimension(this.sliderBorderInf.getPreferredSize().width+200,this.sliderBorderInf.getPreferredSize().height+30));
 			this.sliderBorderInf.setMajorTickSpacing(50);
 			this.sliderBorderInf.setMinorTickSpacing(10);
 			this.sliderBorderInf.setPaintTicks(true);
 			this.sliderBorderInf.setPaintLabels(true);
-
+		
 			//Listener
 			this.sliderBorderSup.addChangeListener(this);
 			this.sliderBorderInf.addChangeListener(this);
-
+		
 			this.sliderDisplayBorderSup.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent ke) {
@@ -539,7 +547,7 @@ import javax.swing.event.ChangeListener;
 					sliderBorderSup.setValue(value);
 				}
 			});
-
+		
 			this.sliderDisplayBorderInf.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent ke) {
@@ -552,22 +560,26 @@ import javax.swing.event.ChangeListener;
 					sliderBorderInf.setValue(value);
 				}
 			});
-
+		
 					//Sup
 			gcBorderSup.anchor = GridBagConstraints.LINE_START;					
 			gcBorderSup.fill = GridBagConstraints.HORIZONTAL;
 			gcBorderSup.gridx = 0;
 			gcBorderSup.gridy = 0 ; 
+			gcBorderSup.gridwidth = 1 ;
 			this.paneBorderSup.add(new JLabel("Superior"),gcBorderSup);
 			
 										
 					gcBorderSup.fill = GridBagConstraints.HORIZONTAL;
 					gcBorderSup.gridx = 0;
 					gcBorderSup.gridy = 1 ; 
+					gcBorderSup.gridwidth = 1 ;
+		
 					this.paneBorderSup.add(this.sliderBorderSup,gcBorderSup);
-					
-					gcBorderSup.gridx = 2;
+					gcBorderSup.fill = GridBagConstraints.BOTH;
+					gcBorderSup.gridx = 3;
 					gcBorderSup.gridy = 1 ; 
+					gcBorderSup.weightx= 0.7;
 					this.paneBorderSup.add(this.sliderDisplayBorderSup,gcBorderSup);
 					
 					//Inf
@@ -576,25 +588,27 @@ import javax.swing.event.ChangeListener;
 					gcBorderInf.fill = GridBagConstraints.HORIZONTAL;
 					gcBorderInf.gridx = 0;
 					gcBorderInf.gridy = 0 ; 
+					gcBorderInf.gridwidth = 1;
 					this.paneBorderInf.add(new JLabel("Inferior"),gcBorderInf);
 					
 					
 					gcBorderInf.fill = GridBagConstraints.HORIZONTAL;
 					gcBorderInf.gridx = 0;
 					gcBorderInf.gridy = 1 ;
-					gcBorderInf.weightx=1;
-
+					gcBorderInf.gridwidth = 1;
+		
 					this.paneBorderInf.add(this.sliderBorderInf,gcBorderInf);
-					
-					gcBorderInf.gridx = 2;
-					gcBorderInf.gridy = 1;							; 
+					gcBorderInf.fill = GridBagConstraints.BOTH;
+					gcBorderInf.weightx = 0.7;
+					gcBorderInf.gridx = 3;
+					gcBorderInf.gridy = 1; 
 					this.paneBorderInf.add(this.sliderDisplayBorderInf,gcBorderInf);
 					
 					//this.rubrique 4 
 					GridBagConstraints contraintesBorder = new GridBagConstraints();
 					contraintesBorder.fill = GridBagConstraints.BOTH;
 					contraintesBorder.insets = new Insets(5, 5, 5, 5);
-
+		
 					contraintesBorder.ipady=contraintesBorder.anchor=GridBagConstraints.CENTER;;
 					contraintesBorder.weightx = 2;
 					contraintesBorder.weighty = 2;
@@ -618,7 +632,7 @@ import javax.swing.event.ChangeListener;
 					
 			this.paneEnd.setPreferredSize(new Dimension(900, 100));
 			this.paneEnd.setBackground(Color.white);
-
+		
 			btFinish.addActionListener(this);
 			btApply.addActionListener(this);
 			btClear.addActionListener(this);
@@ -627,10 +641,13 @@ import javax.swing.event.ChangeListener;
 			this.paneEnd.add(btFinish, BorderLayout.WEST);
 			this.paneEnd.add(btApply, BorderLayout.WEST);
 			this.paneEnd.add(btClear, BorderLayout.WEST);
-
+		
 			JSeparator p = new JSeparator(SwingConstants.HORIZONTAL);
 			p.setBackground(Color.BLACK);
 			p.setPreferredSize(new Dimension(p.getWidth()+100, p.getHeight()+20));
+			
+			GridLayout experimentLayout = new GridLayout(6,0);
+			this.panelTotal.setLayout(experimentLayout);
 			
 			this.panelTotal.add(this.rubrique0);
 			this.panelTotal.add(this.rubrique1);
@@ -640,10 +657,15 @@ import javax.swing.event.ChangeListener;
 			//this.panelTotal.add(p,BorderLayout);
 			this.panelTotal.add(this.paneEnd);
 		}
-
+		
 		public void stateChanged(ChangeEvent event) {
 			// this.sliderBorderSup
 			if (event.getSource() == this.sliderBorderSup) {
+		
+				Rectangle r = paneAreaInf.getBounds();
+		System.out.println("h"+ r.height);
+		System.out.println("w" + r.width);
+		
 				this.sliderDisplayBorderSup.setText(String.valueOf(this.sliderBorderSup.getValue()));
 				System.out.println("BorderSup : "+ String.valueOf(this.sliderBorderSup.getValue()));
 				System.out.println("radioSelected : "+ getRadioSelected());
@@ -664,7 +686,7 @@ import javax.swing.event.ChangeListener;
 						contR.getListRequested().get(i).setBorderInf(Double.valueOf(this.sliderBorderInf.getValue()));
 					}
 				}
-
+		
 			}
 			
 			// SliderSphericitySup
@@ -672,7 +694,7 @@ import javax.swing.event.ChangeListener;
 				
 				double a = this.sliderSphericitySup.getValue()*0.001;
 				System.out.println("a"+ a);
-
+		
 				this.sliderDisplaySphericitySup.setText(String.valueOf(String.valueOf(Math.floor(a*1e2)/1e2)));
 				System.out.println("SphéericitySup : "+ String.valueOf(String.valueOf(Math.floor(a*1e2)/1e2)));
 			
@@ -682,8 +704,8 @@ import javax.swing.event.ChangeListener;
 						contR.getListRequested().get(i).setSphericitySup(Double.valueOf(this.sliderSphericitySup.getValue())*0.001);
 					}
 				}
-
-
+		
+		
 			}
 			// SliderSphericityInf
 			if (event.getSource() == this.sliderSphericityInf) {
@@ -700,10 +722,10 @@ import javax.swing.event.ChangeListener;
 					}
 				}
 			}
-
+		
 			// SliderAreaSup
 			if (event.getSource() == this.sliderAreaSup) {
-
+		
 				this.sliderDisplayAreaSup.setText(String.valueOf(this.sliderAreaSup.getValue()));
 				System.out.println("AreaSup : "+ String.valueOf(this.sliderAreaSup.getValue()));
 					
@@ -716,7 +738,7 @@ import javax.swing.event.ChangeListener;
 			}
 			// SlierAreaInf
 			if (event.getSource() == this.sliderAreaInf) {
-
+		
 				this.sliderDisplayAreaInf.setText(String.valueOf(this.sliderAreaInf.getValue()));
 				System.out.println("AreaInf : "+ String.valueOf(this.sliderAreaInf.getValue()));
 				
@@ -728,16 +750,31 @@ import javax.swing.event.ChangeListener;
 				}
 				
 			}
-
+		
 		}
-
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == btCheck_AllCell){
+				System.out.println("all check");
+				
+				Enumeration<AbstractButton> elements = this.groupButton.getElements();
+				while (elements.hasMoreElements()) {
+					AbstractButton button = (AbstractButton) elements.nextElement();
+					button.setEnabled(false);
+				}
+				btRadio_AllCell.setEnabled(true);
+				for(JCheckBox ch : listCheckBox){
+					ch.setSelected(false);
+				}
+				btCheck_AllCell.setSelected(true);
+
+			}
 			if (e.getSource() == btFinish) {
 				System.out.println("It is finish ! RequestFrame");
 				
 				this.btRadio_AllCell.setSelected(true);
-				this.btCheck_AllCell.setSelected(true);
+				//this.btCheck_AllCell.setSelected(true);
 					
 				this.sliderAreaInf.setValue((int)contR.getDefault_AreaSup());
 				this.sliderAreaSup.setValue((int)contR.getDefault_AreaInf());
@@ -745,7 +782,7 @@ import javax.swing.event.ChangeListener;
 				this.sliderBorderSup.setValue((int)contR.getDefault_BorderInf());
 				this.sliderSphericityInf.setValue((int)contR.getDefault_SphericitySup());
 				this.sliderSphericitySup.setValue((int)contR.getDefault_SphericityInf());
-
+		
 				this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(contR.getDefault_AreaInf()*1e2)/1e2));
 				this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(contR.getDefault_AreaSup()*1e2)/1e2));
 				this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(contR.getDefault_BorderSup()*1e2)/1e2));
@@ -766,19 +803,19 @@ import javax.swing.event.ChangeListener;
 				for(JCheckBox ch :  listCheckBox){
 					ch.setSelected(false);
 				}
-				this.btCheck_AllCell.setSelected(true);
-
+				//this.btCheck_AllCell.setSelected(true);
+		
 				//clear list with paramast
 				for(CellRequested cr : contR.getListRequested()){
 					cr.setAreaInf(contR.getDefault_AreaSup());
 					cr.setAreaSup(contR.getDefault_AreaInf());
-
+		
 					cr.setBorderInf(contR.getDefault_BorderSup());
 					cr.setBorderSup(contR.getDefault_BorderInf());
-
+		
 					cr.setSphericityInf(contR.getDefault_SphericitySup()*0.001);
 					cr.setSphericitySup(contR.getDefault_SphericityInf()*0.001);
-
+		
 				}
 				
 				for(int i = 0 ;i<contR.getListRequested().size() ; i++){
@@ -790,7 +827,7 @@ import javax.swing.event.ChangeListener;
 				this.sliderBorderSup.setValue((int)contR.getDefault_BorderInf());
 				this.sliderSphericityInf.setValue((int)contR.getDefault_SphericitySup());
 				this.sliderSphericitySup.setValue((int)contR.getDefault_SphericityInf());
-
+		
 				this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(contR.getDefault_AreaInf()*1e2)/1e2));
 				this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(contR.getDefault_AreaSup()*1e2)/1e2));
 				this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(contR.getDefault_BorderSup()*1e2)/1e2));
@@ -803,10 +840,10 @@ import javax.swing.event.ChangeListener;
 				
 			}
 		
-
+		
 			if (e.getSource() == btApply) {
 				System.out.println("It is apply from RequestFram !");
-
+		
 			
 			//debug
 			for(int i = 0 ; i<contR.getListRequested().size();i++){
@@ -817,15 +854,15 @@ import javax.swing.event.ChangeListener;
 			}
 			
 		}
-
+		
 		class StateListener implements ActionListener {
-
+		
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("Cellule : "+ ((JRadioButton) e.getSource()).getText());
 				
 				setRadioSelected(((JRadioButton) e.getSource()).getText());
-
+		
 				
 				for(CellRequested cr : contR.getListRequested()){
 					if(cr.getName().equals(getRadioSelected())){
@@ -868,7 +905,7 @@ import javax.swing.event.ChangeListener;
 			}
 		}
 		public void init(double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder,HashMap<String, String> mapForRadioButton){
-
+		
 		// If value < 0 then this.slider not works , so change value
 		contR.setDefault_AreaSup(adaptValue(maxArea));
 		contR.setDefault_AreaInf(adaptValue(minArea));
@@ -876,45 +913,45 @@ import javax.swing.event.ChangeListener;
 		contR.setDefault_SphericityInf(adaptValue(minSphericity));
 		contR.setDefault_BorderSup(adaptValue(maxBorder));
 		contR.setDefault_BorderInf(adaptValue(minBorder));
-
+		
 		
 		this.sliderSphericityInf.setMaximum((int) contR.getDefault_SphericitySup());
 		this.sliderSphericityInf.setMinimum((int) contR.getDefault_SphericityInf());
 		this.sliderSphericityInf.setValue((int) contR.getDefault_SphericitySup());
 		this.sliderSphericityInf.setMajorTickSpacing(50);
 		this.sliderSphericityInf.setMinorTickSpacing(10);
-
+		
 		this.sliderSphericitySup.setMaximum((int) contR.getDefault_SphericitySup());
 		this.sliderSphericitySup.setMinimum((int) contR.getDefault_SphericityInf());
 		this.sliderSphericitySup.setValue((int) contR.getDefault_SphericityInf());
 		this.sliderSphericitySup.setMajorTickSpacing(50);
 		this.sliderSphericitySup.setMinorTickSpacing(10);
-
+		
 		this.sliderAreaInf.setMaximum((int) contR.getDefault_AreaSup());
 		this.sliderAreaInf.setMinimum((int) contR.getDefault_AreaInf());
 		this.sliderAreaInf.setValue((int) contR.getDefault_AreaSup());
 		this.sliderAreaInf.setMajorTickSpacing(1000);
 		this.sliderAreaInf.setMinorTickSpacing(100);
-
+		
 		this.sliderAreaSup.setMaximum((int) contR.getDefault_AreaSup());
 		this.sliderAreaSup.setMinimum((int) contR.getDefault_AreaInf());
 		this.sliderAreaSup.setValue((int) contR.getDefault_AreaInf());
 		this.sliderAreaSup.setMajorTickSpacing(1000);
 		this.sliderAreaSup.setMinorTickSpacing(100);
-
+		
 		this.sliderBorderInf.setMaximum((int) contR.getDefault_BorderSup());
 		this.sliderBorderInf.setMinimum((int) contR.getDefault_BorderInf());
 		this.sliderBorderInf.setValue((int) contR.getDefault_BorderSup());
 		this.sliderBorderInf.setMajorTickSpacing(50);
 		this.sliderBorderInf.setMinorTickSpacing(10);
-
+		
 		this.sliderBorderSup.setMaximum((int) contR.getDefault_BorderSup());
 		this.sliderBorderSup.setMinimum((int) contR.getDefault_BorderInf());
 		this.sliderBorderSup.setValue((int) contR.getDefault_BorderInf());
 		this.sliderBorderSup.setMajorTickSpacing(50);
 		this.sliderBorderSup.setMinorTickSpacing(10);
-
-
+		
+		
 		this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(contR.getDefault_AreaInf()*1e2)/1e2));
 		this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(contR.getDefault_AreaSup()*1e2)/1e2));
 		this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(contR.getDefault_BorderSup()*1e2)/1e2));
@@ -924,7 +961,7 @@ import javax.swing.event.ChangeListener;
 		
 		System.out.println("Init max : " + maxArea + " S :" + maxSphericity	+ " B : " + maxBorder);
 		System.out.println("Init min : " + minArea + " S :" + minSphericity + " B : " + minBorder);
-
+		
 		// Bouttons radios
 		// delete all buttons in GroupButton
 		Enumeration<AbstractButton> elements = this.groupButton.getElements();
@@ -946,14 +983,14 @@ import javax.swing.event.ChangeListener;
 		this.paneCellDisplay.removeAll();
 		
 		
-		// Recreate buttons in listCheckBox
-		btCheck_AllCell.setSelected(true);
+		// Recreate btCheck_AllCell in listCheckBox
+		//btCheck_AllCell.setSelected(true);
 		btCheck_AllCell.setName("All Cells");
 		listCheckBox.add(btCheck_AllCell);
 		this.paneCellDisplay.add(btCheck_AllCell);
-
+		
 		// Recreate buttons in this.groupButton
-		btRadio_AllCell.setSelected(true);
+		//btRadio_AllCell.setSelected();
 		this.groupButton.add(btRadio_AllCell);
 		this.paneCellule.add(btRadio_AllCell);
 		
@@ -966,11 +1003,30 @@ import javax.swing.event.ChangeListener;
 			this.paneCellule.add(btRadio_Map);
 			
 			System.out.println("key_btCheck : " + key_radio);
-			JCheckBox btCheck_Map = new JCheckBox(key_radio);
+			final JCheckBox btCheck_Map = new JCheckBox(key_radio);
 			btCheck_Map.setName(key_radio);
+			btCheck_Map.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(btCheck_Map.isSelected()){
+						
+						Enumeration<AbstractButton> elements = groupButton.getElements();
+						while (elements.hasMoreElements()) {
+							AbstractButton button = (AbstractButton) elements.nextElement();
+							button.setEnabled(true);
+						}
+						//btRadio_AllCell.setEnabled(false);
+						//btCheck_AllCell.setEnabled(false);
+						btRadio_AllCell.setSelected(false);
+						btCheck_AllCell.setSelected(false);
+						
+					}
+				}
+			});
 			this.paneCellDisplay.add(btCheck_Map);
 			listCheckBox.add(btCheck_Map);
-
+		
 		}
 		this.rubrique1.add(this.paneCellule);
 		this.rubrique0.add(this.paneCellDisplay);
@@ -995,49 +1051,49 @@ import javax.swing.event.ChangeListener;
 		}
 		
 		setRadioSelected("All Cells");
+			
+		}
 		
-	}
-
-		public double adaptValue(double e){
-			if(e<1){
-				e = e *1000;
+			public double adaptValue(double e){
+				if(e<1){
+					e = e *1000;
+				}
+				return e;
 			}
-			return e;
-		}
+			
+			public JButton getBtApply() {
+				return btApply;
+			}
 		
-		public JButton getBtApply() {
-			return btApply;
+			public JButton getBtClear() {
+				return btClear;
+			}
+		
+			public void setBtClear(JButton btClear) {
+				this.btClear = btClear;
+			}
+			public String getRadioSelected() {
+				return radioSelected;
+			}
+			public void setRadioSelected(String radioSelected) {
+				this.radioSelected = radioSelected;
+			}
+		
+		
+			public JButton getBtFinish() {
+				return btFinish;
+			}
+		
+			public void setBtFinish(JButton btFinish) {
+				this.btFinish = btFinish;
+			}
+		
+			public ControllerRequest getContR() {
+				return contR;
+			}
+		
+			public void setContR(ControllerRequest contR) {
+				this.contR = contR;
+			}
+		
 		}
-
-		public JButton getBtClear() {
-			return btClear;
-		}
-
-		public void setBtClear(JButton btClear) {
-			this.btClear = btClear;
-		}
-		public String getRadioSelected() {
-			return radioSelected;
-		}
-		public void setRadioSelected(String radioSelected) {
-			this.radioSelected = radioSelected;
-		}
-
-
-		public JButton getBtFinish() {
-			return btFinish;
-		}
-
-		public void setBtFinish(JButton btFinish) {
-			this.btFinish = btFinish;
-		}
-
-		public ControllerRequest getContR() {
-			return contR;
-		}
-
-		public void setContR(ControllerRequest contR) {
-			this.contR = contR;
-		}
-
-	}
