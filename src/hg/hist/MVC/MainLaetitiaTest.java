@@ -1,6 +1,5 @@
 package hg.hist.MVC;
 
-import java.awt.Dimension;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -10,8 +9,9 @@ public class MainLaetitiaTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-	
-		RequestFrameLaetitia  frame2 = new RequestFrameLaetitia(10079,0.765,580,626,0.391,128);
+		ControllerRequest contR= new ControllerRequest();
+
+		RequestFrameLaetitia  frame2 = new RequestFrameLaetitia(contR,10079,0.765,580,626,0.391,128);
 		//frame2.setPreferredSize(new Dimension(600, 300));
 		HashMap<String,String> mp = new HashMap<String, String>();
 		mp.put("Tumor nucleus", "red");

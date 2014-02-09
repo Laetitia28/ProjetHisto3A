@@ -85,7 +85,7 @@ public class RequestFram extends JFrame implements ActionListener,
 	private JPanel rubrique2 = new JPanel(new GridBagLayout());
 	private JPanel rubrique3 = new JPanel(new GridBagLayout());
 	private JPanel rubrique4 = new JPanel(new GridBagLayout());
-	private JPanel rubrique5 = new JPanel(new GridBagLayout());
+	//private JPanel rubrique5 = new JPanel(new GridBagLayout());
 	
 	private ButtonGroup groupButton = new ButtonGroup();
 
