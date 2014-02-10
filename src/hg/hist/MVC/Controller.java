@@ -404,22 +404,7 @@ public class Controller {
 		
 		setMapColor(unionMap);
 	}
-/*
-	public List<Cell> firstSortListCell(String typeName){
-		List<Cell> list_tmp =new ArrayList<Cell>();
-	//	System.out.println("type" + typeName);
-		for(Cell a : getListCells()){
-			//System.out.println(a.getClass_name());
-			if(a.getClass_name().equals(typeName)){
-				list_tmp.add(a);
-			}
-		}
-		if(list_tmp.isEmpty()){
-			list_tmp = getListCells();
-		}
-		return list_tmp;
-	}
-*/
+
 	public Color stringToColor(String mrd){
 		if(mrd.equals("red")){
 			return Color.red;
@@ -457,44 +442,7 @@ public class Controller {
 		else {
 		return Color.black;
 		}
-	} 
-/*	public void secondSortListCell(double valueBorderSup,
-			double valueBorderInf, double valueSphericitySup ,
-			double  valueSphericityInf , double valueAreaSup,
-			double valueAreaInf, String type,mxGraph graph) {
-		
-		for (Cell a : firstSortListCell(type)) {
-			//debug
-			/*
-			System.out.println("area "+a.getArea_pxl());
-			System.out.println("border "+a.getBorder_Lenght_pxl());
-			System.out.println("sphe "+ a.getSphericity());
-			
-				if (a.getBorder_Lenght_pxl() > valueBorderSup
-						&& a.getBorder_Lenght_pxl() < valueBorderInf &&
-						a.getArea_pxl() > valueAreaSup
-						&& a.getArea_pxl() < valueAreaInf &&
-						a.getSphericity() > valueSphericitySup
-						&& a.getSphericity() < valueSphericityInf) {					
-					this.temp.add(a);
-					System.out.println("I add in finale list");
-				}				
-		}
-		graph.getModel().beginUpdate();
-		try {
-			for (Cell c : this.temp) {
-					graph.insertVertex(graph.getDefaultParent(),
-							null, c.getClass_name(), c.getInner_x() * 0.4,
-							c.getInner_y() * 0.4, 10, 10,
-							"shape=ellipse;per=ellipsePerimeter;fillColor="
-									+ getMapColor().get(c.getClass_name()));
-				}
-		} finally {
-			graph.getModel().endUpdate();
-		}
-		//return this.temp;
 	}
-*/
 	public void getMaxMin(List<Cell> list){
 	    for(int i=0; i<list.size(); i++){
 	    	//max
@@ -519,6 +467,9 @@ public class Controller {
 	        	setMinArea(list.get(i).getArea_pxl());
 	        }
 	    }
+	    System.out.println("min" + minArea + ":"+ minBorder + ":"+minSphericity);
+	    System.out.println("max" + maxArea + ":"+ maxBorder + ":"+maxSphericity);
+
 	    
 	}
 	
@@ -566,12 +517,12 @@ public class Controller {
 			for (Cell c : getListCells()) {
 				for (CellRequested element : listRequest) {
 					if (((element.getName()).equals(c.getClass_name()))
-							&& (c.getArea_pxl() < element.getAreaInf())
-							&& (c.getArea_pxl() > element.getAreaSup())
-							&& (c.getSphericity() < element.getSphericityInf())
-							&& (c.getSphericity() > element.getSphericitySup())
-							&& (c.getBorder_Lenght_pxl() < element.getBorderInf())
-							&& (c.getBorder_Lenght_pxl() > element.getBorderSup())) {
+							&& (c.getArea_pxl() <= element.getAreaInf())
+							&& (c.getArea_pxl() >= element.getAreaSup())
+							&& (c.getSphericity() <= element.getSphericityInf())
+							&& (c.getSphericity() >= element.getSphericitySup())
+							&& (c.getBorder_Lenght_pxl() <= element.getBorderInf())
+							&& (c.getBorder_Lenght_pxl() >= element.getBorderSup())) {
 									// ajout dans la liste triée de l'element
 									getTempList().add(c);
 					}
@@ -590,12 +541,12 @@ public class Controller {
 						// System.out.println("element : " + element.toString());
 
 						if (((element.getName()).equals(c.getClass_name()))
-								&& (c.getArea_pxl() < element.getAreaInf())
-								&& (c.getArea_pxl() > element.getAreaSup())
-								&& (c.getSphericity() < element.getSphericityInf())
-								&& (c.getSphericity() > element.getSphericitySup())
-								&& (c.getBorder_Lenght_pxl() < element.getBorderInf())
-								&& (c.getBorder_Lenght_pxl() > element.getBorderSup())) {
+								&& (c.getArea_pxl() <= element.getAreaInf())
+								&& (c.getArea_pxl() >= element.getAreaSup())
+								&& (c.getSphericity() <= element.getSphericityInf())
+								&& (c.getSphericity() >= element.getSphericitySup())
+								&& (c.getBorder_Lenght_pxl() <= element.getBorderInf())
+								&& (c.getBorder_Lenght_pxl() >= element.getBorderSup())) {
 									// ajout dans la liste triée de l'element
 									getTempList().add(c);
 						}
@@ -650,25 +601,17 @@ public class Controller {
 		return color;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
-	}
 
 	public String getImg_default() {
 		return img_default;
 	}
 
-	public void setImg_default(String img_default) {
-		this.img_default = img_default;
-	}
 
 	public String getPath_excel_default() {
 		return path_excel_default;
 	}
 
-	public void setPath_excel_default(String path_excel_default) {
-		this.path_excel_default = path_excel_default;
-	}
+
 
 	public String getPath_current() {
 		return path_current;
@@ -678,29 +621,17 @@ public class Controller {
 		this.path_current = path_current;
 	}
 
-	public String getPath_initial() {
-		return path_initial;
-	}
 
-	public void setPath_initial(String path_initial) {
-		this.path_initial = path_initial;
-	}
 
 	public ImageIcon getImg() {
 		return img;
 	}
 
-	public void setImg(ImageIcon img) {
-		this.img = img;
-	}
 
 	public String getPath_image() {
 		return path_image;
 	}
 
-	public void setPath_image(String path_image) {
-		this.path_image = path_image;
-	}
 
 	public HashMap<String, String> getMapColor() {
 		return mapColor;
@@ -729,43 +660,51 @@ public class Controller {
 		return maxArea;
 	}
 
-	public void setMaxArea(double maxArea) {
-		this.maxArea = maxArea;
-	}
+	
 
 	public double getMaxBorder() {
 		return maxBorder;
+	}
+
+
+	public double getMinSphericity() {
+		return minSphericity;
+	}
+
+
+	public double getMinArea() {
+		return minArea;
+	}
+
+
+
+	public double getMinBorder() {
+		return minBorder;
+	}
+
+
+	public String[] getListColor() {
+		return listColor;
+	}
+
+	public void setMaxArea(double maxArea) {
+		this.maxArea = maxArea;
 	}
 
 	public void setMaxBorder(double maxBorder) {
 		this.maxBorder = maxBorder;
 	}
 
-	public double getMinSphericity() {
-		return minSphericity;
-	}
-
 	public void setMinSphericity(double minSphericity) {
 		this.minSphericity = minSphericity;
-	}
-
-	public double getMinArea() {
-		return minArea;
 	}
 
 	public void setMinArea(double minArea) {
 		this.minArea = minArea;
 	}
 
-	public double getMinBorder() {
-		return minBorder;
-	}
-
 	public void setMinBorder(double minBorder) {
 		this.minBorder = minBorder;
-	}
-	public String[] getListColor() {
-		return listColor;
 	}
 
 

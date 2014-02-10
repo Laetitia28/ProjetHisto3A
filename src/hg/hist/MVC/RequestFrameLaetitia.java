@@ -34,8 +34,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 		
 			
-public class RequestFrameLaetitia extends JFrame implements ActionListener,
-					ChangeListener {
+public class RequestFrameLaetitia extends JFrame implements ActionListener,	ChangeListener {
 				
 		
 		private static final long serialVersionUID = 123456L;
@@ -83,7 +82,6 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		private JPanel rubrique4 = new JPanel(new GridBagLayout());
 		
 		private ButtonGroup groupButton = new ButtonGroup();
-		//private JRadioButton btRadio_AllCell = new JRadioButton("All Cells");
 		
 		private JCheckBox btCheckRadio_AllCell = new JCheckBox("All Cells");
 		private JCheckBox btCheck_AllCell = new JCheckBox("All Cells");		
@@ -91,7 +89,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		private String radioSelected = "Tumor nucleus";
 
 		private boolean btCheckRadio_AllCellSelected = false;
-		//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
+		
 		private ControllerRequest contR;
 		
 		public RequestFrameLaetitia(ControllerRequest contR,double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder) 
@@ -99,33 +97,32 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		
 			this.contR = contR;
 			
-			System.out.println("MaxParams \n"+ " Area : " + maxArea+ " Sphericity :" + maxSphericity+ " Border : " +maxBorder);
-			System.out.println("MinParams \n "+" Area : " + minArea+ " Sphericity :" + minSphericity+ " Border : " +minBorder);
+			System.out.println("MaxParamsReceive \n"+ " Area : " + maxArea+ " Sphericity :" + maxSphericity+ " Border : " +maxBorder);
+			System.out.println("MinParamsReceive \n "+" Area : " + minArea+ " Sphericity :" + minSphericity+ " Border : " +minBorder);
 			
 			//Size of Frame
-			//this.setSize(950, 600);
 			this.setSize(500 , 561);
 			
 		// If value < 0 then this.slider not works , so change value
-		contR.setDefault_AreaSup(adaptValue(maxArea));
-		contR.setDefault_AreaInf(adaptValue(minArea));
-		contR.setDefault_SphericitySup(adaptValue(maxSphericity));
-		contR.setDefault_SphericityInf(adaptValue(minSphericity));
-		contR.setDefault_BorderSup (adaptValue(maxBorder));
-		contR.setDefault_BorderInf (adaptValue(minBorder));
+		this.contR.setDefault_AreaSup(adaptValue(maxArea));
+		this.contR.setDefault_AreaInf(adaptValue(minArea));
+		this.contR.setDefault_SphericitySup(adaptValue(maxSphericity));
+		this.contR.setDefault_SphericityInf(adaptValue(minSphericity));
+		this.contR.setDefault_BorderSup (adaptValue(maxBorder));
+		this.contR.setDefault_BorderInf (adaptValue(minBorder));
 		
-			System.out.println("Max default \n "+"Area : " + contR.getDefault_AreaSup()+ " Sphericity : " + contR.getDefault_SphericitySup()+ " Border : " +contR.getDefault_BorderSup());
-			System.out.println("Min defualt \n "+"Area : " + contR.getDefault_AreaInf()+ " Sphericity : " +contR.getDefault_SphericityInf()+ " Border : " +contR.getDefault_BorderInf());
+			System.out.println("Max default \n "+"Area : " + this.contR.getDefault_AreaSup()+ " Sphericity : " + this.contR.getDefault_SphericitySup()+ " Border : " +this.contR.getDefault_BorderSup());
+			System.out.println("Min defualt \n "+"Area : " + this.contR.getDefault_AreaInf()+ " Sphericity : " +this.contR.getDefault_SphericityInf()+ " Border : " +this.contR.getDefault_BorderInf());
 				
 			//Verifier les valeurs
-			this.sliderSphericitySup = new JSlider(JSlider.HORIZONTAL,(int)contR.getDefault_SphericityInf(), (int)contR.getDefault_SphericitySup() ,(int) contR.getDefault_SphericityInf());
-			this.sliderSphericityInf = new JSlider(JSlider.HORIZONTAL,(int)contR.getDefault_SphericityInf(), (int)contR.getDefault_SphericitySup(),(int) contR.getDefault_SphericitySup());
+			this.sliderSphericitySup = new JSlider(JSlider.HORIZONTAL,(int)this.contR.getDefault_SphericityInf(), (int)this.contR.getDefault_SphericitySup() ,(int) this.contR.getDefault_SphericityInf());
+			this.sliderSphericityInf = new JSlider(JSlider.HORIZONTAL,(int)this.contR.getDefault_SphericityInf(), (int)this.contR.getDefault_SphericitySup(),(int) this.contR.getDefault_SphericitySup());
 			
-			this.sliderAreaSup = new JSlider(JSlider.HORIZONTAL, (int)contR.getDefault_AreaInf(), (int)contR.getDefault_AreaSup() ,(int) contR.getDefault_AreaInf());
-			this.sliderAreaInf = new JSlider(JSlider.HORIZONTAL,(int)contR.getDefault_AreaInf(), (int)contR.getDefault_AreaSup(),(int) contR.getDefault_AreaSup());				
+			this.sliderAreaSup = new JSlider(JSlider.HORIZONTAL, (int)this.contR.getDefault_AreaInf(), (int)this.contR.getDefault_AreaSup() ,(int) this.contR.getDefault_AreaInf());
+			this.sliderAreaInf = new JSlider(JSlider.HORIZONTAL,(int)this.contR.getDefault_AreaInf(), (int)this.contR.getDefault_AreaSup(),(int) this.contR.getDefault_AreaSup());				
 			
-			this.sliderBorderSup = new JSlider(JSlider.HORIZONTAL,(int)contR.getDefault_BorderInf(), (int)contR.getDefault_BorderSup(),(int) contR.getDefault_BorderInf());
-			this.sliderBorderInf = new JSlider(JSlider.HORIZONTAL,(int)contR.getDefault_BorderInf(), (int)contR.getDefault_BorderSup(),(int) contR.getDefault_BorderSup());
+			this.sliderBorderSup = new JSlider(JSlider.HORIZONTAL,(int)this.contR.getDefault_BorderInf(), (int)this.contR.getDefault_BorderSup(),(int) this.contR.getDefault_BorderInf());
+			this.sliderBorderInf = new JSlider(JSlider.HORIZONTAL,(int)this.contR.getDefault_BorderInf(), (int)this.contR.getDefault_BorderSup(),(int) this.contR.getDefault_BorderSup());
 			
 			this.panelTotal.setBackground(Color.white);
 			
@@ -672,16 +669,16 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 			// si le boutton radio All Cell est selectionné
 			if (btCheckRadio_AllCell.isSelected()) {					
 						// pour toute la liste des cells avce parametres
-						for (CellRequested cr : contR.getListRequested()) {
+						for (CellRequested cr : this.contR.getListRequested()) {
 								cr.setBorderSup(Double.valueOf(this.sliderBorderSup.getValue()));								
 						}
 					
 				
 			} else {
-				for (int i = 0; i < contR.getListRequested().size(); i++) {
-					if ((contR.getListRequested().get(i).getName())
+				for (int i = 0; i < this.contR.getListRequested().size(); i++) {
+					if ((this.contR.getListRequested().get(i).getName())
 							.equals(getRadioSelected())) {
-						contR.getListRequested().get(i).setBorderSup(Double.valueOf(this.sliderBorderSup.getValue()));
+						this.contR.getListRequested().get(i).setBorderSup(Double.valueOf(this.sliderBorderSup.getValue()));
 					}
 				}
 			}
@@ -694,15 +691,15 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				// si le boutton radio All Cell est selectionné
 				if (btCheckRadio_AllCell.isSelected()) {
 							// pour toute la liste des cells avce parametres
-							for (CellRequested cr : contR.getListRequested()) {								
+							for (CellRequested cr : this.contR.getListRequested()) {								
 									cr.setBorderSup(Double.valueOf(this.sliderBorderInf.getValue()));
 							}
 						
 					
 				} else {
-				for(int i = 0 ;i<contR.getListRequested().size();i++){
-					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
-						contR.getListRequested().get(i).setBorderInf(Double.valueOf(this.sliderBorderInf.getValue()));
+				for(int i = 0 ;i<this.contR.getListRequested().size();i++){
+					if((this.contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
+						this.contR.getListRequested().get(i).setBorderInf(Double.valueOf(this.sliderBorderInf.getValue()));
 					}
 				}
 		
@@ -720,7 +717,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				// si le boutton radio All Cell est selectionné
 				if (btCheckRadio_AllCell.isSelected()) {
 							// pour toute la liste des cells avce parametres
-							for (CellRequested cr : contR.getListRequested()) {
+							for (CellRequested cr : this.contR.getListRequested()) {
 									cr.setSphericitySup(Double.valueOf(this.sliderSphericitySup.getValue())*0.001);
 								}
 							}
@@ -728,9 +725,9 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 					
 				 else {
 				System.out.println("radioSelected : "+ getRadioSelected());
-				for(int i = 0 ;i<contR.getListRequested().size();i++){
-					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
-						contR.getListRequested().get(i).setSphericitySup(Double.valueOf(this.sliderSphericitySup.getValue())*0.001);
+				for(int i = 0 ;i<this.contR.getListRequested().size();i++){
+					if((this.contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
+						this.contR.getListRequested().get(i).setSphericitySup(Double.valueOf(this.sliderSphericitySup.getValue())*0.001);
 					}
 				}
 			}
@@ -747,7 +744,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				// si le boutton radio All Cell est selectionné
 				if (btCheckRadio_AllCell.isSelected()) {
 							// pour toute la liste des cells avce parametres
-							for (CellRequested cr : contR.getListRequested()) {
+							for (CellRequested cr : this.contR.getListRequested()) {
 								// on recherche celles qui ont le meme nom que les
 								// checkboxs cochées
 									cr.setSphericityInf(Double.valueOf(this.sliderSphericityInf.getValue())*0.001);
@@ -756,9 +753,9 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 						
 					
 				} else {
-				for(int i = 0 ;i<contR.getListRequested().size();i++){
-					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
-						contR.getListRequested().get(i).setSphericityInf(Double.valueOf(this.sliderSphericityInf.getValue())*0.001);
+				for(int i = 0 ;i<this.contR.getListRequested().size();i++){
+					if((this.contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
+						this.contR.getListRequested().get(i).setSphericityInf(Double.valueOf(this.sliderSphericityInf.getValue())*0.001);
 					}
 				}
 			}
@@ -775,16 +772,16 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				// si le boutton radio All Cell est selectionné
 				if (btCheckRadio_AllCell.isSelected()) {
 							// pour toute la liste des cells avce parametres
-							for (CellRequested cr : contR.getListRequested()) {
+							for (CellRequested cr : this.contR.getListRequested()) {
 									cr.setAreaSup(Double.valueOf(this.sliderAreaSup.getValue()));
 								
 							}
 						
 					
 				} else {
-				for(int i = 0 ;i<contR.getListRequested().size();i++){
-					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
-						contR.getListRequested().get(i).setAreaSup(Double.valueOf(this.sliderAreaSup.getValue()));
+				for(int i = 0 ;i<this.contR.getListRequested().size();i++){
+					if((this.contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
+						this.contR.getListRequested().get(i).setAreaSup(Double.valueOf(this.sliderAreaSup.getValue()));
 					}
 				}
 			}
@@ -799,7 +796,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				// si le boutton radio All Cell est selectionné
 				if (btCheckRadio_AllCell.isSelected()) {
 							// pour toute la liste des cells avce parametres
-							for (CellRequested cr : contR.getListRequested()) {
+							for (CellRequested cr : this.contR.getListRequested()) {
 								// on recherche celles qui ont le meme nom que les
 								// checkboxs cochées
 									cr.setAreaInf(Double.valueOf(this.sliderAreaInf.getValue()));
@@ -808,16 +805,16 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 						
 					
 				} else {
-				for(int i = 0 ;i<contR.getListRequested().size();i++){
-					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
-						contR.getListRequested().get(i).setAreaInf(Double.valueOf(this.sliderAreaInf.getValue()));
+				for(int i = 0 ;i<this.contR.getListRequested().size();i++){
+					if((this.contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
+						this.contR.getListRequested().get(i).setAreaInf(Double.valueOf(this.sliderAreaInf.getValue()));
 					}
 				}
 				}
 			}
 			//debug
-			for(int i= 0; i<contR.getListRequested().size();i++ ){
-				System.out.println("listRequested init " + contR.getListRequested().get(i).toString());
+			for(int i= 0; i<this.contR.getListRequested().size();i++ ){
+				System.out.println("listRequested init " + this.contR.getListRequested().get(i).toString());
 			}
 		
 		}
@@ -834,7 +831,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				btCheck_AllCell.setSelected(true);
 				
 				//On veut afficher toutes les cellules 
-				for(CellRequested cr : contR.getListRequested()){
+				for(CellRequested cr : this.contR.getListRequested()){
 					cr.setSelected(true);
 				}
 
@@ -873,19 +870,19 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				//this.btRadio_AllCell.setSelected(true);
 				//this.btCheck_AllCell.setSelected(true);
 					
-				this.sliderAreaInf.setValue((int)contR.getDefault_AreaSup());
-				this.sliderAreaSup.setValue((int)contR.getDefault_AreaInf());
-				this.sliderBorderInf.setValue((int)contR.getDefault_BorderSup());
-				this.sliderBorderSup.setValue((int)contR.getDefault_BorderInf());
-				this.sliderSphericityInf.setValue((int)contR.getDefault_SphericitySup());
-				this.sliderSphericitySup.setValue((int)contR.getDefault_SphericityInf());
+				this.sliderAreaInf.setValue((int)this.contR.getDefault_AreaSup());
+				this.sliderAreaSup.setValue((int)this.contR.getDefault_AreaInf());
+				this.sliderBorderInf.setValue((int)this.contR.getDefault_BorderSup());
+				this.sliderBorderSup.setValue((int)this.contR.getDefault_BorderInf());
+				this.sliderSphericityInf.setValue((int)this.contR.getDefault_SphericitySup());
+				this.sliderSphericitySup.setValue((int)this.contR.getDefault_SphericityInf());
 		
-				this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(contR.getDefault_AreaInf()*1e2)/1e2));
-				this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(contR.getDefault_AreaSup()*1e2)/1e2));
-				this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(contR.getDefault_BorderSup()*1e2)/1e2));
-				this.sliderDisplayBorderSup.setText(String.valueOf(Math.floor(contR.getDefault_BorderInf()*1e2)/1e2));
-				this.sliderDisplaySphericityInf.setText(String.valueOf(Math.floor(contR.getDefault_SphericitySup()*1e2)/1e2));
-				this.sliderDisplaySphericitySup.setText(String.valueOf(Math.floor(contR.getDefault_SphericityInf()*1e2)/1e2));
+				this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(this.contR.getDefault_AreaInf()*1e2)/1e2));
+				this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(this.contR.getDefault_AreaSup()*1e2)/1e2));
+				this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(this.contR.getDefault_BorderSup()*1e2)/1e2));
+				this.sliderDisplayBorderSup.setText(String.valueOf(Math.floor(this.contR.getDefault_BorderInf()*1e2)/1e2));
+				this.sliderDisplaySphericityInf.setText(String.valueOf(Math.floor(this.contR.getDefault_SphericitySup()*1e2)/1e2));
+				this.sliderDisplaySphericitySup.setText(String.valueOf(Math.floor(this.contR.getDefault_SphericityInf()*1e2)/1e2));
 				
 				
 				this.setVisible(false);
@@ -903,34 +900,34 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				//this.btCheck_AllCell.setSelected(true);
 		
 				//clear list with paramast
-				for(CellRequested cr : contR.getListRequested()){
-					cr.setAreaInf(contR.getDefault_AreaSup());
-					cr.setAreaSup(contR.getDefault_AreaInf());
+				for(CellRequested cr : this.contR.getListRequested()){
+					cr.setAreaInf(this.contR.getDefault_AreaSup());
+					cr.setAreaSup(this.contR.getDefault_AreaInf());
 		
-					cr.setBorderInf(contR.getDefault_BorderSup());
-					cr.setBorderSup(contR.getDefault_BorderInf());
+					cr.setBorderInf(this.contR.getDefault_BorderSup());
+					cr.setBorderSup(this.contR.getDefault_BorderInf());
 		
-					cr.setSphericityInf(contR.getDefault_SphericitySup()*0.001);
-					cr.setSphericitySup(contR.getDefault_SphericityInf()*0.001);
+					cr.setSphericityInf(this.contR.getDefault_SphericitySup()*0.001);
+					cr.setSphericitySup(this.contR.getDefault_SphericityInf()*0.001);
 		
 				}
 				
-				for(int i = 0 ;i<contR.getListRequested().size() ; i++){
-					System.out.println(contR.getListRequested().get(i).toString());
+				for(int i = 0 ;i<this.contR.getListRequested().size() ; i++){
+					System.out.println(this.contR.getListRequested().get(i).toString());
 				}
-				this.sliderAreaInf.setValue((int)contR.getDefault_AreaSup());
-				this.sliderAreaSup.setValue((int)contR.getDefault_AreaInf());
-				this.sliderBorderInf.setValue((int)contR.getDefault_BorderSup());
-				this.sliderBorderSup.setValue((int)contR.getDefault_BorderInf());
-				this.sliderSphericityInf.setValue((int)contR.getDefault_SphericitySup());
-				this.sliderSphericitySup.setValue((int)contR.getDefault_SphericityInf());
+				this.sliderAreaInf.setValue((int)this.contR.getDefault_AreaSup());
+				this.sliderAreaSup.setValue((int)this.contR.getDefault_AreaInf());
+				this.sliderBorderInf.setValue((int)this.contR.getDefault_BorderSup());
+				this.sliderBorderSup.setValue((int)this.contR.getDefault_BorderInf());
+				this.sliderSphericityInf.setValue((int)this.contR.getDefault_SphericitySup());
+				this.sliderSphericitySup.setValue((int)this.contR.getDefault_SphericityInf());
 		
-				this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(contR.getDefault_AreaInf()*1e2)/1e2));
-				this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(contR.getDefault_AreaSup()*1e2)/1e2));
-				this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(contR.getDefault_BorderSup()*1e2)/1e2));
-				this.sliderDisplayBorderSup.setText(String.valueOf(Math.floor(contR.getDefault_BorderInf()*1e2)/1e2));
-				this.sliderDisplaySphericityInf.setText(String.valueOf(Math.floor(contR.getDefault_SphericitySup()*1e2)/1e2));
-				this.sliderDisplaySphericitySup.setText(String.valueOf(Math.floor(contR.getDefault_SphericityInf()*1e2)/1e2));
+				this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(this.contR.getDefault_AreaInf()*1e2)/1e2));
+				this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(this.contR.getDefault_AreaSup()*1e2)/1e2));
+				this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(this.contR.getDefault_BorderSup()*1e2)/1e2));
+				this.sliderDisplayBorderSup.setText(String.valueOf(Math.floor(this.contR.getDefault_BorderInf()*1e2)/1e2));
+				this.sliderDisplaySphericityInf.setText(String.valueOf(Math.floor(this.contR.getDefault_SphericitySup()*1e2)/1e2));
+				this.sliderDisplaySphericitySup.setText(String.valueOf(Math.floor(this.contR.getDefault_SphericityInf()*1e2)/1e2));
 				
 			
 				this.setVisible(true);
@@ -959,8 +956,8 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				}
 			
 			//debug
-			for(int i = 0 ; i<contR.getListRequested().size();i++){
-				System.out.println("element :" + contR.getListRequested().get(i).toString());
+			for(int i = 0 ; i<this.contR.getListRequested().size();i++){
+				System.out.println("element :" + this.contR.getListRequested().get(i).toString());
 			}	
 				
 				this.setVisible(true);
@@ -979,8 +976,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				///Affichage des donnees pre existantes
 				for(CellRequested cr : contR.getListRequested()){
 					if(cr.getName().equals(getRadioSelected())){
-						//debug
-						//System.out.println("\n "+cr.toString());
+						
 						
 						sliderAreaInf.setValue((int)cr.getAreaInf());
 						sliderAreaSup.setValue((int)cr.getAreaSup());
@@ -1002,82 +998,82 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 			for (JCheckBox ch : this.listCheckBox) {				
 				if (ch.isSelected()) {
 					//System.out.println("I am selected : " + ch.getName());
-					for (int i = 0; i < contR.getListRequested().size(); i++) {
-						if ((ch.getName()).equals(contR.getListRequested().get(i).getName())) {
-									contR.getListRequested().get(i).setSelected(true);
+					for (int i = 0; i < this.contR.getListRequested().size(); i++) {
+						if ((ch.getName()).equals(this.contR.getListRequested().get(i).getName())) {
+									this.contR.getListRequested().get(i).setSelected(true);
 						}
 					}
 				}
 				else{
 					//System.out.println("I am not selected : " + ch.getName());
-					for (int i = 0; i < contR.getListRequested().size(); i++) {
-						if ((ch.getName()).equals(contR.getListRequested().get(i).getName())) {
-									contR.getListRequested().get(i).setSelected(false);
+					for (int i = 0; i < this.contR.getListRequested().size(); i++) {
+						if ((ch.getName()).equals(this.contR.getListRequested().get(i).getName())) {
+									this.contR.getListRequested().get(i).setSelected(false);
 						}
 					}
 				}
 			}
 			//il faut traiter le cas ou All Cells est coché
 			if(btCheck_AllCell.isSelected()){
-				for (int i = 0; i < contR.getListRequested().size(); i++) {
-						contR.getListRequested().get(i).setSelected(true);
+				for (int i = 0; i < this.contR.getListRequested().size(); i++) {
+						this.contR.getListRequested().get(i).setSelected(true);
 					}
 			}
 		}
 		public void init(double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder,HashMap<String, String> mapForRadioButton){
 		
 		// If value < 0 then this.slider not works , so change value
-		contR.setDefault_AreaSup(adaptValue(maxArea));
-		contR.setDefault_AreaInf(adaptValue(minArea));
-		contR.setDefault_SphericitySup(adaptValue(maxSphericity));
-		contR.setDefault_SphericityInf(adaptValue(minSphericity));
-		contR.setDefault_BorderSup(adaptValue(maxBorder));
-		contR.setDefault_BorderInf(adaptValue(minBorder));
+		this.contR.setDefault_AreaSup(adaptValue(maxArea));
+		this.contR.setDefault_AreaInf(adaptValue(minArea));
+		this.contR.setDefault_SphericitySup(adaptValue(maxSphericity));
+		this.contR.setDefault_SphericityInf(adaptValue(minSphericity));
+		this.contR.setDefault_BorderSup(adaptValue(maxBorder));
+		this.contR.setDefault_BorderInf(adaptValue(minBorder));
 		
 		
-		this.sliderSphericityInf.setMaximum((int) contR.getDefault_SphericitySup());
-		this.sliderSphericityInf.setMinimum((int) contR.getDefault_SphericityInf());
-		this.sliderSphericityInf.setValue((int) contR.getDefault_SphericitySup());
+		this.sliderSphericityInf.setMaximum((int) this.contR.getDefault_SphericitySup());
+		this.sliderSphericityInf.setMinimum((int) this.contR.getDefault_SphericityInf());
+		this.sliderSphericityInf.setValue((int) this.contR.getDefault_SphericitySup());
 		this.sliderSphericityInf.setMajorTickSpacing(50);
 		this.sliderSphericityInf.setMinorTickSpacing(10);
 		
-		this.sliderSphericitySup.setMaximum((int) contR.getDefault_SphericitySup());
-		this.sliderSphericitySup.setMinimum((int) contR.getDefault_SphericityInf());
-		this.sliderSphericitySup.setValue((int) contR.getDefault_SphericityInf());
+		this.sliderSphericitySup.setMaximum((int) this.contR.getDefault_SphericitySup());
+		this.sliderSphericitySup.setMinimum((int) this.contR.getDefault_SphericityInf());
+		this.sliderSphericitySup.setValue((int) this.contR.getDefault_SphericityInf());
 		this.sliderSphericitySup.setMajorTickSpacing(50);
 		this.sliderSphericitySup.setMinorTickSpacing(10);
 		
-		this.sliderAreaInf.setMaximum((int) contR.getDefault_AreaSup());
-		this.sliderAreaInf.setMinimum((int) contR.getDefault_AreaInf());
-		this.sliderAreaInf.setValue((int) contR.getDefault_AreaSup());
+		this.sliderAreaInf.setMaximum((int) this.contR.getDefault_AreaSup());
+		this.sliderAreaInf.setMinimum((int) this.contR.getDefault_AreaInf());
+		this.sliderAreaInf.setValue((int) this.contR.getDefault_AreaSup());
 		this.sliderAreaInf.setMajorTickSpacing(1000);
 		this.sliderAreaInf.setMinorTickSpacing(100);
 		
-		this.sliderAreaSup.setMaximum((int) contR.getDefault_AreaSup());
-		this.sliderAreaSup.setMinimum((int) contR.getDefault_AreaInf());
-		this.sliderAreaSup.setValue((int) contR.getDefault_AreaInf());
+		this.sliderAreaSup.setMaximum((int) this.contR.getDefault_AreaSup());
+		this.sliderAreaSup.setMinimum((int) this.contR.getDefault_AreaInf());
+		this.sliderAreaSup.setValue((int) this.contR.getDefault_AreaInf());
 		this.sliderAreaSup.setMajorTickSpacing(1000);
 		this.sliderAreaSup.setMinorTickSpacing(100);
 		
-		this.sliderBorderInf.setMaximum((int) contR.getDefault_BorderSup());
-		this.sliderBorderInf.setMinimum((int) contR.getDefault_BorderInf());
-		this.sliderBorderInf.setValue((int) contR.getDefault_BorderSup());
+		this.sliderBorderInf.setMaximum((int) this.contR.getDefault_BorderSup());
+		this.sliderBorderInf.setMinimum((int) this.contR.getDefault_BorderInf());
+		this.sliderBorderInf.setValue((int) this.contR.getDefault_BorderSup());
 		this.sliderBorderInf.setMajorTickSpacing(50);
 		this.sliderBorderInf.setMinorTickSpacing(10);
 		
-		this.sliderBorderSup.setMaximum((int) contR.getDefault_BorderSup());
-		this.sliderBorderSup.setMinimum((int) contR.getDefault_BorderInf());
-		this.sliderBorderSup.setValue((int) contR.getDefault_BorderInf());
+		this.sliderBorderSup.setMaximum((int) this.contR.getDefault_BorderSup());
+		this.sliderBorderSup.setMinimum((int) this.contR.getDefault_BorderInf());
+		this.sliderBorderSup.setValue((int) this.contR.getDefault_BorderInf());
 		this.sliderBorderSup.setMajorTickSpacing(50);
 		this.sliderBorderSup.setMinorTickSpacing(10);
 		
 		
-		this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(contR.getDefault_AreaInf()*1e2)/1e2));
-		this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(contR.getDefault_AreaSup()*1e2)/1e2));
-		this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(contR.getDefault_BorderSup()*1e2)/1e2));
-		this.sliderDisplayBorderSup.setText(String.valueOf(Math.floor(contR.getDefault_BorderInf()*1e2)/1e2));
-		this.sliderDisplaySphericityInf.setText(String.valueOf(0.001*Math.floor(contR.getDefault_SphericitySup()*1e2)/1e2));
-		this.sliderDisplaySphericitySup.setText(String.valueOf(0.001*Math.floor(contR.getDefault_SphericityInf()*1e2)/1e2));
+		this.sliderDisplayAreaSup.setText(String.valueOf(Math.floor(this.contR.getDefault_AreaInf()*1e2)/1e2));
+		this.sliderDisplayAreaInf.setText(String.valueOf(Math.floor(this.contR.getDefault_AreaSup()*1e2)/1e2));
+		this.sliderDisplayBorderInf.setText(String.valueOf(Math.floor(this.contR.getDefault_BorderSup()*1e2)/1e2));
+		this.sliderDisplayBorderSup.setText(String.valueOf(Math.floor(this.contR.getDefault_BorderInf()*1e2)/1e2));
+		this.sliderDisplaySphericityInf.setText(String.valueOf(0.001*Math.floor(this.contR.getDefault_SphericitySup()*1e2)/1e2));
+		this.sliderDisplaySphericitySup.setText(String.valueOf(0.001*Math.floor(this.contR.getDefault_SphericityInf()*1e2)/1e2));
 		
 		System.out.println("Init max : " + maxArea + " S :" + maxSphericity	+ " B : " + maxBorder);
 		System.out.println("Init min : " + minArea + " S :" + minSphericity + " B : " + minBorder);
@@ -1136,9 +1132,6 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 							AbstractButton button = (AbstractButton) elements.nextElement();
 							button.setEnabled(true);
 						}
-						//btRadio_AllCell.setEnabled(false);
-						//btCheck_AllCell.setEnabled(false);
-						//btRadio_AllCell.setSelected(false);
 						btCheckRadio_AllCell.setSelected(false);
 						btCheckRadio_AllCellSelected = false;
 						btCheck_AllCell.setSelected(false);
@@ -1152,20 +1145,18 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		}
 		this.rubrique1.add(this.paneCellule);
 		this.rubrique0.add(this.paneCellDisplay);
-		
-		//System.out.println("count listCheckBox : " + listCheckBox.size());
-		
-		contR.getListRequested().clear();
+				
+		this.contR.getListRequested().clear();
 		
 		for(String h : mapForRadioButton.keySet()){
 			CellRequested cr = new CellRequested(h, false, minArea, maxArea, minSphericity, maxSphericity, minBorder, maxBorder);
-			contR.getListRequested().add(cr);
+			this.contR.getListRequested().add(cr);
 		}
-		contR.getListRequested().add(new CellRequested("All Cells", false,minArea, maxArea, minSphericity, maxSphericity, minBorder, maxBorder));
+		this.contR.getListRequested().add(new CellRequested("All Cells", false,minArea, maxArea, minSphericity, maxSphericity, minBorder, maxBorder));
 		/*
 		//debug
-		for(int i= 0; i<contR.getListRequested().size();i++ ){
-			System.out.println("listRequested init " + contR.getListRequested().get(i).toString());
+		for(int i= 0; i<this.contR.getListRequested().size();i++ ){
+			System.out.println("listRequested init " + this.contR.getListRequested().get(i).toString());
 		}
 		
 		//debug
@@ -1179,11 +1170,11 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		
 			public double adaptValue(double e){
 				if(e<1){
-					e = e *1000;
+					e = (e *1000)+1;
 				}
 				return e;
 			}
-			
+	
 			public JButton getBtApply() {
 				return btApply;
 			}
@@ -1208,7 +1199,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 
 		
 			public ControllerRequest getContR() {
-				return contR;
+				return this.contR;
 			}
 		
 			public void setContR(ControllerRequest contR) {
@@ -1222,7 +1213,6 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 			public JCheckBox getBtCheck_AllCell() {
 				return btCheck_AllCell;
 			}
-
 
 
 	
