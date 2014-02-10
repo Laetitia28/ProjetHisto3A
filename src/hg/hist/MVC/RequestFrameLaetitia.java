@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -23,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
@@ -83,13 +83,14 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		private JPanel rubrique4 = new JPanel(new GridBagLayout());
 		
 		private ButtonGroup groupButton = new ButtonGroup();
-		private JRadioButton btRadio_AllCell = new JRadioButton("All Cells");
+		//private JRadioButton btRadio_AllCell = new JRadioButton("All Cells");
 		
+		private JCheckBox btCheckRadio_AllCell = new JCheckBox("All Cells");
 		private JCheckBox btCheck_AllCell = new JCheckBox("All Cells");		
 		private List<JCheckBox> listCheckBox = new ArrayList<JCheckBox>();
-		private String radioSelected = "All Cells";
+		private String radioSelected = "Tumor nucleus";
 
-		
+		private boolean btCheckRadio_AllCellSelected = false;
 		//AreaMax SphMax BorderMax AreaMin ShpMoin BorderMin
 		private ControllerRequest contR;
 		
@@ -162,9 +163,10 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 			
 		
 			
-			this.groupButton.add(btRadio_AllCell);			
-			this.paneCellule.add(btRadio_AllCell);
-			this.btRadio_AllCell.addActionListener(new StateListener());
+			//this.groupButton.add(btRadio_AllCell);			
+			this.paneCellule.add(btCheckRadio_AllCell);
+			//this.btRadio_AllCell.addActionListener(new StateListener());
+			this.btCheckRadio_AllCell.addActionListener(this);
 			
 			///RUBRIQUE 0 
 			//To center the this.label
@@ -660,27 +662,44 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		
 		public void stateChanged(ChangeEvent event) {
 			// this.sliderBorderSup
-			if (event.getSource() == this.sliderBorderSup) {
-		
-				Rectangle r = paneAreaInf.getBounds();
-		System.out.println("h"+ r.height);
-		System.out.println("w" + r.width);
-		
-				this.sliderDisplayBorderSup.setText(String.valueOf(this.sliderBorderSup.getValue()));
-				System.out.println("BorderSup : "+ String.valueOf(this.sliderBorderSup.getValue()));
-				System.out.println("radioSelected : "+ getRadioSelected());
-				for(int i = 0 ;i<contR.getListRequested().size();i++){
-					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
+		if (event.getSource() == this.sliderBorderSup) {
+
+			this.sliderDisplayBorderSup.setText(String.valueOf(this.sliderBorderSup.getValue()));
+			System.out.println("BorderSup : "
+					+ String.valueOf(this.sliderBorderSup.getValue()));
+			System.out.println("radioSelected : " + getRadioSelected());
+			
+			// si le boutton radio All Cell est selectionné
+			if (btCheckRadio_AllCell.isSelected()) {					
+						// pour toute la liste des cells avce parametres
+						for (CellRequested cr : contR.getListRequested()) {
+								cr.setBorderSup(Double.valueOf(this.sliderBorderSup.getValue()));								
+						}
+					
+				
+			} else {
+				for (int i = 0; i < contR.getListRequested().size(); i++) {
+					if ((contR.getListRequested().get(i).getName())
+							.equals(getRadioSelected())) {
 						contR.getListRequested().get(i).setBorderSup(Double.valueOf(this.sliderBorderSup.getValue()));
 					}
 				}
 			}
+		}
 			// SliderBorderInf
 			if (event.getSource() == this.sliderBorderInf) {
 				this.sliderDisplayBorderInf.setText(String.valueOf(this.sliderBorderInf.getValue()));
-				System.out.println("BorderInf : "+ String.valueOf(this.sliderBorderInf.getValue()));
-				
+				System.out.println("BorderInf : "+ String.valueOf(this.sliderBorderInf.getValue()));				
 				System.out.println("radioSelected : "+ getRadioSelected());
+				// si le boutton radio All Cell est selectionné
+				if (btCheckRadio_AllCell.isSelected()) {
+							// pour toute la liste des cells avce parametres
+							for (CellRequested cr : contR.getListRequested()) {								
+									cr.setBorderSup(Double.valueOf(this.sliderBorderInf.getValue()));
+							}
+						
+					
+				} else {
 				for(int i = 0 ;i<contR.getListRequested().size();i++){
 					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
 						contR.getListRequested().get(i).setBorderInf(Double.valueOf(this.sliderBorderInf.getValue()));
@@ -688,7 +707,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				}
 		
 			}
-			
+			}
 			// SliderSphericitySup
 			if (event.getSource() == this.sliderSphericitySup) {
 				
@@ -698,12 +717,23 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				this.sliderDisplaySphericitySup.setText(String.valueOf(String.valueOf(Math.floor(a*1e2)/1e2)));
 				System.out.println("SphéericitySup : "+ String.valueOf(String.valueOf(Math.floor(a*1e2)/1e2)));
 			
+				// si le boutton radio All Cell est selectionné
+				if (btCheckRadio_AllCell.isSelected()) {
+							// pour toute la liste des cells avce parametres
+							for (CellRequested cr : contR.getListRequested()) {
+									cr.setSphericitySup(Double.valueOf(this.sliderSphericitySup.getValue())*0.001);
+								}
+							}
+						
+					
+				 else {
 				System.out.println("radioSelected : "+ getRadioSelected());
 				for(int i = 0 ;i<contR.getListRequested().size();i++){
 					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
 						contR.getListRequested().get(i).setSphericitySup(Double.valueOf(this.sliderSphericitySup.getValue())*0.001);
 					}
 				}
+			}
 		
 		
 			}
@@ -713,14 +743,25 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				 
 				this.sliderDisplaySphericityInf.setText(String.valueOf(Math.floor(a*1e2)/1e2));
 				System.out.println("SphericityInf : "+ String.valueOf(Math.floor(a*1e2)/1e2));
-				
 				System.out.println("radioSelected : "+ getRadioSelected());
-				
+				// si le boutton radio All Cell est selectionné
+				if (btCheckRadio_AllCell.isSelected()) {
+							// pour toute la liste des cells avce parametres
+							for (CellRequested cr : contR.getListRequested()) {
+								// on recherche celles qui ont le meme nom que les
+								// checkboxs cochées
+									cr.setSphericityInf(Double.valueOf(this.sliderSphericityInf.getValue())*0.001);
+								}
+							
+						
+					
+				} else {
 				for(int i = 0 ;i<contR.getListRequested().size();i++){
 					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
 						contR.getListRequested().get(i).setSphericityInf(Double.valueOf(this.sliderSphericityInf.getValue())*0.001);
 					}
 				}
+			}
 			}
 		
 			// SliderAreaSup
@@ -730,11 +771,23 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				System.out.println("AreaSup : "+ String.valueOf(this.sliderAreaSup.getValue()));
 					
 				System.out.println("radioSelected : "+ getRadioSelected());
+				
+				// si le boutton radio All Cell est selectionné
+				if (btCheckRadio_AllCell.isSelected()) {
+							// pour toute la liste des cells avce parametres
+							for (CellRequested cr : contR.getListRequested()) {
+									cr.setAreaSup(Double.valueOf(this.sliderAreaSup.getValue()));
+								
+							}
+						
+					
+				} else {
 				for(int i = 0 ;i<contR.getListRequested().size();i++){
 					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
 						contR.getListRequested().get(i).setAreaSup(Double.valueOf(this.sliderAreaSup.getValue()));
 					}
 				}
+			}
 			}
 			// SlierAreaInf
 			if (event.getSource() == this.sliderAreaInf) {
@@ -743,37 +796,81 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				System.out.println("AreaInf : "+ String.valueOf(this.sliderAreaInf.getValue()));
 				
 				System.out.println("radioSelected : "+ getRadioSelected());
+				// si le boutton radio All Cell est selectionné
+				if (btCheckRadio_AllCell.isSelected()) {
+							// pour toute la liste des cells avce parametres
+							for (CellRequested cr : contR.getListRequested()) {
+								// on recherche celles qui ont le meme nom que les
+								// checkboxs cochées
+									cr.setAreaInf(Double.valueOf(this.sliderAreaInf.getValue()));
+								
+							}
+						
+					
+				} else {
 				for(int i = 0 ;i<contR.getListRequested().size();i++){
 					if((contR.getListRequested().get(i).getName()).equals(getRadioSelected())){
 						contR.getListRequested().get(i).setAreaInf(Double.valueOf(this.sliderAreaInf.getValue()));
 					}
 				}
-				
+				}
+			}
+			//debug
+			for(int i= 0; i<contR.getListRequested().size();i++ ){
+				System.out.println("listRequested init " + contR.getListRequested().get(i).toString());
 			}
 		
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			// Si on coche btCheck_AllCell
 			if(e.getSource() == btCheck_AllCell){
-				System.out.println("all check");
-				
-				Enumeration<AbstractButton> elements = this.groupButton.getElements();
-				while (elements.hasMoreElements()) {
-					AbstractButton button = (AbstractButton) elements.nextElement();
-					button.setEnabled(false);
-				}
-				btRadio_AllCell.setEnabled(true);
+				System.out.println("All Cells check");
+								
 				for(JCheckBox ch : listCheckBox){
 					ch.setSelected(false);
 				}
 				btCheck_AllCell.setSelected(true);
+				
+				//On veut afficher toutes les cellules 
+				for(CellRequested cr : contR.getListRequested()){
+					cr.setSelected(true);
+				}
 
 			}
+			//Si on coche BtCheckRadio_AllCell()
+		if (e.getSource() == getBtCheckRadio_AllCell()) {
+
+			if (btCheckRadio_AllCellSelected == false) {
+				
+				//on grise les boutons 
+				Enumeration<AbstractButton> elements = this.groupButton.getElements();
+				while (elements.hasMoreElements()) {
+					AbstractButton button = (AbstractButton) elements.nextElement();
+					button.setEnabled(false);
+					button.setSelected(false);
+				}
+				btCheckRadio_AllCellSelected = true;
+			}
+			else
+			{
+				Enumeration<AbstractButton> elements = this.groupButton.getElements();
+				while (elements.hasMoreElements()) {
+					AbstractButton button = (AbstractButton) elements.nextElement();
+					button.setEnabled(true);
+					
+				}
+				getBtCheckRadio_AllCell().setSelected(false);
+				btCheckRadio_AllCellSelected = false;
+				
+			}
+			
+		}
 			if (e.getSource() == btFinish) {
 				System.out.println("It is finish ! RequestFrame");
 				
-				this.btRadio_AllCell.setSelected(true);
+				//this.btRadio_AllCell.setSelected(true);
 				//this.btCheck_AllCell.setSelected(true);
 					
 				this.sliderAreaInf.setValue((int)contR.getDefault_AreaSup());
@@ -797,7 +894,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				
 				System.out.println("It is Clear RequestFrame !");
 				//radio_All cell true
-				this.btRadio_AllCell.setSelected(true);
+				//this.btRadio_AllCell.setSelected(true);
 				
 				//init check box
 				for(JCheckBox ch :  listCheckBox){
@@ -843,7 +940,23 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		
 			if (e.getSource() == btApply) {
 				System.out.println("It is apply from RequestFram !");
-		
+				String h = "";
+				for(CellRequested cr : getContR().getListRequested()){
+					if((cr.getAreaInf()-cr.getAreaSup())<0){
+						h = h+" For : "+ cr.getName() + " AreaInf is superior to AreaSup \n";
+						//JOptionPane.showMessageDialog(RequestFrameLaetitia.this,"Warning : \n"+"" "AreaInf is superior to AreaSup");
+					}
+					if((cr.getSphericityInf()-cr.getSphericitySup())<0){
+						h = h+" For : "+ cr.getName() + " SphericityInf is superior to SphericitySup \n";
+					}
+					if((cr.getBorderInf()-cr.getBorderSup())<0){
+						h = h+" For : "+ cr.getName() + " BorderInf is superior to BorderSup \n";
+
+					}
+				}
+				if(!h.equals("")){
+				JOptionPane.showMessageDialog(RequestFrameLaetitia.this,"Warning : \n"+ h);
+				}
 			
 			//debug
 			for(int i = 0 ; i<contR.getListRequested().size();i++){
@@ -860,13 +973,14 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("Cellule : "+ ((JRadioButton) e.getSource()).getText());
-				
 				setRadioSelected(((JRadioButton) e.getSource()).getText());
-		
-				
+
+						
+				///Affichage des donnees pre existantes
 				for(CellRequested cr : contR.getListRequested()){
 					if(cr.getName().equals(getRadioSelected())){
-						System.out.println("\n "+cr.toString());
+						//debug
+						//System.out.println("\n "+cr.toString());
 						
 						sliderAreaInf.setValue((int)cr.getAreaInf());
 						sliderAreaSup.setValue((int)cr.getAreaSup());
@@ -885,7 +999,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		
 		public void checkButtons(){
 			System.out.println("check Button method");
-			for (JCheckBox ch : this.listCheckBox) {
+			for (JCheckBox ch : this.listCheckBox) {				
 				if (ch.isSelected()) {
 					//System.out.println("I am selected : " + ch.getName());
 					for (int i = 0; i < contR.getListRequested().size(); i++) {
@@ -902,6 +1016,12 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 						}
 					}
 				}
+			}
+			//il faut traiter le cas ou All Cells est coché
+			if(btCheck_AllCell.isSelected()){
+				for (int i = 0; i < contR.getListRequested().size(); i++) {
+						contR.getListRequested().get(i).setSelected(true);
+					}
 			}
 		}
 		public void init(double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder,HashMap<String, String> mapForRadioButton){
@@ -991,18 +1111,18 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		
 		// Recreate buttons in this.groupButton
 		//btRadio_AllCell.setSelected();
-		this.groupButton.add(btRadio_AllCell);
-		this.paneCellule.add(btRadio_AllCell);
+	//	this.groupButton.add(btRadio_AllCell);
+		this.paneCellule.add(btCheckRadio_AllCell);
 		
 		for (String key_radio : mapForRadioButton.keySet()) {
-			System.out.println("key_radio : " + key_radio);
+			//System.out.println("key_radio : " + key_radio);
 			JRadioButton btRadio_Map = new JRadioButton(key_radio);
 			btRadio_Map.setName(key_radio);
 			this.groupButton.add(btRadio_Map);
 			btRadio_Map.addActionListener(new StateListener());
 			this.paneCellule.add(btRadio_Map);
 			
-			System.out.println("key_btCheck : " + key_radio);
+			//System.out.println("key_btCheck : " + key_radio);
 			final JCheckBox btCheck_Map = new JCheckBox(key_radio);
 			btCheck_Map.setName(key_radio);
 			btCheck_Map.addActionListener(new ActionListener() {
@@ -1018,7 +1138,9 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 						}
 						//btRadio_AllCell.setEnabled(false);
 						//btCheck_AllCell.setEnabled(false);
-						btRadio_AllCell.setSelected(false);
+						//btRadio_AllCell.setSelected(false);
+						btCheckRadio_AllCell.setSelected(false);
+						btCheckRadio_AllCellSelected = false;
 						btCheck_AllCell.setSelected(false);
 						
 					}
@@ -1031,7 +1153,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		this.rubrique1.add(this.paneCellule);
 		this.rubrique0.add(this.paneCellDisplay);
 		
-		System.out.println("count listCheckBox : " + listCheckBox.size());
+		//System.out.println("count listCheckBox : " + listCheckBox.size());
 		
 		contR.getListRequested().clear();
 		
@@ -1040,6 +1162,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 			contR.getListRequested().add(cr);
 		}
 		contR.getListRequested().add(new CellRequested("All Cells", false,minArea, maxArea, minSphericity, maxSphericity, minBorder, maxBorder));
+		/*
 		//debug
 		for(int i= 0; i<contR.getListRequested().size();i++ ){
 			System.out.println("listRequested init " + contR.getListRequested().get(i).toString());
@@ -1049,7 +1172,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 		for(int i= 0; i<listCheckBox.size();i++ ){
 			System.out.println("listCheckBox init " + listCheckBox.get(i).getName());
 		}
-		
+		*/
 		setRadioSelected("All Cells");
 			
 		}
@@ -1069,9 +1192,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				return btClear;
 			}
 		
-			public void setBtClear(JButton btClear) {
-				this.btClear = btClear;
-			}
+	
 			public String getRadioSelected() {
 				return radioSelected;
 			}
@@ -1084,9 +1205,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 				return btFinish;
 			}
 		
-			public void setBtFinish(JButton btFinish) {
-				this.btFinish = btFinish;
-			}
+
 		
 			public ControllerRequest getContR() {
 				return contR;
@@ -1095,5 +1214,17 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,
 			public void setContR(ControllerRequest contR) {
 				this.contR = contR;
 			}
+
+			public JCheckBox getBtCheckRadio_AllCell() {
+				return btCheckRadio_AllCell;
+			}
+
+			public JCheckBox getBtCheck_AllCell() {
+				return btCheck_AllCell;
+			}
+
+
+
+	
 		
 		}

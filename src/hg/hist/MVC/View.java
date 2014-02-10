@@ -103,6 +103,7 @@ public class View extends JFrame implements ActionListener {
 		graph.setCellsMovable(false);
 		graph.setCellsSelectable(false);
 		graph.setCellsResizable(false);
+		
 
 		//create the graph
 		controller.initFrame(graph, graphComponent);
@@ -153,13 +154,7 @@ public class View extends JFrame implements ActionListener {
 
 		// Ada ButtonDisplay in down JPanel
 		down.add(btDisplay, BorderLayout.SOUTH);
-
-		// Ada JPanel down ie check box in OptionBox JPanel
-		optionBox.add(down);
-		optionBox.add(buttonBar, BorderLayout.CENTER);// because Zoom is on NORTH
-		optionBox.add(panelAdvancedRequest, BorderLayout.AFTER_LAST_LINE);
-
-		getContentPane().add(optionBox, BorderLayout.EAST);
+		
 		setJMenuBar(menu.buildMenu());
 
 		//frame2 = new RequestFram();
@@ -189,14 +184,48 @@ public class View extends JFrame implements ActionListener {
 					
 					//change mapColor with new value of type cell selected
 					getController().changeMapColor(event.getActionCommand(),comboBox.getSelectedItem().toString());
+										
 					graph.setCellsDeletable(true);
 					graph.removeCells(graph.getChildVertices(parent));
 					graph.refresh();
 					graph.setCellsDeletable(false);
+					
 					getController().changeFrame(getController().getPath_current(), graph,graphComponent);
+					for(String key : getController().getMapColor().keySet()){
+						System.out.println("key map :" + key +  getController().getMapColor().get(key));
+					}
+					
+					//change down panel
+					for (String key : listOfCheckBox.keySet()) {
+						down.remove(listOfCheckBox.get(key));
+					}
+
+					down.remove(btDisplay);
+					listOfCheckBox.clear();
+					for (String key : getController().getMapColor().keySet()) {
+						checkBox = new JCheckBox(key.toString());
+						checkBox.setName("CheckBox_" + key.toString());
+						checkBox.setSelected(false);
+						checkBox.setForeground(getController().stringToColor(getController().getMapColor().get(key)));
+						listOfCheckBox.put(key.toString(), checkBox);
+						down.add(checkBox);
+					}
+					
+					down.add(btDisplay, BorderLayout.CENTER);
+					optionBox.add(down);	
+					optionBox.add(buttonBar, BorderLayout.CENTER);// because Zoom is on NORTH
+					optionBox.add(panelAdvancedRequest, BorderLayout.AFTER_LAST_LINE);
+					getContentPane().add(optionBox, BorderLayout.EAST);
+					getContentPane().validate();
+					
 				}
 			});
 			menu.getPropertyCells().add(a);
+			// Ada JPanel down ie check box in OptionBox JPanel
+			optionBox.add(down);
+			optionBox.add(buttonBar, BorderLayout.CENTER);// because Zoom is on NORTH
+			optionBox.add(panelAdvancedRequest, BorderLayout.AFTER_LAST_LINE);
+			getContentPane().add(optionBox, BorderLayout.EAST);
 			
 		}
 		
@@ -232,12 +261,15 @@ public class View extends JFrame implements ActionListener {
 			chooser.setApproveButtonText("Choose File...");
 			
 			controller.ChangeFile(chooser, graphComponent, graph);
+			
 			for (String key : listOfCheckBox.keySet()) {
 				down.remove(listOfCheckBox.get(key));
 			}
 
 			down.remove(btDisplay);
+			
 			listOfCheckBox.clear();
+			
 			for (String key : controller.getMapColor().keySet()) {
 				checkBox = new JCheckBox(key.toString());
 				checkBox.setName("CheckBox_" + key.toString());
@@ -248,7 +280,8 @@ public class View extends JFrame implements ActionListener {
 				down.add(checkBox);
 			}
 			down.add(btDisplay, BorderLayout.CENTER);
-			this.setVisible(true);
+			
+			//this.setVisible(true);
 
 			menu.getPropertyCells().removeAll();
 		
@@ -271,11 +304,35 @@ public class View extends JFrame implements ActionListener {
 						
 						//change mapColor with new value of type cell selected
 						getController().changeMapColor(event.getActionCommand(),comboBox.getSelectedItem().toString());
+						
 						graph.setCellsDeletable(true);
 						graph.removeCells(graph.getChildVertices(parent));
 						graph.refresh();
 						graph.setCellsDeletable(false);
 						getController().changeFrame(getController().getPath_current(), graph,graphComponent);
+						
+						//change down panel
+						for (String key : listOfCheckBox.keySet()) {
+							down.remove(listOfCheckBox.get(key));
+						}
+
+						down.remove(btDisplay);
+						listOfCheckBox.clear();
+						for (String key : getController().getMapColor().keySet()) {
+							checkBox = new JCheckBox(key.toString());
+							checkBox.setName("CheckBox_" + key.toString());
+							checkBox.setSelected(false);
+							checkBox.setForeground(getController().stringToColor(getController().getMapColor().get(key)));
+							listOfCheckBox.put(key.toString(), checkBox);
+							down.add(checkBox);
+						}
+						
+						down.add(btDisplay, BorderLayout.CENTER);
+						optionBox.add(down);	
+						optionBox.add(buttonBar, BorderLayout.CENTER);// because Zoom is on NORTH
+						optionBox.add(panelAdvancedRequest, BorderLayout.AFTER_LAST_LINE);
+						getContentPane().add(optionBox, BorderLayout.EAST);
+						getContentPane().validate();
 					}
 				});
 				menu.getPropertyCells().add(a);
@@ -366,13 +423,22 @@ public class View extends JFrame implements ActionListener {
 			controller.changeFrame(controller.getPath_current(), graph,graphComponent);
 			
 		}
-		
+				
 		if(e.getSource() == frame2.getBtClear()){
 			
 			while(comboBoxRequest.getItemCount()>0){
 				comboBoxRequest.removeItemAt(0);
 			}
 			comboBoxRequest.addItem("No Request");
+			
+			//earse graph
+			graph.setCellsDeletable(true);
+			this.graph.removeCells(this.graph.getChildVertices(this.parent));
+			graph.refresh();
+			graph.setCellsDeletable(false);
+			
+			controller.changeFrame(controller.getPath_current(), graph,graphComponent);
+		//	getController().changeFrame(getController().getPath_current(), graph, graphComponent);
 		}
 		
 		if(e.getSource() == frame2.getBtFinish()){
@@ -405,9 +471,11 @@ public class View extends JFrame implements ActionListener {
 			graph.setCellsDeletable(false);
 			
 			frame2.checkButtons();
+			
 			boolean found  = false;
 			
-			getController().sortListFromRequest(frame2.getContR().getListRequested(),this.graph);
+			getController().sortListFromRequest(frame2.getContR().getListRequested(),this.graph,frame2.getBtCheck_AllCell().isSelected());
+			
 			for(CellRequested cr : frame2.getContR().getListRequested()){		
 				if(cr.isSelected()){
 					found = true;

@@ -94,7 +94,7 @@ public class Controller {
 	}
 //ok
 	public List<Cell> setListCell(String path) {
-		System.out.println("pathhee :" +path);
+		System.out.println("path SetCell :" +path);
 		if(path.equals("/ressources/image0046.csv")){
 			path = this.getClass().getResource(path).getFile();
 		}
@@ -118,8 +118,8 @@ public class Controller {
 		return null;
 	}
 
-	public mxGraphComponent changeFrame(String path, mxGraph graph,
-			mxGraphComponent graphComponent) {
+	public mxGraphComponent changeFrame(String path, mxGraph graph,	mxGraphComponent graphComponent) {
+		
 		graph.setCellsDeletable(true);
 		graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
 		graph.refresh();
@@ -135,6 +135,7 @@ public class Controller {
 		setMinSphericity(MIN);
 
 		//change ListCell
+		System.out.println("path :" +path);
 		this.listCells = setListCell(path);
 		
 		//find Max and Min of Boerder,  Area , Sphérictiy
@@ -286,6 +287,7 @@ public class Controller {
 		mapColor.put("Lymphocyte Nucleus", "green");
 		mapColor.put("Nucleus DAB+ PRD+", "black");
 		mapColor.put("Nucleus DAB+", "blue");
+		mapColor.put("Nucleus PRD+", "orange");
 	}
 
 	//ok
@@ -309,8 +311,8 @@ public class Controller {
 		try {
 			for (Cell c : this.listCells) {
 				graph.insertVertex(graph.getDefaultParent(), null,
-						c.getClass_name(), c.getInner_x() * 0.4,
-						c.getInner_y() * 0.4, 10, 10,
+						c.getClass_name(), c.getInner_x() *0.4,
+						c.getInner_y() *0.4, 10, 10,
 						"shape=ellipse;per=ellipsePerimeter;fillColor="
 								+ getMapColor().get(c.getClass_name()));
 			}
@@ -370,6 +372,15 @@ public class Controller {
 		unionMap.putAll(tmp_map);
 
 		unionMap.putAll(getMapColor());
+		
+		/*for (String key : getMapColor().keySet()) {
+			System.out.println("origine :" + key+ getMapColor().get(key));
+		}
+		
+		for (String key : unionMap.keySet()) {
+			System.out.println("union :" + key+ unionMap.get(key));
+		}
+		*/
 		
 		int i = 0;
 		for (String mapKeyUnion : unionMap.keySet()) {
@@ -539,28 +550,21 @@ public class Controller {
 	System.out.println("time duration "+duration*Math.pow(10,-9)+"s");
 	
 	}
-	public void sortListFromRequest(List<CellRequested> listRequest,mxGraph graph){
+
+	public void sortListFromRequest(List<CellRequested> listRequest,mxGraph graph, boolean allCellSelected) {
 		System.out.println("sort \n");
-		
-		/*
+
 		// debug
 		for (int i = 0; i < listRequest.size(); i++) {
-			System.out.println("element :" + listRequest.get(i).toString());
-		}*/
+			System.out.println("element sort method :"
+					+ listRequest.get(i).toString());
+		}
 		tempList = new ArrayList<Cell>();
-		for (CellRequested element : listRequest) {
-			
-			if (element.isSelected() == true) {
-				System.out.println("isSelected " + element.getName());
-				/*if(element.getName().equals("All Cells")){
-					for (Cell c : getListCells()) {
-						
-					}
-				}*/
-				for (Cell c : getListCells()) {
-					//System.out.println("c : " + c.toString());
-					System.out.println("element : " + element.toString());
 
+		// si allCellSelected alors on affiche toutes les cellules
+		if (allCellSelected == true) {
+			for (Cell c : getListCells()) {
+				for (CellRequested element : listRequest) {
 					if (((element.getName()).equals(c.getClass_name()))
 							&& (c.getArea_pxl() < element.getAreaInf())
 							&& (c.getArea_pxl() > element.getAreaSup())
@@ -568,28 +572,38 @@ public class Controller {
 							&& (c.getSphericity() > element.getSphericitySup())
 							&& (c.getBorder_Lenght_pxl() < element.getBorderInf())
 							&& (c.getBorder_Lenght_pxl() > element.getBorderSup())) {
-						//ajout dans la liste triée de l'element
-						getTempList().add(c);
+									// ajout dans la liste triée de l'element
+									getTempList().add(c);
 					}
 				}
-				/*
-					if((element.getName()).equals("All Cells") 
-							&& (c.getArea_pxl() < element.getAreaInf())
-							&& (c.getArea_pxl() > element.getAreaSup())
-							&& (c.getSphericity() < element.getSphericityInf())
-							&& (c.getSphericity() > element.getSphericitySup())
-							&& (c.getBorder_Lenght_pxl() < element.getBorderInf())
-							&& (c.getBorder_Lenght_pxl() > element.getBorderSup())
-							){
-								//ajout dans la liste triée de l'element
-								getTempList().add(c);
-						
-					}
-					*/
-				}
-				
-
 			}
+		}
+
+		else {
+
+			for (CellRequested element : listRequest) {
+
+				if (element.isSelected() == true) {
+					// System.out.println("isSelected " + element.getName());
+					for (Cell c : getListCells()) {
+						// System.out.println("c : " + c.toString());
+						// System.out.println("element : " + element.toString());
+
+						if (((element.getName()).equals(c.getClass_name()))
+								&& (c.getArea_pxl() < element.getAreaInf())
+								&& (c.getArea_pxl() > element.getAreaSup())
+								&& (c.getSphericity() < element.getSphericityInf())
+								&& (c.getSphericity() > element.getSphericitySup())
+								&& (c.getBorder_Lenght_pxl() < element.getBorderInf())
+								&& (c.getBorder_Lenght_pxl() > element.getBorderSup())) {
+									// ajout dans la liste triée de l'element
+									getTempList().add(c);
+						}
+					}
+				}
+			}
+
+		}
 		
 	
 		
