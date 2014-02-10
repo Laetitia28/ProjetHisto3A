@@ -104,7 +104,7 @@ public class View extends JFrame implements ActionListener {
 		graph.setCellsCloneable(false);
 		graph.setCellsDeletable(false);
 		graph.setCellsMovable(false);
-		graph.setCellsSelectable(false);
+		//graph.setCellsSelectable(false);
 		graph.setCellsResizable(false);
 
 		// create the graph
