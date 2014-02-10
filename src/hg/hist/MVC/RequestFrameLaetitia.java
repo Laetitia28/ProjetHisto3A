@@ -1025,8 +1025,8 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// If value < 0 then this.slider not works , so change value
 		this.contR.setDefault_AreaSup(adaptValue(maxArea));
 		this.contR.setDefault_AreaInf(adaptValue(minArea));
-		this.contR.setDefault_SphericitySup(adaptValue(maxSphericity));
-		this.contR.setDefault_SphericityInf(adaptValue(minSphericity));
+		this.contR.setDefault_SphericitySup(adaptValue(maxSphericity)+1);
+		this.contR.setDefault_SphericityInf(adaptValue(minSphericity)-1);
 		this.contR.setDefault_BorderSup(adaptValue(maxBorder));
 		this.contR.setDefault_BorderInf(adaptValue(minBorder));
 		
@@ -1100,25 +1100,20 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		
 		
 		// Recreate btCheck_AllCell in listCheckBox
-		//btCheck_AllCell.setSelected(true);
 		btCheck_AllCell.setName("All Cells");
 		listCheckBox.add(btCheck_AllCell);
 		this.paneCellDisplay.add(btCheck_AllCell);
 		
 		// Recreate buttons in this.groupButton
-		//btRadio_AllCell.setSelected();
-	//	this.groupButton.add(btRadio_AllCell);
 		this.paneCellule.add(btCheckRadio_AllCell);
 		
 		for (String key_radio : mapForRadioButton.keySet()) {
-			//System.out.println("key_radio : " + key_radio);
 			JRadioButton btRadio_Map = new JRadioButton(key_radio);
 			btRadio_Map.setName(key_radio);
 			this.groupButton.add(btRadio_Map);
 			btRadio_Map.addActionListener(new StateListener());
 			this.paneCellule.add(btRadio_Map);
 			
-			//System.out.println("key_btCheck : " + key_radio);
 			final JCheckBox btCheck_Map = new JCheckBox(key_radio);
 			btCheck_Map.setName(key_radio);
 			btCheck_Map.addActionListener(new ActionListener() {
@@ -1170,7 +1165,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		
 			public double adaptValue(double e){
 				if(e<1){
-					e = (e *1000)+1;
+					e = (e *1000);
 				}
 				return e;
 			}
