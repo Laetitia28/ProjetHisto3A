@@ -10,6 +10,7 @@ public class CellRequested {
 	private double sphericityInf;
 	private double borderSup;
 	private double borderInf;
+	private String neighbourhood;
 
 	public CellRequested() {
 		super();
@@ -17,7 +18,7 @@ public class CellRequested {
 	
 	public CellRequested(String name, boolean isSelected, double areaSup,
 			double areaInf, double sphericitySup, double sphericityInf,
-			double borderSup, double borderInf) {
+			double borderSup, double borderInf , String neighbourhood) {
 		super();
 		this.name = name;
 		this.isSelected = isSelected;
@@ -27,22 +28,35 @@ public class CellRequested {
 		this.sphericityInf = sphericityInf;
 		this.borderSup = borderSup;
 		this.borderInf = borderInf;
+		this.borderInf = borderInf;
+		this.neighbourhood =  neighbourhood;
 	}
 
+
+
+
+	
 	@Override
 	public String toString() {
 		return "CellRequested [name=" + name + ", isSelected=" + isSelected
 				+ ", areaSup=" + areaSup + ", areaInf=" + areaInf
 				+ ", sphericitySup=" + sphericitySup + ", sphericityInf="
 				+ sphericityInf + ", borderSup=" + borderSup + ", borderInf="
-				+ borderInf + "]";
+				+ borderInf + ", neighbourhood=" + neighbourhood + "]";
 	}
-	
+
 	public String toShow() {
 		return "name=" + name +", areaSup=" + areaSup + ", areaInf=" + areaInf
 				+ ", sphericitySup=" + sphericitySup + ", sphericityInf="
 				+ sphericityInf + ", borderSup=" + borderSup + ", borderInf="
 				+ borderInf + "]";
+	}
+	public String getNeighbourhood() {
+		return neighbourhood;
+	}
+
+	public void setNeighbourhood(String neighbourhood) {
+		this.neighbourhood = neighbourhood;
 	}
 	
 	public double getAreaSup() {

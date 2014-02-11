@@ -20,15 +20,15 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -57,9 +57,17 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		private JPanel paneBorderInf = new JPanel();
 		private JPanel paneEnd = new JPanel();
 		
+		private JPanel paneNeighbourhood = new JPanel();
+		private JPanel paneCellDisplayNeighbourhood = new JPanel();
+		private JPanel paneCelluleNeighbourhood = new JPanel();
+		private JPanel paneButtonsNeighbourhood = new JPanel();
+
+		
 		private JButton btFinish = new JButton("Finish");
 		private JButton btApply = new JButton("Apply");
 		private JButton btClear = new JButton("Clear");
+		private JButton btAddOneConstraintNeighbourhood = new JButton("AddOneConstraint");
+		private JButton btClearNeighbourhood = new JButton("Clear");
 		
 		private JSlider sliderSphericitySup ; 
 		private JSlider sliderSphericityInf ;
@@ -84,11 +92,26 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		private ButtonGroup groupButton = new ButtonGroup();
 		
 		private JCheckBox btCheckRadio_AllCell = new JCheckBox("All Cells");
-		private JCheckBox btCheck_AllCell = new JCheckBox("All Cells");		
+		private JCheckBox btCheck_AllCell = new JCheckBox("All Cells");	
+		private JCheckBox btCheck_AllCellNeighborhood = new JCheckBox("All Cells");	
+		
+		
+		private JCheckBox btCheckNeighbourhoodPaneCellule_AllCell = new JCheckBox("All Cells");
 		private List<JCheckBox> listCheckBox = new ArrayList<JCheckBox>();
+		private List<JCheckBox> listCheckBoxNeighborhood = new ArrayList<JCheckBox>();
+		private List<JCheckBox> listCheckBoxPaneCelluleNeighborhood = new ArrayList<JCheckBox>();
+		
 		private String radioSelected = "Tumor nucleus";
 
 		private boolean btCheckRadio_AllCellSelected = false;
+		
+		private JTabbedPane tabbedPane = new JTabbedPane();
+		
+		private final static String PARAMETERS = "Search using parameters of cells";
+		private final static String NEIGHBOURHOOD = "Search using neighbourhood";
+		
+		private JComboBox comboBox = new JComboBox();
+
 		
 		private ControllerRequest contR;
 		
@@ -97,13 +120,15 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 
 		this.contR = contR;
 
+		comboBox.addItem("No Request");
+
 		System.out.println("MaxParamsReceive \n" + " Area : " + maxArea
 				+ " Sphericity :" + maxSphericity + " Border : " + maxBorder);
 		System.out.println("MinParamsReceive \n " + " Area : " + minArea
 				+ " Sphericity :" + minSphericity + " Border : " + minBorder);
 
 		// Size of Frame
-		this.setSize(500, 680);
+		this.setSize(500, 750);
 
 		// If value < 0 then this.slider not works , so change value
 		this.contR.setDefault_AreaSup(adaptValue(maxArea));
@@ -152,7 +177,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 
 		this.panelTotal.setBackground(Color.white);
 
-		this.add(panelTotal);
+		
 
 		// choisir la cellule
 
@@ -168,25 +193,50 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		this.paneCellule.setBounds(0, 200, 150, 200);
 		this.paneCellule.setOpaque(true);
 		this.paneCellule.setBackground(Color.GREEN);
-		//this.paneCellule.setPreferredSize(new Dimension(600, 50));
 		this.paneCellule.setLayout(new GridLayout(3, 3));
 
+		this.paneCelluleNeighbourhood.setBorder(blackline);
+		this.paneCelluleNeighbourhood.setBounds(0, 200, 150, 200);
+		this.paneCelluleNeighbourhood.setOpaque(true);
+		this.paneCelluleNeighbourhood.setBackground(Color.GREEN);
+		this.paneCelluleNeighbourhood.setLayout(new GridLayout(3, 3));
+		
+		
 		this.paneCellDisplay.setBorder(blackline);
 		this.paneCellDisplay.setBounds(0, 200, 150, 200);
 		this.paneCellDisplay.setOpaque(true);
 		this.paneCellDisplay.setBackground(Color.GREEN);
-		//this.paneCellDisplay.setPreferredSize(new Dimension(600, 50));
 		this.paneCellDisplay.setLayout(new GridLayout(3, 3));
+		
+		this.paneCellDisplayNeighbourhood.setBorder(blackline);
+		this.paneCellDisplayNeighbourhood.setBounds(0, 200, 150, 200);
+		this.paneCellDisplayNeighbourhood.setOpaque(true);
+		this.paneCellDisplayNeighbourhood.setBackground(Color.GREEN);
+		this.paneCellDisplayNeighbourhood.setLayout(new GridLayout(3, 3));
 
 		this.btCheck_AllCell.setName("All Cells");
-		this.listCheckBox.add(btCheck_AllCell);
+		this.listCheckBox.add(btCheck_AllCell);	
+		
 		this.btCheck_AllCell.addActionListener(this);
 		this.paneCellDisplay.add(btCheck_AllCell);
+		//paleNeighobohoohd
+		
+		this.btCheck_AllCellNeighborhood.setName("All Cells");
+		this.listCheckBoxNeighborhood.add(btCheck_AllCellNeighborhood);
+		
+		this.btCheck_AllCellNeighborhood.addActionListener(this);
+		this.paneCellDisplayNeighbourhood.add(btCheck_AllCellNeighborhood);
 
-		// this.groupButton.add(btRadio_AllCell);
+		
+		this.btCheckNeighbourhoodPaneCellule_AllCell.setName("All Cells");
+		this.listCheckBoxPaneCelluleNeighborhood.add(btCheckNeighbourhoodPaneCellule_AllCell);
+		
+		this.btCheckNeighbourhoodPaneCellule_AllCell.addActionListener(this);
+		this.paneCelluleNeighbourhood.add(btCheckNeighbourhoodPaneCellule_AllCell);
+
 		this.paneCellule.add(btCheckRadio_AllCell);
-		// this.btRadio_AllCell.addActionListener(new StateListener());
 		this.btCheckRadio_AllCell.addActionListener(this);
+
 
 		// /RUBRIQUE 0
 		// To center the this.label
@@ -231,7 +281,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		this.sliderDisplayAreaInf.setForeground(Color.BLUE);
 
 		// Sup
-		Dimension d = this.sliderAreaSup.getPreferredSize();
+		//Dimension d = this.sliderAreaSup.getPreferredSize();
 	//	this.sliderAreaSup.setPreferredSize(new Dimension(d.width + 200,		d.height + 30));
 		this.sliderAreaSup.setMajorTickSpacing(1000);
 		this.sliderAreaSup.setMinorTickSpacing(100);
@@ -666,10 +716,11 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			//this.paneEnd.setPreferredSize(new Dimension(900, 100));
 			this.paneEnd.setBackground(Color.white);
 		
-			btFinish.addActionListener(this);
-			btApply.addActionListener(this);
-			btClear.addActionListener(this);
-		
+			this.btFinish.addActionListener(this);
+			this.btApply.addActionListener(this);
+			this.btClear.addActionListener(this);
+			this.btAddOneConstraintNeighbourhood.addActionListener(this);
+			this.btClearNeighbourhood.addActionListener(this);
 			
 			this.paneEnd.add(btFinish, BorderLayout.WEST);
 			this.paneEnd.add(btApply, BorderLayout.WEST);
@@ -683,7 +734,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			GridBagConstraints c = new GridBagConstraints();
 			this.panelTotal.setLayout(new GridBagLayout());
 			c.weightx = 1;
-			c.weighty = 6;
+			c.weighty = 7;
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 0;
@@ -691,6 +742,8 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 1;
+			c.weightx = 0.5;
+
 			this.panelTotal.add(this.rubrique1,c);
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
@@ -704,13 +757,54 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			c.gridx = 0;
 			c.gridy = 4;
 			this.panelTotal.add(this.rubrique4,c);
-			c.fill = GridBagConstraints.PAGE_END;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
-			c.gridy = 5;
+			c.gridy = 6;
 			c.insets = new Insets(5, 5, 5, 5);
-
-			//this.panelTotal.add(p,BorderLayout);
 			this.panelTotal.add(this.paneEnd,c);
+			
+			
+			this.tabbedPane.add(PARAMETERS,panelTotal);
+			
+			
+			GridBagConstraints cNeighbouhood = new GridBagConstraints();
+			
+			this.paneNeighbourhood.setLayout(new GridBagLayout());
+			cNeighbouhood.weightx = 1;
+			cNeighbouhood.weighty = 4;
+			
+			cNeighbouhood.fill = GridBagConstraints.HORIZONTAL;
+			
+			cNeighbouhood.gridx = 0;
+			cNeighbouhood.gridy = 0;
+			
+			this.paneCellDisplayNeighbourhood.setBackground(Color.RED);
+			this.paneNeighbourhood.add(paneCellDisplayNeighbourhood,cNeighbouhood);
+			
+			cNeighbouhood.fill = GridBagConstraints.HORIZONTAL;
+			cNeighbouhood.gridx = 0;
+			cNeighbouhood.gridy = 1;
+			this.paneNeighbourhood.add(paneCelluleNeighbourhood,cNeighbouhood);
+			
+			
+			cNeighbouhood.fill = GridBagConstraints.BOTH;
+			cNeighbouhood.gridx = 0;
+			cNeighbouhood.gridy = 2;
+			
+			this.paneButtonsNeighbourhood.add(this.btAddOneConstraintNeighbourhood);
+			this.paneButtonsNeighbourhood.add(this.btClearNeighbourhood);
+
+			this.paneNeighbourhood.add(comboBox,cNeighbouhood);
+
+			cNeighbouhood.fill = GridBagConstraints.BOTH;
+			cNeighbouhood.weighty=0.5;
+			cNeighbouhood.gridx = 0;
+			cNeighbouhood.gridy = 3;
+			this.paneNeighbourhood.add(this.paneButtonsNeighbourhood,cNeighbouhood);
+			
+			this.tabbedPane.add(NEIGHBOURHOOD,paneNeighbourhood);
+			
+			this.add(tabbedPane);
 		}
 		
 		public void stateChanged(ChangeEvent event) {
@@ -878,7 +972,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// Si on coche btCheck_AllCell
-			if(e.getSource() == btCheck_AllCell){
+			if(e.getSource() == this.btCheck_AllCell){
 				System.out.println("All Cells check");
 								
 				for(JCheckBox ch : listCheckBox){
@@ -895,7 +989,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			//Si on coche BtCheckRadio_AllCell()
 		if (e.getSource() == getBtCheckRadio_AllCell()) {
 
-			if (btCheckRadio_AllCellSelected == false) {
+			if (this.btCheckRadio_AllCellSelected == false) {
 				
 				//on grise les boutons 
 				Enumeration<AbstractButton> elements = this.groupButton.getElements();
@@ -920,11 +1014,46 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			}
 			
 		}
-			if (e.getSource() == btFinish) {
-				System.out.println("It is finish ! RequestFrame");
+			if(e.getSource() == this.btClearNeighbourhood){
 				
-				//this.btRadio_AllCell.setSelected(true);
-				//this.btCheck_AllCell.setSelected(true);
+				for(CellRequested cr : this.contR.getListRequested()){
+					cr.setNeighbourhood("");
+				}
+				for(JCheckBox ch : listCheckBoxNeighborhood){
+					ch.setSelected(false);
+				}
+				for(JCheckBox ch : listCheckBoxPaneCelluleNeighborhood){
+					ch.setSelected(false);
+				}
+				
+			}
+			if(e.getSource() == this.btAddOneConstraintNeighbourhood){
+				
+				for(JCheckBox ch : this.listCheckBoxNeighborhood){
+
+					if(ch.isSelected()){
+						System.out.println(ch.toString());
+
+						for(JCheckBox ch2 : listCheckBoxPaneCelluleNeighborhood){
+
+							if(ch2.isSelected()){
+								System.out.println("ch2 \n" + ch2.toString());
+
+								for (int i = 0; i < this.contR.getListRequested().size(); i++) {
+									if ((ch.getName()).equals(this.contR.getListRequested().get(i).getName())) {
+												this.contR.getListRequested().get(i).setNeighbourhood(this.contR.getListRequested().get(i).getNeighbourhood() +" " + ch2.getName());
+									}
+								}
+							}
+						}
+					}
+				}
+				for(CellRequested cr : this.contR.getListRequested()){
+					System.out.println(cr.toString());
+				}
+			}
+			if (e.getSource() == this.btFinish) {
+				System.out.println("It is finish ! RequestFrame");
 					
 				this.sliderAreaInf.setValue((int)this.contR.getDefault_AreaSup());
 				this.sliderAreaSup.setValue((int)this.contR.getDefault_AreaInf());
@@ -943,7 +1072,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 				
 				this.setVisible(false);
 			}
-			if (e.getSource() == btClear) {
+			if (e.getSource() == this.btClear) {
 				
 				System.out.println("It is Clear RequestFrame !");
 				//radio_All cell true
@@ -991,7 +1120,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			}
 		
 		
-			if (e.getSource() == btApply) {
+			if (e.getSource() == this.btApply) {
 				System.out.println("It is apply from RequestFram !");
 				String h = "";
 				for(CellRequested cr : getContR().getListRequested()){
@@ -1144,24 +1273,34 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		}
 		// delete in paneCell
 		this.paneCellule.removeAll();
+		this.paneCelluleNeighbourhood.removeAll();
 		
 		// Bouttons checkBox
 		// delete all buttons in listCheckBox
 		for (int i= 0;i<listCheckBox.size();i++) {
 			System.out.println("I delete checkBox : "+listCheckBox.get(i).getName());
 			listCheckBox.remove(i);
+			listCheckBoxNeighborhood.remove(i);
+			listCheckBoxPaneCelluleNeighborhood.remove(i);
 		}
 		// delete in paneCell
 		this.paneCellDisplay.removeAll();
-		
+		this.paneCellDisplayNeighbourhood.removeAll();
 		
 		// Recreate btCheck_AllCell in listCheckBox
 		btCheck_AllCell.setName("All Cells");
 		listCheckBox.add(btCheck_AllCell);
 		this.paneCellDisplay.add(btCheck_AllCell);
 		
+		btCheck_AllCellNeighborhood.setName("All Cells");
+		listCheckBoxNeighborhood.add(btCheck_AllCellNeighborhood);
+		listCheckBoxPaneCelluleNeighborhood.add(btCheckNeighbourhoodPaneCellule_AllCell);
+		
+		this.paneCellDisplayNeighbourhood.add(btCheck_AllCellNeighborhood);
+		
 		// Recreate buttons in this.groupButton
 		this.paneCellule.add(btCheckRadio_AllCell);
+		this.paneCelluleNeighbourhood.add(btCheckNeighbourhoodPaneCellule_AllCell);
 		
 		for (String key_radio : mapForRadioButton.keySet()) {
 			JRadioButton btRadio_Map = new JRadioButton(key_radio);
@@ -1190,20 +1329,54 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 					}
 				}
 			});
+			
+			final JCheckBox btCheck_MapNeighborhoodPaneCellule = new JCheckBox(key_radio);
+			btCheck_MapNeighborhoodPaneCellule.setName(key_radio);
+			this.paneCelluleNeighbourhood.add(btCheck_MapNeighborhoodPaneCellule);	
+			this.listCheckBoxPaneCelluleNeighborhood.add(btCheck_MapNeighborhoodPaneCellule);
+
+			final JCheckBox btCheck_MapNeighborhood = new JCheckBox(key_radio);
+			btCheck_MapNeighborhood.setName(key_radio);
+			btCheck_MapNeighborhood.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(btCheck_MapNeighborhood.isSelected()){
+						
+						for(JCheckBox ch :listCheckBoxPaneCelluleNeighborhood ){
+							ch.setSelected(false);
+						}
+						
+					}
+				}
+			});
+			
+			
 			this.paneCellDisplay.add(btCheck_Map);
-			listCheckBox.add(btCheck_Map);
-		
+			this.paneCellDisplayNeighbourhood.add(btCheck_MapNeighborhood);
+			
+			this.listCheckBox.add(btCheck_Map);			
+			this.listCheckBoxNeighborhood.add(btCheck_MapNeighborhood);
+			
+			for(JCheckBox ck : listCheckBoxPaneCelluleNeighborhood){
+				System.out.println(ck.getName());
+			}
+			System.out.println("size : " + listCheckBoxPaneCelluleNeighborhood.size());
 		}
+		//this.paneNeighbourhood.add(this.paneCellDisplayNeighbourhood);		
+		//this.paneNeighbourhood.add(this.paneCelluleNeighbourhood);		
+
+		
 		this.rubrique1.add(this.paneCellule);
 		this.rubrique0.add(this.paneCellDisplay);
 				
 		this.contR.getListRequested().clear();
 		
 		for(String h : mapForRadioButton.keySet()){
-			CellRequested cr = new CellRequested(h, false, minArea, maxArea, minSphericity, maxSphericity, minBorder, maxBorder);
+			CellRequested cr = new CellRequested(h, false, minArea, maxArea, minSphericity, maxSphericity, minBorder, maxBorder,"");
 			this.contR.getListRequested().add(cr);
 		}
-		this.contR.getListRequested().add(new CellRequested("All Cells", false,minArea, maxArea, minSphericity, maxSphericity, minBorder, maxBorder));
+		this.contR.getListRequested().add(new CellRequested("All Cells", false,minArea, maxArea, minSphericity, maxSphericity, minBorder, maxBorder,""));
 		/*
 		//debug
 		for(int i= 0; i<this.contR.getListRequested().size();i++ ){

@@ -556,8 +556,35 @@ public class Controller {
 
 		}
 		
-	
-		
+		ArrayList<Cell> tmpWithNeighbourhood = new ArrayList<Cell>();
+		boolean listnew =false;
+		for(CellRequested cr : listRequest){
+			if(!cr.getNeighbourhood().equals("")){
+				listnew =true;
+
+				System.out.println("cr"+cr.getName() + cr.getNeighbourhood());
+				for(Cell c :getTempList()){
+					
+					if((c.getClass_name().equals(cr.getName()))){
+						System.out.println("found");
+
+						for(Cell caca : getListCells()){
+							System.out.println(cr.getNeighbourhood().contains(caca.getClass_name()));
+							if(cr.getNeighbourhood().contains(caca.getClass_name())){
+								System.out.println("caca");
+								if (((Math.abs(c.getInner_x() - caca.getInner_x()) < 40) && (Math.abs(c.getInner_y() - caca.getInner_y()) < 40))) {
+									tmpWithNeighbourhood.add(c);
+							}
+						}
+						}
+						
+					}
+				}
+			}
+		}
+		if(listnew ==true){
+		setTempList(tmpWithNeighbourhood);
+		}
 		graph.getModel().beginUpdate();
 		try {
 			for (Cell c : getTempList()) {
