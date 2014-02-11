@@ -268,7 +268,6 @@ public class View extends JFrame implements ActionListener {
 		}
 
 		// Add ActionListener elements
-		//graph.addListener(mxEvent.SELECT, );
 		menu.getExit().addActionListener(this);
 		menu.getOpen().addActionListener(this);
 		menu.getPropertyCells().addActionListener(this);
