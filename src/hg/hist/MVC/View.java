@@ -11,6 +11,8 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -32,7 +34,11 @@ import javax.swing.border.EmptyBorder;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
+import com.mxgraph.util.mxEvent;
+import com.mxgraph.util.mxEventObject;
+import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.mxGraphSelectionModel;
 
 public class View extends JFrame implements ActionListener {
 
@@ -104,9 +110,26 @@ public class View extends JFrame implements ActionListener {
 		graph.setCellsCloneable(false);
 		graph.setCellsDeletable(false);
 		graph.setCellsMovable(false);
-		//graph.setCellsSelectable(false);
+		graph.setCellsSelectable(false);
 		graph.setCellsResizable(false);
+		
+		graphComponent.getGraphControl().addMouseListener(new MouseAdapter() {
+			 public void mousePressed(MouseEvent e) {
+			      if (e.getClickCount() == 1) {
+			        // Get Cell under Mousepointer
+			        int x = e.getX(), y = e.getY();
+			        
+			        Object cell = graphComponent.getCellAt(x, y);
+			        // Print Cell Label
+			        if (cell != null) {
+			        	System.out.println(graph.convertValueToString(cell));
+			        	System.out.println("x :"+ x + "y : "+ y);
 
+			        }
+			      }
+			 }
+		
+		});
 		// create the graph
 		controller.initFrame(graph, graphComponent);
 
@@ -158,7 +181,6 @@ public class View extends JFrame implements ActionListener {
 
 		setJMenuBar(menu.buildMenu());
 
-		// frame2 = new RequestFram();
 		frame2 = new RequestFrameLaetitia(contR, controller.getMaxArea(),
 				controller.getMaxSphericity(), controller.getMaxBorder(),
 				controller.getMinArea(), controller.getMinSphericity(),
@@ -246,6 +268,7 @@ public class View extends JFrame implements ActionListener {
 		}
 
 		// Add ActionListener elements
+		//graph.addListener(mxEvent.SELECT, );
 		menu.getExit().addActionListener(this);
 		menu.getOpen().addActionListener(this);
 		menu.getPropertyCells().addActionListener(this);
