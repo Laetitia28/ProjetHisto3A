@@ -66,7 +66,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		private JButton btFinish = new JButton("Finish");
 		private JButton btApply = new JButton("Apply");
 		private JButton btClear = new JButton("Clear");
-		private JButton btAddOneConstraintNeighbourhood = new JButton("AddOneConstraint");
+		private JButton btAddOneConstraintNeighbourhood = new JButton("AddConstraint");
 		private JButton btClearNeighbourhood = new JButton("Clear");
 		
 		private JSlider sliderSphericitySup ; 
@@ -182,36 +182,36 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// choisir la cellule
 
 		// this.rubrique0.setPreferredSize(new Dimention(1000,100));
-		this.rubrique0.setBackground(Color.GREEN);
+	//	this.rubrique0.setBackground(Color.GREEN);
 
 		// this.rubrique1.setPreferredSize(new Dimension(1000, 100));
-		this.rubrique1.setBackground(Color.RED);
+	//	this.rubrique1.setBackground(Color.RED);
 
 		// put a line a separator
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		this.paneCellule.setBorder(blackline);
 		this.paneCellule.setBounds(0, 200, 150, 200);
 		this.paneCellule.setOpaque(true);
-		this.paneCellule.setBackground(Color.GREEN);
+	//	this.paneCellule.setBackground(Color.GREEN);
 		this.paneCellule.setLayout(new GridLayout(3, 3));
 
 		this.paneCelluleNeighbourhood.setBorder(blackline);
 		this.paneCelluleNeighbourhood.setBounds(0, 200, 150, 200);
 		this.paneCelluleNeighbourhood.setOpaque(true);
-		this.paneCelluleNeighbourhood.setBackground(Color.GREEN);
+	//	this.paneCelluleNeighbourhood.setBackground(Color.GREEN);
 		this.paneCelluleNeighbourhood.setLayout(new GridLayout(3, 3));
 		
 		
 		this.paneCellDisplay.setBorder(blackline);
 		this.paneCellDisplay.setBounds(0, 200, 150, 200);
 		this.paneCellDisplay.setOpaque(true);
-		this.paneCellDisplay.setBackground(Color.GREEN);
+		//this.paneCellDisplay.setBackground(Color.GREEN);
 		this.paneCellDisplay.setLayout(new GridLayout(3, 3));
 		
 		this.paneCellDisplayNeighbourhood.setBorder(blackline);
 		this.paneCellDisplayNeighbourhood.setBounds(0, 200, 150, 200);
 		this.paneCellDisplayNeighbourhood.setOpaque(true);
-		this.paneCellDisplayNeighbourhood.setBackground(Color.GREEN);
+	//	this.paneCellDisplayNeighbourhood.setBackground(Color.GREEN);
 		this.paneCellDisplayNeighbourhood.setLayout(new GridLayout(3, 3));
 
 		this.btCheck_AllCell.setName("All Cells");
@@ -255,30 +255,30 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// RUBRIQUE 2 AREA
 
 		//this.rubrique2.setPreferredSize(new Dimension(1000, 1000));
-		this.rubrique2.setBackground(Color.YELLOW);
+	//	this.rubrique2.setBackground(Color.YELLOW);
 
 		this.paneAreaSup.setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.weightx = 3;
 		gc.weighty = 1;
-		this.paneAreaSup.setBackground(Color.ORANGE);
+	//	this.paneAreaSup.setBackground(Color.ORANGE);
 		//this.paneAreaSup.setPreferredSize(new Dimension(435, 60));
 
 		this.paneAreaInf.setLayout(new GridBagLayout());
 		GridBagConstraints gcAreaInf = new GridBagConstraints();
 		gcAreaInf.weightx = 3;
 		gcAreaInf.weighty = 1;
-		this.paneAreaInf.setBackground(Color.ORANGE);
+	//	this.paneAreaInf.setBackground(Color.ORANGE);
 		//this.paneAreaInf.setPreferredSize(new Dimension(435, 60));
 
 		// Area
 		// Sup
 		this.sliderDisplayAreaSup.setPreferredSize(new Dimension(50, 45));
-		this.sliderDisplayAreaSup.setForeground(Color.BLUE);
+	//	this.sliderDisplayAreaSup.setForeground(Color.BLUE);
 
 		// Inf
 		this.sliderDisplayAreaInf.setPreferredSize(new Dimension(50, 45));
-		this.sliderDisplayAreaInf.setForeground(Color.BLUE);
+	//	this.sliderDisplayAreaInf.setForeground(Color.BLUE);
 
 		// Sup
 		//Dimension d = this.sliderAreaSup.getPreferredSize();
@@ -422,14 +422,14 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// RUBRIQUE 3 Shpericity
 
 		// this.rubrique3.setPreferredSize(new Dimension(1100, 100));
-		this.rubrique3.setBackground(Color.GREEN);
+	//	this.rubrique3.setBackground(Color.GREEN);
 
 		// sup
 		this.paneSphereSup.setLayout(new GridBagLayout());
 		GridBagConstraints gcSphericitySup = new GridBagConstraints();
 		gcSphericitySup.weightx = 3;
 		gcSphericitySup.weighty = 1;
-		this.paneSphereSup.setBackground(Color.RED);
+	//	this.paneSphereSup.setBackground(Color.RED);
 		// this.paneSphereSup.setPreferredSize(new Dimension(600, 50));
 
 		// Inf
@@ -437,17 +437,17 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		GridBagConstraints gcSphericityInf = new GridBagConstraints();
 		gcSphericityInf.weightx = 3;
 		gcSphericityInf.weighty = 1;
-		this.paneSphereInf.setBackground(Color.GREEN);
+	//	this.paneSphereInf.setBackground(Color.GREEN);
 		// this.paneSphereInf.setPreferredSize(new Dimension(600, 50));
 
 		// sphericity
 		// Sup
 		this.sliderDisplaySphericitySup.setPreferredSize(new Dimension(50, 45));
-		this.sliderDisplaySphericitySup.setForeground(Color.BLUE);
+	//	this.sliderDisplaySphericitySup.setForeground(Color.BLUE);
 
 		// Inf
 		this.sliderDisplaySphericityInf.setPreferredSize(new Dimension(50, 45));
-		this.sliderDisplaySphericityInf.setForeground(Color.BLUE);
+	//	this.sliderDisplaySphericityInf.setForeground(Color.BLUE);
 
 		// Sup
 		//this.sliderSphericitySup.setPreferredSize(new Dimension(
@@ -572,30 +572,30 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// Border
 
 		// this.rubrique4.setPreferredSize(new Dimension(1100, 100));
-		this.rubrique4.setBackground(Color.YELLOW);
+		//this.rubrique4.setBackground(Color.YELLOW);
 
 		this.paneBorderSup.setLayout(new GridBagLayout());
 		GridBagConstraints gcBorderSup = new GridBagConstraints();
 		gcBorderSup.weightx = 3;
 		gcBorderSup.weighty = 1;
-		this.paneBorderSup.setBackground(Color.BLUE);
+	//	this.paneBorderSup.setBackground(Color.BLUE);
 		// this.paneBorderSup.setPreferredSize(new Dimension(600, 50));
 
 		this.paneBorderInf.setLayout(new GridBagLayout());
 		GridBagConstraints gcBorderInf = new GridBagConstraints();
 		gcBorderInf.weightx = 3;
 		gcBorderInf.weighty = 1;
-		this.paneBorderInf.setBackground(Color.white);
+	//	this.paneBorderInf.setBackground(Color.white);
 		// this.paneBorderInf.setPreferredSize(new Dimension(600, 50));
 
 		// Border
 		// Sup
 		this.sliderDisplayBorderSup.setPreferredSize(new Dimension(50, 45));
-		this.sliderDisplayBorderSup.setForeground(Color.BLUE);
+	//	this.sliderDisplayBorderSup.setForeground(Color.BLUE);
 
 		// Inf
 		this.sliderDisplayBorderInf.setPreferredSize(new Dimension(50, 45));
-		this.sliderDisplayBorderInf.setForeground(Color.BLUE);
+	//	this.sliderDisplayBorderInf.setForeground(Color.BLUE);
 
 		// Sup
 		//this.sliderBorderSup.setPreferredSize(new Dimension(
