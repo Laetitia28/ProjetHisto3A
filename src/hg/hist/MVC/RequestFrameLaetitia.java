@@ -41,6 +41,8 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			
 		private JLabel labelDisplayTypeCell = new JLabel("Choose cells to display");
 		private JLabel labelChooseType = new JLabel("Choose your Cellule type");
+		private JLabel labelNeighbourhood0= new JLabel("Select your target cellule");
+		private JLabel labelNeighbourhood1= new JLabel("Near To ");
 		private JLabel labelSphericity = new JLabel("Choose your spherecity ");
 		private JLabel labelArea = new JLabel("Choose your area (pxl) ");
 		private JLabel labelBorder = new JLabel("Choose your border (pxl) ");
@@ -88,6 +90,9 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		private JPanel rubrique2 = new JPanel(new GridBagLayout());
 		private JPanel rubrique3 = new JPanel(new GridBagLayout());
 		private JPanel rubrique4 = new JPanel(new GridBagLayout());
+		
+		private JPanel rubrique0N = new JPanel(new BorderLayout());
+		private JPanel rubrique1N = new JPanel(new BorderLayout());
 		
 		private ButtonGroup groupButton = new ButtonGroup();
 		
@@ -182,10 +187,10 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// choisir la cellule
 
 		// this.rubrique0.setPreferredSize(new Dimention(1000,100));
-	//	this.rubrique0.setBackground(Color.GREEN);
+	    this.rubrique0.setBackground(Color.darkGray);
 
 		// this.rubrique1.setPreferredSize(new Dimension(1000, 100));
-	//	this.rubrique1.setBackground(Color.RED);
+        this.rubrique1.setBackground(Color.darkGray);
 
 		// put a line a separator
 		Border blackline = BorderFactory.createLineBorder(Color.black);
@@ -211,7 +216,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		this.paneCellDisplayNeighbourhood.setBorder(blackline);
 		this.paneCellDisplayNeighbourhood.setBounds(0, 200, 150, 200);
 		this.paneCellDisplayNeighbourhood.setOpaque(true);
-	//	this.paneCellDisplayNeighbourhood.setBackground(Color.GREEN);
+	   // this.paneCellDisplayNeighbourhood.setBackground(Color.red);
 		this.paneCellDisplayNeighbourhood.setLayout(new GridLayout(3, 3));
 
 		this.btCheck_AllCell.setName("All Cells");
@@ -242,6 +247,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// To center the this.label
 		this.labelDisplayTypeCell.setHorizontalAlignment(JLabel.CENTER);
 		this.labelDisplayTypeCell.setVerticalAlignment(JLabel.CENTER);
+		this.labelDisplayTypeCell.setForeground(Color.RED);
 		this.rubrique0.add(this.labelDisplayTypeCell, BorderLayout.NORTH);
 		this.rubrique0.add(this.paneCellDisplay, BorderLayout.CENTER);
 
@@ -249,13 +255,14 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// To center the this.label
 		this.labelChooseType.setHorizontalAlignment(JLabel.CENTER);
 		this.labelChooseType.setVerticalAlignment(JLabel.CENTER);
+		this.labelChooseType.setForeground(Color.RED);
 		this.rubrique1.add(this.labelChooseType, BorderLayout.NORTH);
 		this.rubrique1.add(this.paneCellule, BorderLayout.CENTER);
 
 		// RUBRIQUE 2 AREA
 
 		//this.rubrique2.setPreferredSize(new Dimension(1000, 1000));
-	//	this.rubrique2.setBackground(Color.YELLOW);
+	    this.rubrique2.setBackground(Color.darkGray);
 
 		this.paneAreaSup.setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
@@ -392,7 +399,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 
 	//	contraintes.anchor = GridBagConstraints.;
 		contraintes.fill = GridBagConstraints.BOTH;
-
+         this.labelArea.setForeground(Color.red);
 		this.rubrique2.add(this.labelArea, contraintes);
 
 		contraintes.fill = GridBagConstraints.BOTH;
@@ -422,7 +429,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// RUBRIQUE 3 Shpericity
 
 		// this.rubrique3.setPreferredSize(new Dimension(1100, 100));
-	//	this.rubrique3.setBackground(Color.GREEN);
+	    this.rubrique3.setBackground(Color.darkGray);
 
 		// sup
 		this.paneSphereSup.setLayout(new GridBagLayout());
@@ -555,6 +562,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 
 		this.labelSphericity.setText("<html>" + this.labelSphericity.getText()
 				+ " (" + j + " pxl ) </html>");
+		this.labelSphericity.setForeground(Color.red);
 		this.rubrique3.add(this.labelSphericity, contraintesSphericity);
 
 		contraintesSphericity.fill = GridBagConstraints.BOTH;
@@ -572,7 +580,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		// Border
 
 		// this.rubrique4.setPreferredSize(new Dimension(1100, 100));
-		//this.rubrique4.setBackground(Color.YELLOW);
+		this.rubrique4.setBackground(Color.darkGray);
 
 		this.paneBorderSup.setLayout(new GridBagLayout());
 		GridBagConstraints gcBorderSup = new GridBagConstraints();
@@ -700,6 +708,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		contraintesBorder.gridy = 0;
 		contraintesBorder.gridwidth = 1;
 		contraintesBorder.anchor = GridBagConstraints.NORTH;
+		this.labelBorder.setForeground(Color.red);
 		this.rubrique4.add(this.labelBorder, contraintesBorder);
 
 		contraintesBorder.fill = GridBagConstraints.BOTH;
@@ -731,6 +740,10 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			p.setPreferredSize(new Dimension(p.getWidth()+100, p.getHeight()+20));
 			*/
 			//GridLayout experimentLayout = new GridLayout(6,1);
+			
+			
+			
+			
 			GridBagConstraints c = new GridBagConstraints();
 			this.panelTotal.setLayout(new GridBagLayout());
 			c.weightx = 1;
@@ -767,26 +780,50 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			this.tabbedPane.add(PARAMETERS,panelTotal);
 			
 			
-			GridBagConstraints cNeighbouhood = new GridBagConstraints();
+			//**************************************Onglet2*******************************************\\
+			
+			GridBagConstraints cNeighbouhood = new GridBagConstraints( );
 			
 			this.paneNeighbourhood.setLayout(new GridBagLayout());
 			cNeighbouhood.weightx = 1;
-			cNeighbouhood.weighty = 4;
+			cNeighbouhood.weighty = 0;
+			cNeighbouhood.insets=new Insets(5, 0, 5, 0);
 			
 			cNeighbouhood.fill = GridBagConstraints.HORIZONTAL;
 			
 			cNeighbouhood.gridx = 0;
 			cNeighbouhood.gridy = 0;
 			
-			this.paneCellDisplayNeighbourhood.setBackground(Color.RED);
-		//this.paneNeighbourhood.add(rubrique0Neighbood,cNeighbouhood);
-			this.paneNeighbourhood.add(paneCellDisplayNeighbourhood,cNeighbouhood);
+			
+			
+			this.rubrique0N.setBackground(Color.darkGray);
+			this.labelNeighbourhood0.setHorizontalAlignment(JLabel.CENTER);
+			this.labelNeighbourhood0.setVerticalAlignment(JLabel.CENTER);
+			this.labelNeighbourhood0.setForeground(Color.RED);
+			this.rubrique0N.add(this.labelNeighbourhood0, BorderLayout.NORTH);
+			this.rubrique0N.add(this.paneCellDisplayNeighbourhood, BorderLayout.CENTER);
+			
+			//this.paneCellDisplayNeighbourhood.setBackground(Color.RED);
+		   this.paneNeighbourhood.add(rubrique0N,cNeighbouhood);
+		   //this.paneNeighbourhood.add(paneCellDisplayNeighbourhood,cNeighbouhood);
 			
 			cNeighbouhood.fill = GridBagConstraints.HORIZONTAL;
 			cNeighbouhood.gridx = 0;
 			cNeighbouhood.gridy = 1;
+			
+			
+			
+			this.rubrique1N.setBackground(Color.darkGray);
+			this.labelNeighbourhood1.setHorizontalAlignment(JLabel.CENTER);
+			this.labelNeighbourhood1.setVerticalAlignment(JLabel.CENTER);
+			this.labelNeighbourhood1.setForeground(Color.RED);
+			this.rubrique1N.add(this.labelNeighbourhood1, BorderLayout.NORTH);
+			this.rubrique1N.add(this.paneCelluleNeighbourhood, BorderLayout.CENTER);
+			
+			//this.paneCellDisplayNeighbourhood.setBackground(Color.RED);
+		    this.paneNeighbourhood.add(rubrique1N,cNeighbouhood);
 			//this.paneNeighbourhood.add(rubrique1Neighbood,cNeighbouhood);
-			this.paneNeighbourhood.add(paneCelluleNeighbourhood,cNeighbouhood);
+			//this.paneNeighbourhood.add(paneCelluleNeighbourhood,cNeighbouhood);
 			
 			
 			cNeighbouhood.fill = GridBagConstraints.BOTH;
