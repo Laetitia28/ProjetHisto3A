@@ -57,7 +57,7 @@ public class Controller {
 	//C'est la liste de cellule qui est selectionner dans la fenetre request
 	private List<Cell> tempList ;
 
-	private String[] listColor = {"red","white","green","black","blue","cyan","darkGray","gray","magenta","orange","pink","yellow"};
+	private String[] listColor = {"red","white","green","black","blue","cyan","darkGray","gray","magenta","orange","yellow"};
 
 
 	
@@ -149,7 +149,7 @@ public class Controller {
 		try {
 			for (Cell c : this.listCells) {
 				graph.insertVertex(graph.getDefaultParent(), null,
-						c.getClass_name(), c.getInner_x() * 0.4,
+						"", c.getInner_x() * 0.4,
 						c.getInner_y() * 0.4, 10, 10,
 						"shape=ellipse;per=ellipsePerimeter;fillColor="
 								+ getMapColor().get(c.getClass_name()));
@@ -283,7 +283,7 @@ public class Controller {
 	//ok
 	public void mapColorCellInit() {
 		mapColor.put("Tumor nucleus", "red");
-		mapColor.put("Granulocyte nucleus", "pink");
+		mapColor.put("Granulocyte nucleus", "cyan");
 		mapColor.put("Lymphocyte Nucleus", "green");
 		mapColor.put("Nucleus DAB+ PRD+", "black");
 		mapColor.put("Nucleus DAB+", "blue");
@@ -311,7 +311,7 @@ public class Controller {
 		try {
 			for (Cell c : this.listCells) {
 				graph.insertVertex(graph.getDefaultParent(), null,
-						c.getClass_name(), c.getInner_x() *0.4,
+						"", c.getInner_x() *0.4,
 						c.getInner_y() *0.4, 10, 10,
 						"shape=ellipse;per=ellipsePerimeter;fillColor="
 								+ getMapColor().get(c.getClass_name()));
@@ -338,7 +338,7 @@ public class Controller {
 				if (c.getClass_name().equals(nameSelected)) {
 
 					graph.insertVertex(graph.getDefaultParent(),
-							null, c.getClass_name(), c.getInner_x() * 0.4,
+							null, "", c.getInner_x() * 0.4,
 							c.getInner_y() * 0.4, 10, 10,
 							"shape=ellipse;per=ellipsePerimeter;fillColor="
 									+ getMapColor().get(c.getClass_name()));
@@ -473,35 +473,7 @@ public class Controller {
 	    
 	}
 	
-	public void neighbourhood(){
-	long startTime = System.nanoTime();
-	System.out.println("time begin "+startTime+"ns");
-
-	System.out.println("size" + getListCells().size());
-	int a = 0; 
-	//a ramplacer par une liste deja sort 
-	for (Cell lamerde : getListCells()) {
-		//System.out.println("type" + lamerde.getClass_name());
-		if ((lamerde.getClass_name()).equals("Tumor nucleus")) {
-			
-			for (Cell merde : getListCells()) {
-				if ((Math.abs(merde.getInner_x() - lamerde.getInner_x()) < 3) && (Math.abs(merde.getInner_y() - lamerde.getInner_y()) < 3)) {
-					a = a+1;
-					System.out.println("in"+a);
-				}
-
-			}
-
-		}
-	}
-
-	long endTime = System.nanoTime();
-	System.out.println("time end "+endTime+"ns");
-	long duration = endTime - startTime;
-	System.out.println("time duration "+duration*Math.pow(10,-9)+"s");
 	
-	}
-
 	public void sortListFromRequest(List<CellRequested> listRequest,mxGraph graph, boolean allCellSelected) {
 		System.out.println("sort \n");
 
@@ -572,8 +544,9 @@ public class Controller {
 							System.out.println(cr.getNeighbourhood().contains(caca.getClass_name()));
 							if(cr.getNeighbourhood().contains(caca.getClass_name())){
 								System.out.println("caca");
-								if (((Math.abs(c.getInner_x() - caca.getInner_x()) < 40) && (Math.abs(c.getInner_y() - caca.getInner_y()) < 40))) {
+								if (((Math.abs(c.getInner_x() - caca.getInner_x()) < 60) && (Math.abs(c.getInner_y() - caca.getInner_y()) < 60))) {
 									tmpWithNeighbourhood.add(c);
+									tmpWithNeighbourhood.add(caca);
 							}
 						}
 						}
@@ -589,9 +562,9 @@ public class Controller {
 		try {
 			for (Cell c : getTempList()) {
 					graph.insertVertex(graph.getDefaultParent(),
-							null, c.getClass_name(), c.getInner_x() * 0.4,
+							null, "", c.getInner_x() * 0.4,
 							c.getInner_y() * 0.4, 10, 10,
-							"shape=ellipse;per=ellipsePerimeter;fillColor="
+							"shape=ellipse;per=ellipsePerimeter;strokeColor="
 									+ getMapColor().get(c.getClass_name()));
 				}
 		} finally {

@@ -779,11 +779,13 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			cNeighbouhood.gridy = 0;
 			
 			this.paneCellDisplayNeighbourhood.setBackground(Color.RED);
+		//this.paneNeighbourhood.add(rubrique0Neighbood,cNeighbouhood);
 			this.paneNeighbourhood.add(paneCellDisplayNeighbourhood,cNeighbouhood);
 			
 			cNeighbouhood.fill = GridBagConstraints.HORIZONTAL;
 			cNeighbouhood.gridx = 0;
 			cNeighbouhood.gridy = 1;
+			//this.paneNeighbourhood.add(rubrique1Neighbood,cNeighbouhood);
 			this.paneNeighbourhood.add(paneCelluleNeighbourhood,cNeighbouhood);
 			
 			
@@ -792,6 +794,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			cNeighbouhood.gridy = 2;
 			
 			this.paneButtonsNeighbourhood.add(this.btAddOneConstraintNeighbourhood);
+			
 			this.paneButtonsNeighbourhood.add(this.btClearNeighbourhood);
 
 			this.paneNeighbourhood.add(comboBox,cNeighbouhood);
@@ -1018,6 +1021,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 				
 				for(CellRequested cr : this.contR.getListRequested()){
 					cr.setNeighbourhood("");
+					
 				}
 				for(JCheckBox ch : listCheckBoxNeighborhood){
 					ch.setSelected(false);
@@ -1025,10 +1029,16 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 				for(JCheckBox ch : listCheckBoxPaneCelluleNeighborhood){
 					ch.setSelected(false);
 				}
+				while (comboBox.getItemCount() > 0) {
+					comboBox.removeItemAt(0);
+				}
+				comboBox.addItem("No Request");
+				
 				
 			}
 			if(e.getSource() == this.btAddOneConstraintNeighbourhood){
-				
+				boolean present= false;
+				comboBox.addItem("Next");
 				for(JCheckBox ch : this.listCheckBoxNeighborhood){
 
 					if(ch.isSelected()){
@@ -1041,13 +1051,21 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 
 								for (int i = 0; i < this.contR.getListRequested().size(); i++) {
 									if ((ch.getName()).equals(this.contR.getListRequested().get(i).getName())) {
+										if(!this.contR.getListRequested().get(i).getNeighbourhood().contains(ch2.getName())){
+											present= true;
 												this.contR.getListRequested().get(i).setNeighbourhood(this.contR.getListRequested().get(i).getNeighbourhood() +" " + ch2.getName());
-									}
+												this.comboBox.addItem(this.contR.getListRequested().get(i).getName() +  " near to " + this.contR.getListRequested().get(i).getNeighbourhood());
+									}}
 								}
 							}
 						}
 					}
 				}
+				
+				if(present = true){
+					comboBox.removeItem("No Request");
+				}
+				//afficher la liste
 				for(CellRequested cr : this.contR.getListRequested()){
 					System.out.println(cr.toString());
 				}

@@ -159,13 +159,13 @@ public class RequestFram extends JFrame implements ActionListener,
 		// choisir la cellule
 
 		rubrique1.setPreferredSize(new Dimension(1000, 100));
-		rubrique1.setBackground(Color.RED);
+	//	rubrique1.setBackground(Color.RED);
 
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		paneCellule.setBorder(blackline);
 		paneCellule.setBounds(0, 200, 150, 200);
 		paneCellule.setOpaque(true);
-		paneCellule.setBackground(Color.GREEN);
+	//	paneCellule.setBackground(Color.GREEN);
 		paneCellule.setPreferredSize(new Dimension(600, 50));
 		
 		paneCellule.setLayout(new GridLayout(3, 3));
@@ -184,13 +184,13 @@ public class RequestFram extends JFrame implements ActionListener,
 		//RUBRIQUE 2 AREA 
 		
 		rubrique2.setPreferredSize(new Dimension(1100, 100));
-		rubrique2.setBackground(Color.YELLOW);
+	//	rubrique2.setBackground(Color.YELLOW);
 				
 		paneAreaSup.setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.weightx = 3 ;
 		gc.weighty = 0 ;
-		paneAreaSup.setBackground(Color.BLUE);
+	//	paneAreaSup.setBackground(Color.BLUE);
 		paneAreaSup.setPreferredSize(new Dimension(600, 50));
 		
 		
@@ -198,7 +198,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		GridBagConstraints gcAreaInf = new GridBagConstraints();
 		gcAreaInf.weightx = 3 ;
 		gcAreaInf.weighty = 0 ;
-		paneAreaInf.setBackground(Color.ORANGE);
+	//	paneAreaInf.setBackground(Color.ORANGE);
 		paneAreaInf.setPreferredSize(new Dimension(400, 50));
 
 		
@@ -206,12 +206,12 @@ public class RequestFram extends JFrame implements ActionListener,
 		//Sup
 		sliderDisplayAreaSup.setText("Value");
 		sliderDisplayAreaSup.setPreferredSize(new Dimension(50, 45));
-		sliderDisplayAreaSup.setForeground(Color.BLUE);
+	//	sliderDisplayAreaSup.setForeground(Color.BLUE);
 		
 		//Inf
 		sliderDisplayAreaInf.setText("Value");
 		sliderDisplayAreaInf.setPreferredSize(new Dimension(50, 45));
-		sliderDisplayAreaInf.setForeground(Color.BLUE);
+//		sliderDisplayAreaInf.setForeground(Color.BLUE);
 
 		//Sup
 		Dimension d = sliderAreaSup.getPreferredSize();  
@@ -322,14 +322,14 @@ public class RequestFram extends JFrame implements ActionListener,
 		// RUBRIQUE 3 Shpericity
 
 		rubrique3.setPreferredSize(new Dimension(1100, 100));
-		rubrique3.setBackground(Color.YELLOW);
+	//	rubrique3.setBackground(Color.YELLOW);
 
 		//sup
 		paneSphereSup.setLayout(new GridBagLayout());
 		GridBagConstraints gcSphericitySup = new GridBagConstraints();
 		gcSphericitySup.weightx = 3 ;
 		gcSphericitySup.weighty = 0 ;
-		paneSphereSup.setBackground(Color.RED);
+//		paneSphereSup.setBackground(Color.RED);
 		paneSphereSup.setPreferredSize(new Dimension(600, 50));
 		
 		//Inf
@@ -337,7 +337,7 @@ public class RequestFram extends JFrame implements ActionListener,
 		GridBagConstraints gcSphericityInf = new GridBagConstraints();
 		gcSphericityInf.weightx = 3 ;
 		gcSphericityInf.weighty = 0 ;
-		paneSphereInf.setBackground(Color.GREEN);
+	//	paneSphereInf.setBackground(Color.GREEN);
 		paneSphereInf.setPreferredSize(new Dimension(600, 50));
 
 		
@@ -345,12 +345,12 @@ public class RequestFram extends JFrame implements ActionListener,
 		//Sup
 		sliderDisplaySphericitySup.setText("Value");
 		sliderDisplaySphericitySup.setPreferredSize(new Dimension(50, 45));
-		sliderDisplaySphericitySup.setForeground(Color.BLUE);
+	//	sliderDisplaySphericitySup.setForeground(Color.BLUE);
 		
 		//Inf
 		sliderDisplaySphericityInf.setText("Value");
 		sliderDisplaySphericityInf.setPreferredSize(new Dimension(50, 45));
-		sliderDisplaySphericityInf.setForeground(Color.BLUE);
+	//	sliderDisplaySphericityInf.setForeground(Color.BLUE);
 
 		
 		//Sup
@@ -466,32 +466,32 @@ public class RequestFram extends JFrame implements ActionListener,
 		//Border
 
 		rubrique4.setPreferredSize(new Dimension(1100, 100));
-		rubrique4.setBackground(Color.YELLOW);
+//		rubrique4.setBackground(Color.YELLOW);
 
 		paneBorderSup.setLayout(new GridBagLayout());
 		GridBagConstraints gcBorderSup  = new GridBagConstraints();
 		gcBorderSup.weightx = 3;
 		gcBorderSup.weightx = 0;
-		paneBorderSup.setBackground(Color.BLUE);
+	//	paneBorderSup.setBackground(Color.BLUE);
 		paneBorderSup.setPreferredSize(new Dimension(600, 50));
 		
 		paneBorderInf.setLayout(new GridBagLayout());
 		GridBagConstraints gcBorderInf  = new GridBagConstraints();
 		gcBorderInf.weightx = 3;
 		gcBorderInf.weightx = 0;
-		paneBorderInf.setBackground(Color.white);
+	//	paneBorderInf.setBackground(Color.white);
 		paneBorderInf.setPreferredSize(new Dimension(600, 50));
 
 		//Border 
 		//Sup
 		sliderDisplayBorderSup.setText("Value");
 		sliderDisplayBorderSup.setPreferredSize(new Dimension(50, 45));
-		sliderDisplayBorderSup.setForeground(Color.BLUE);
+		//sliderDisplayBorderSup.setForeground(Color.BLUE);
 		
 		//Inf
 		sliderDisplayBorderInf.setText("Value");
 		sliderDisplayBorderInf.setPreferredSize(new Dimension(50, 45));
-		sliderDisplayBorderInf.setForeground(Color.BLUE);
+		//sliderDisplayBorderInf.setForeground(Color.BLUE);
 
 		//Sup
 		sliderBorderSup.setPreferredSize(new Dimension(sliderBorderSup.getPreferredSize().width+200,sliderBorderSup.getPreferredSize().height+30));

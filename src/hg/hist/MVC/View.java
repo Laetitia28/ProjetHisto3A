@@ -139,7 +139,7 @@ public class View extends JFrame implements ActionListener {
 		// Check Box
 		Border border = BorderFactory.createTitledBorder("Selected Cell");
 		down.setBorder(border);
-		// down.setBackground(Color.GREEN);
+		//down.setBackground(Color.);
 		down.setBounds(0, 200, 200, 300);
 		down.setOpaque(true);
 		down.setLayout(new GridLayout(10, 1));
@@ -149,6 +149,7 @@ public class View extends JFrame implements ActionListener {
 		// Check Box
 		for (String key : controller.getMapColor().keySet()) {
 			checkBox = new JCheckBox(key.toString());
+			checkBox.setBackground(Color.lightGray);
 			checkBox.setName("CheckBox_" + key.toString());
 			checkBox.setSelected(false);
 			checkBox.setForeground(getController().stringToColor(
