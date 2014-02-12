@@ -144,6 +144,7 @@ public class View extends JFrame implements ActionListener {
 		down.setOpaque(true);
 		down.setLayout(new GridLayout(10, 1));
 		checkAll.setSelected(true);
+		checkAll.setBackground(Color.LIGHT_GRAY);
 		down.add(checkAll);
 
 		// Check Box
@@ -194,8 +195,7 @@ public class View extends JFrame implements ActionListener {
 				@Override
 				public void actionPerformed(ActionEvent event) {
 
-					JComboBox comboBox = new JComboBox(getController()
-							.getListColor());
+					JComboBox comboBox = new JComboBox(getController().getListColor());
 					comboBox.setEditable(false);
 					comboBox.getSelectedItem();
 					JOptionPane.showMessageDialog(null, comboBox,

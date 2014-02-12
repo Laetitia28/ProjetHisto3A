@@ -18,6 +18,7 @@ import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -40,12 +41,15 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		private static final long serialVersionUID = 123456L;
 			
 		private JLabel labelDisplayTypeCell = new JLabel("Choose cells to display");
-		private JLabel labelChooseType = new JLabel("Choose your Cellule type");
+		private JLabel labelChooseType = new JLabel("Choose cells to filter ");
 		private JLabel labelNeighbourhood0= new JLabel("Select your target cellule");
 		private JLabel labelNeighbourhood1= new JLabel("Near To ");
 		private JLabel labelSphericity = new JLabel("Choose your spherecity ");
 		private JLabel labelArea = new JLabel("Choose your area (pxl) ");
 		private JLabel labelBorder = new JLabel("Choose your border (pxl) ");
+		private JLabel labelDescription= new JLabel("Don't forget to display the target cells before applying.");
+	    private JLabel labelDescription2= new JLabel("Then select one or more target cells and the neighbourd cells.");
+		private JLabel labelImage = new JLabel(new ImageIcon("images/w.jpg"));
 		
 		private JPanel panelTotal = new JPanel();
 		
@@ -93,7 +97,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		
 		private JPanel rubrique0N = new JPanel(new BorderLayout());
 		private JPanel rubrique1N = new JPanel(new BorderLayout());
-		
+		private JPanel rubriqueInfo = new JPanel(new BorderLayout());
 		private ButtonGroup groupButton = new ButtonGroup();
 		
 		private JCheckBox btCheckRadio_AllCell = new JCheckBox("All Cells");
@@ -788,13 +792,18 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			cNeighbouhood.weightx = 1;
 			cNeighbouhood.weighty = 0;
 			cNeighbouhood.insets=new Insets(5, 0, 5, 0);
-			
 			cNeighbouhood.fill = GridBagConstraints.HORIZONTAL;
 			
 			cNeighbouhood.gridx = 0;
 			cNeighbouhood.gridy = 0;
 			
+			this.rubriqueInfo.add(labelDescription,BorderLayout.NORTH);		
+			this.rubriqueInfo.add(labelDescription2,BorderLayout.SOUTH);
+			this.paneNeighbourhood.add(rubriqueInfo,cNeighbouhood);
+			//this.paneNeighbourhood.add(labelDescription,cNeighbouhood);
 			
+			cNeighbouhood.gridx = 0;
+			cNeighbouhood.gridy = 1;
 			
 			this.rubrique0N.setBackground(Color.darkGray);
 			this.labelNeighbourhood0.setHorizontalAlignment(JLabel.CENTER);
@@ -809,7 +818,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			
 			cNeighbouhood.fill = GridBagConstraints.HORIZONTAL;
 			cNeighbouhood.gridx = 0;
-			cNeighbouhood.gridy = 1;
+			cNeighbouhood.gridy = 2;
 			
 			
 			
@@ -828,7 +837,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			
 			cNeighbouhood.fill = GridBagConstraints.BOTH;
 			cNeighbouhood.gridx = 0;
-			cNeighbouhood.gridy = 2;
+			cNeighbouhood.gridy = 3;
 			
 			this.paneButtonsNeighbourhood.add(this.btAddOneConstraintNeighbourhood);
 			
@@ -839,7 +848,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 			cNeighbouhood.fill = GridBagConstraints.BOTH;
 			cNeighbouhood.weighty=0.5;
 			cNeighbouhood.gridx = 0;
-			cNeighbouhood.gridy = 3;
+			cNeighbouhood.gridy = 4;
 			this.paneNeighbourhood.add(this.paneButtonsNeighbourhood,cNeighbouhood);
 			
 			this.tabbedPane.add(NEIGHBOURHOOD,paneNeighbourhood);

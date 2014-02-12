@@ -57,7 +57,7 @@ public class Controller {
 	//C'est la liste de cellule qui est selectionner dans la fenetre request
 	private List<Cell> tempList ;
 
-	private String[] listColor = {"red","white","green","black","blue","cyan","darkGray","gray","magenta","orange","yellow"};
+	private String[] listColor = {"red","white","green","black","blue","cyan","darkGray","gray","magenta","orange","yellow","bordeau"};
 
 
 	
@@ -288,6 +288,7 @@ public class Controller {
 		mapColor.put("Nucleus DAB+ PRD+", "black");
 		mapColor.put("Nucleus DAB+", "blue");
 		mapColor.put("Nucleus PRD+", "orange");
+		
 	}
 
 	//ok
@@ -338,7 +339,7 @@ public class Controller {
 				if (c.getClass_name().equals(nameSelected)) {
 
 					graph.insertVertex(graph.getDefaultParent(),
-							null, "", c.getInner_x() * 0.4,
+							null,"", c.getInner_x() * 0.4,
 							c.getInner_y() * 0.4, 10, 10,
 							"shape=ellipse;per=ellipsePerimeter;fillColor="
 									+ getMapColor().get(c.getClass_name()));
@@ -408,6 +409,9 @@ public class Controller {
 	public Color stringToColor(String mrd){
 		if(mrd.equals("red")){
 			return Color.red;
+		}
+		if(mrd.equals ("bordeau")){
+			return new Color(102,0,51);
 		}
 		else if(mrd.equals("yellow")){
 			return Color.yellow;
@@ -540,13 +544,13 @@ public class Controller {
 					if((c.getClass_name().equals(cr.getName()))){
 						System.out.println("found");
 
-						for(Cell caca : getListCells()){
-							System.out.println(cr.getNeighbourhood().contains(caca.getClass_name()));
-							if(cr.getNeighbourhood().contains(caca.getClass_name())){
-								System.out.println("caca");
-								if (((Math.abs(c.getInner_x() - caca.getInner_x()) < 60) && (Math.abs(c.getInner_y() - caca.getInner_y()) < 60))) {
+						for(Cell cn : getListCells()){
+							System.out.println(cr.getNeighbourhood().contains(cn.getClass_name()));
+							if(cr.getNeighbourhood().contains(cn.getClass_name())){
+								System.out.println("cn");
+								if (((Math.abs(c.getInner_x() - cn.getInner_x()) < 60) && (Math.abs(c.getInner_y() - cn.getInner_y()) < 60))) {
 									tmpWithNeighbourhood.add(c);
-									tmpWithNeighbourhood.add(caca);
+									tmpWithNeighbourhood.add(cn);
 							}
 						}
 						}
@@ -564,7 +568,7 @@ public class Controller {
 					graph.insertVertex(graph.getDefaultParent(),
 							null, "", c.getInner_x() * 0.4,
 							c.getInner_y() * 0.4, 10, 10,
-							"shape=ellipse;per=ellipsePerimeter;strokeColor="
+							"shape=ellipse;per=ellipsePerimeter;StrokeColor="
 									+ getMapColor().get(c.getClass_name()));
 				}
 		} finally {
