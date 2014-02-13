@@ -57,7 +57,7 @@ public class Controller {
 	//C'est la liste de cellule qui est selectionner dans la fenetre request
 	private List<Cell> tempList ;
 
-	private String[] listColor = {"red","white","green","black","blue","cyan","darkGray","gray","magenta","orange","yellow","bordeau"};
+	private String[] listColor = {"red","white","green","black","blue","cyan","darkGray","gray","magenta","orange","yellow"};
 
 
 	
@@ -410,9 +410,7 @@ public class Controller {
 		if(mrd.equals("red")){
 			return Color.red;
 		}
-		if(mrd.equals ("bordeau")){
-			return new Color(102,0,51);
-		}
+		
 		else if(mrd.equals("yellow")){
 			return Color.yellow;
 		}
@@ -568,7 +566,7 @@ public class Controller {
 					graph.insertVertex(graph.getDefaultParent(),
 							null, "", c.getInner_x() * 0.4,
 							c.getInner_y() * 0.4, 10, 10,
-							"shape=ellipse;per=ellipsePerimeter;StrokeColor="
+							"shape=ellipse;per=ellipsePerimeter;fillColor="
 									+ getMapColor().get(c.getClass_name()));
 				}
 		} finally {

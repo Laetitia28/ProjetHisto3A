@@ -49,7 +49,7 @@ public class CellRequested {
 		return "name=" + name +", areaSup=" + areaSup + ", areaInf=" + areaInf
 				+ ", sphericitySup=" + sphericitySup + ", sphericityInf="
 				+ sphericityInf + ", borderSup=" + borderSup + ", borderInf="
-				+ borderInf + "]";
+				+ borderInf + "neighbourhood="+ neighbourhood + "]";
 	}
 	public String getNeighbourhood() {
 		return neighbourhood;

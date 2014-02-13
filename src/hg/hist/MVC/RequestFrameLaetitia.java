@@ -39,6 +39,8 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 				
 		
 		private static final long serialVersionUID = 123456L;
+		
+	
 			
 		private JLabel labelDisplayTypeCell = new JLabel("Choose cells to display");
 		private JLabel labelChooseType = new JLabel("Choose cells to filter ");
@@ -1269,7 +1271,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 					}
 			}
 		}
-		public void init(double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder,HashMap<String, String> mapForRadioButton){
+		public void init(HashMap<String,JCheckBox> mapCheckBoxView,double maxArea, double maxSphericity, double maxBorder, double minArea, double minSphericity, double minBorder,HashMap<String, String> mapForRadioButton){
 		
 		// If value < 0 then this.slider not works , so change value
 		this.contR.setDefault_AreaSup(adaptValue(maxArea));
@@ -1453,6 +1455,17 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		}
 		*/
 		setRadioSelected("All Cells");
+		
+		for(String key : mapCheckBoxView.keySet()){
+			if((mapCheckBoxView.get(key).isSelected())){
+				for(JCheckBox chbox : listCheckBox){
+					if(chbox.getName().equals(mapCheckBoxView.get(key).getName())){
+						chbox.setSelected(true);
+					}
+				}
+				
+			}
+		}
 			
 		}
 		

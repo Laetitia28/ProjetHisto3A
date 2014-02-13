@@ -59,8 +59,7 @@ public class View extends JFrame implements ActionListener {
 	private mxGraphComponent graphComponent;
 
 	private JFileChooser chooser = new JFileChooser();
-
-	private JCheckBox checkAll = new JCheckBox("All cells");
+     private JCheckBox checkAll = new JCheckBox("All Cells");
 	private JCheckBox checkBox;
 
 	private JComboBox comboBoxRequest = new JComboBox();
@@ -144,6 +143,7 @@ public class View extends JFrame implements ActionListener {
 		down.setOpaque(true);
 		down.setLayout(new GridLayout(10, 1));
 		checkAll.setSelected(true);
+		checkAll.setName("All Cells");
 		checkAll.setBackground(Color.LIGHT_GRAY);
 		down.add(checkAll);
 
@@ -151,7 +151,9 @@ public class View extends JFrame implements ActionListener {
 		for (String key : controller.getMapColor().keySet()) {
 			checkBox = new JCheckBox(key.toString());
 			checkBox.setBackground(Color.lightGray);
-			checkBox.setName("CheckBox_" + key.toString());
+		//	checkBox.setName("CheckBox_" + key.toString());
+			checkBox.setName(key.toString());
+
 			checkBox.setSelected(false);
 			checkBox.setForeground(getController().stringToColor(
 					getController().getMapColor().get(key)));
@@ -470,7 +472,7 @@ public class View extends JFrame implements ActionListener {
 		// open new Frame
 		if (e.getSource() == buttonAdvancedRequest) {
 
-			frame2.init(controller.getMaxArea(), controller.getMaxSphericity(),
+			frame2.init(this.listOfCheckBox,controller.getMaxArea(), controller.getMaxSphericity(),
 					controller.getMaxBorder(), controller.getMinArea(),
 					controller.getMinSphericity(), controller.getMinBorder(),
 					controller.getMapColor());
