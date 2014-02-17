@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -22,6 +24,7 @@ import javax.swing.JOptionPane;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+
 
 public class Controller {
 
@@ -589,6 +592,115 @@ public class Controller {
 			}
 		return mp;
 	}
+	
+	public void selectRequest(String req, mxGraph graph){
+	       
+	       if(req.equals("Next") || req.equals(null) || req.equals("No Request")){
+	    	   System.out.print("nextt" );
+	       }
+	       else {
+	  		 String[] tab  = new String[8];
+	  		tab[7]=" ";
+	        Pattern p = Pattern.compile("=(.*?),");
+	        Matcher m = p.matcher(req);
+	        int i = 0 ;
+	        while(m.find()){
+	            tab[i] = m.group(1);
+	            i = i+1;
+	        }
+	        Pattern p2 = Pattern.compile("neighbourhood=(.*?)]");
+	        Matcher m2 = p2.matcher(req);
+	        while(m2.find()){
+	            tab[7] = m2.group(1);
+	           
+	        }
+	       
+	        for(int j =0 ;j<tab.length;j++){
+	            System.out.println(tab[j]);
+	        }
+	       
+	       ArrayList<Cell> tempListr = new ArrayList<Cell>();
+
+	        // si allCellSelected alors on affiche toutes les cellules
+	        if (tab[0].equals("All Cells")) {
+	            for (Cell c : getListCells()) {
+	                    if (     (c.getArea_pxl() <= Double.valueOf(tab[2]))
+	                            && (c.getArea_pxl() >= Double.valueOf(tab[1]))
+	                            && (c.getSphericity() <= Double.valueOf(tab[4]))
+	                            && (c.getSphericity() >= Double.valueOf(tab[3]))
+	                            && (c.getBorder_Lenght_pxl() <= Double.valueOf(tab[6]))
+	                            && (c.getBorder_Lenght_pxl() >= Double.valueOf(tab[5]))) {
+	                                    // ajout dans la liste triée de l'element
+	                    	tempListr.add(c);
+	                    }
+	                }
+	            }
+	        
+
+	        else {
+	                    for (Cell c : getListCells()) {
+	                       
+	                        if (tab[0].equals(c.getClass_name())
+	                                && (c.getArea_pxl() <= Double.valueOf(tab[2]))
+	                                && (c.getArea_pxl() >= Double.valueOf(tab[1]))
+	                                && (c.getSphericity() <= Double.valueOf(tab[4]))
+	                                && (c.getSphericity() >= Double.valueOf(tab[3]))
+	                                && (c.getBorder_Lenght_pxl() <= Double.valueOf(tab[6]))
+	                                && (c.getBorder_Lenght_pxl() >= Double.valueOf(tab[5]))) {
+	                                    // ajout dans la liste triée de l'element
+	                        	tempListr.add(c);
+	                        }
+	                        
+	                    }
+	                }
+	            
+
+	        
+	       
+	        ArrayList<Cell> tmpWithNeighbourhoodr = new ArrayList<Cell>();
+	        boolean listnew =false;
+	       
+	            if(!tab[7].equals(null)){
+	                listnew =true;
+
+	                for(Cell c :getTempList()){
+	                   
+	                    if((c.getClass_name().equals(tab[0]))){
+
+	                        for(Cell ca : tempListr){
+	                           
+	                            if(tab[7].contains(ca.getClass_name())){
+	                               
+	                                if (((Math.abs(c.getInner_x() - ca.getInner_x()) < 40) && (Math.abs(c.getInner_y() - ca.getInner_y()) < 40))) {
+	                                    tmpWithNeighbourhoodr.add(c);
+	                            }
+	                        }
+	                        }
+	                       
+	                    }
+	                }
+	            }
+	        
+	        if(listnew ==true){
+	        	tempListr.addAll(tmpWithNeighbourhoodr);
+	        	
+	        }
+	
+	        graph.getModel().beginUpdate();
+	        try {
+	            for (Cell c :tempListr) {
+	                    graph.insertVertex(graph.getDefaultParent(),
+	                            null,"", c.getInner_x() * 0.4,
+	                            c.getInner_y() * 0.4, 10, 10,
+	                            "shape=ellipse;per=ellipsePerimeter;fillColor="
+	                                    + getMapColor().get(c.getClass_name()));
+	                }
+	        } finally {
+	            graph.getModel().endUpdate();
+	        }
+	    }
+	}
+	
 	
 	// Getter and Setter
 	public List<Cell> getListCells() {

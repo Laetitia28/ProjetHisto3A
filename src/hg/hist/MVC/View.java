@@ -11,9 +11,12 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.DefaultListCellRenderer;
@@ -30,6 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.view.mxGraph;
@@ -77,10 +81,20 @@ public class View extends JFrame implements ActionListener {
 
 	public View(Controller controller) {
 
-		super("Frame Cell! MVC ");
+		super("Données Histopathologiques ");
 
 		comboBoxRequest.setRenderer(renderer);
-
+		comboBoxRequest.addItemListener(new ItemChangeListener());
+		/*
+		comboBoxRequest.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			}
+		});
+*/
 		this.controller = controller;
 		contR = new ControllerRequest();
 
@@ -278,7 +292,27 @@ public class View extends JFrame implements ActionListener {
 
 		getContentPane().add(graphComponent);
 	}
+	class ItemChangeListener implements ItemListener{
 
+
+		@Override
+		public void itemStateChanged(ItemEvent event) {
+			// TODO Auto-generated method stub
+			if (event.getStateChange() == ItemEvent.SELECTED) {
+		          Object item = event.getItem();
+		          if(!item.equals("No Request")){
+		        	// earse graph
+						graph.setCellsDeletable(true);
+						graph.removeCells(graph.getChildVertices(parent));
+						graph.refresh();
+						graph.setCellsDeletable(false);
+		          }
+					
+		          getController().selectRequest(item.toString(), graph);
+		          System.out.print("item" + item.toString());
+		       }
+		}       
+	}
 	class ComboBoxRenderer extends DefaultListCellRenderer {
 
 		private static final long serialVersionUID = 1L;
