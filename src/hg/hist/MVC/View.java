@@ -1,5 +1,6 @@
 package hg.hist.MVC;
 
+import hg.histo.CellRequested;
 import hg.histo.Menu;
 
 import java.awt.BorderLayout;
@@ -43,7 +44,7 @@ public class View extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private Controller controller;
-	private RequestFrameLaetitia frame2;
+	private RequestView frame2;
 	private ControllerRequest contR;
 
 	private Menu menu = new Menu();
@@ -66,7 +67,7 @@ public class View extends JFrame implements ActionListener {
      private JCheckBox checkAll = new JCheckBox("All Cells");
 	private JCheckBox checkBox;
 
-	private JComboBox comboBoxRequest = new JComboBox();
+	private JComboBox<String> comboBoxRequest = new JComboBox<String>();
 
 	private JLabel labelTitleRequest = new JLabel("Request : ");
 	private Font police = new Font("Arial", Font.BOLD, 14);
@@ -193,7 +194,7 @@ public class View extends JFrame implements ActionListener {
 
 		setJMenuBar(menu.buildMenu());
 
-		frame2 = new RequestFrameLaetitia(contR, controller.getMaxArea(),
+		frame2 = new RequestView(contR, controller.getMaxArea(),
 				controller.getMaxSphericity(), controller.getMaxBorder(),
 				controller.getMinArea(), controller.getMinSphericity(),
 				controller.getMinBorder());
@@ -211,7 +212,7 @@ public class View extends JFrame implements ActionListener {
 				@Override
 				public void actionPerformed(ActionEvent event) {
 
-					JComboBox comboBox = new JComboBox(getController().getListColor());
+					JComboBox<String> comboBox = new JComboBox<String>(getController().getListColor());
 					comboBox.setEditable(false);
 					comboBox.getSelectedItem();
 					JOptionPane.showMessageDialog(null, comboBox,
@@ -297,7 +298,7 @@ public class View extends JFrame implements ActionListener {
 
 		@Override
 		public void itemStateChanged(ItemEvent event) {
-			// TODO Auto-generated method stub
+			
 			if (event.getStateChange() == ItemEvent.SELECTED) {
 		          Object item = event.getItem();
 		          if(!item.equals("No Request")){
@@ -378,8 +379,7 @@ public class View extends JFrame implements ActionListener {
 					@Override
 					public void actionPerformed(ActionEvent event) {
 
-						JComboBox comboBox = new JComboBox(getController()
-								.getListColor());
+						JComboBox<String> comboBox = new JComboBox<String>(getController().getListColor());
 						comboBox.setEditable(false);
 						comboBox.getSelectedItem();
 						JOptionPane.showMessageDialog(null, comboBox,

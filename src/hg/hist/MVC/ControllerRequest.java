@@ -1,5 +1,7 @@
 package hg.hist.MVC;
 
+import hg.histo.CellRequested;
+
 import java.util.ArrayList;
 import java.util.List;
 

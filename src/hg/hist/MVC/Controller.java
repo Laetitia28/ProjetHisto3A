@@ -1,6 +1,7 @@
 package hg.hist.MVC;
 
 import hg.histo.Cell;
+import hg.histo.CellRequested;
 import hg.histo.FillCellWithCSV;
 import hg.histo.SearchFile;
 

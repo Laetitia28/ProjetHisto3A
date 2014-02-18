@@ -1,4 +1,4 @@
-package hg.hist.MVC;
+package hg.histo;
 
 public class CellRequested {
 

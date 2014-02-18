@@ -1,4 +1,6 @@
 package hg.hist.MVC;
+import hg.histo.CellRequested;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,7 +20,6 @@ import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -35,7 +36,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 		
 			
-public class RequestFrameLaetitia extends JFrame implements ActionListener,	ChangeListener {
+public class RequestView extends JFrame implements ActionListener,	ChangeListener {
 				
 		
 		private static final long serialVersionUID = 123456L;
@@ -51,8 +52,6 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		private JLabel labelBorder = new JLabel("Choose your border (pxl) ");
 		private JLabel labelDescription= new JLabel("Don't forget to display the target cells before applying.");
 	    private JLabel labelDescription2= new JLabel("Then select one or more target cells and the neighbourd cells.");
-		private JLabel labelImage = new JLabel(new ImageIcon("images/w.jpg"));
-		
 		private JPanel panelTotal = new JPanel();
 		
 		private JPanel paneCellDisplay = new JPanel();
@@ -121,12 +120,12 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 		private final static String PARAMETERS = "Search using parameters of cells";
 		private final static String NEIGHBOURHOOD = "Search using neighbourhood";
 		
-		private JComboBox comboBox = new JComboBox();
+		private JComboBox<String> comboBox = new JComboBox<String>();
 
 		
 		private ControllerRequest contR;
 		
-		public RequestFrameLaetitia(ControllerRequest contR,double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder) 
+		public RequestView(ControllerRequest contR,double maxArea, double maxSphericity ,double maxBorder , double minArea ,double minSphericity , double minBorder) 
 		{
 
 		this.contR = contR;
@@ -1203,7 +1202,7 @@ public class RequestFrameLaetitia extends JFrame implements ActionListener,	Chan
 					}
 				}
 				if(!h.equals("")){
-				JOptionPane.showMessageDialog(RequestFrameLaetitia.this,"Warning : \n"+ h);
+				JOptionPane.showMessageDialog(RequestView.this,"Warning : \n"+ h);
 				}
 			
 			//debug
